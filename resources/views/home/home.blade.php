@@ -31,11 +31,11 @@
 
 <div class="custom-control-inline">
     {{-- 金額のフォーム --}}
-    {!! Form::open(['url' => route('home\home.store', ['id' => $activeBook->id]), 'method'
+    {{-- {!! Form::open(['url' => route('home\home.store', ['id' => $activeBook->id]), 'method'
     => 'post']) !!}
     {!! Form::submit('金額の登録', ['class' => 'btn btn-submit btn-sm']) !!}
     {!! Form::close() !!}
-    &nbsp;
+    &nbsp; --}}
 </div>
 
 {{-- フォームグループ開始 --}}

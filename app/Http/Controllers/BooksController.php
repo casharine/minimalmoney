@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Dotenv\Loader\Loader;
 use Illuminate\Http\Request;
-use App\Book;
-use App\User;
-use App\Sharing;
+use App\Models\Book;
+use App\Models\User;
+use App\Models\Sharing;
 
 use function Symfony\Component\Translation\t;
 
@@ -103,13 +103,10 @@ class BooksController extends Controller
 
     }
 
-
-
-
     public function destroy($id)
     {
         // idの値でブックを検索して取得
-        $book = \App\Book::findOrFail($id);
+        $book = Book::findOrFail($id);
         // 認証済みユーザ（閲覧者）がその帳簿の作成者である場合は、削除
         if (\Auth::id() === $book->authorizer_id) {
             $book->delete();

@@ -28,7 +28,7 @@
             {{-- ユーザ詳細タブ アクティブタブの場合は強調表示（三項演算子） --}}
             <div class="col-4">
                 {{-- 家計簿一覧のタブ --}}
-                <li><a href="{{ route('users.show', ['user' => $user->id]) }}"
+                <li><a href="{{ route('users.show') }}"
                         class="nav-link {{ Request::routeIs('users.show') ? 'active' : '' }}">
                         My家計簿
                         <span class="badge badge-secondary">{{ $user->books_count }}</span></a>
@@ -36,7 +36,7 @@
             </div>
             <div class="col-4">
                 {{-- 共有依頼一覧タブ --}}
-                <li><a href="{{ route('users.sharings', ['user' => $user->id]) }}"
+                <li><a href="{{ route('users.sharings') }}"
                         class="nav-link {{ Request::routeIs('users.sharings') ? 'active' : '' }}">
                         共有依頼中
                         <span class="badge badge-secondary">{{ $sharingCounts }}</span></a>
@@ -44,7 +44,7 @@
             </div>
             <div class="col-4">
                 {{-- 未承認一覧タブ --}}
-                <li><a href="{{route('users.unapproved',['user' => $user->id]) }}"
+                <li><a href="{{route('users.unapproved') }}"
                         class="nav-link {{ Request::routeIs('users.unapproved') ? 'active' : '' }}">
                         未承認
 

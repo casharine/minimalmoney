@@ -8,7 +8,6 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\SharingsController;
 use App\Http\Controllers\UnapprovedController;
-use App\Http\Controllers\HomeController;
 
 
 
@@ -25,8 +24,12 @@ use App\Http\Controllers\HomeController;
 
 // Home画面のルーティング ※認証有無でwelcomeページを表示
 Route::get('/', function () {
-    return view('home.home');
+    if(!\Auth::check()){
+        return view('home.home');
+    }
+    return redirect()->route('Home');
  });
+
 Route::get('home', [HomeController::class, 'home'])->name('Home');
 
 // ユーザー登録等処理のグループ

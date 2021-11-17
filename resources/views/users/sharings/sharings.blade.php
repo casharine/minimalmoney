@@ -18,7 +18,8 @@
                 <div class="custom-control-inline">
                     {{-- 帳簿削除ボタンのフォーム --}}
                     {{-- bookインスタンスの->id == sharings->books_id --}}
-                    {!! Form::open(['url' => route('users\sharings.destroy', ['id' => $sharingBook->id]), 'method'
+                    {!! Form::open(['url' => route('users\sharings.destroy', ['id' => $sharingBook->sharings[0]->id]),
+                    'method'
                     => 'delete']) !!}
                     {!! Form::submit('共有依頼の取消', ['class' => 'btn btn-danger btn-sm']) !!}
                     {!! Form::close() !!}

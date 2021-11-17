@@ -11,11 +11,13 @@ class TransactionController extends Controller
         $transactions = Transaction::all();
         return view('transaction.index', compact('transactions'));
     }
+    
     // 詳細（個別）取得 
     public function detail($id) {
         $taransactions = Transaction::find($id);
         return view('transaction.detail', compact('transaction'));
     }
+
     // 編集表示
     public function edit(Request $request) {
         // このユーザーのアクティブシートのトランズアクションとして
@@ -29,6 +31,7 @@ class TransactionController extends Controller
             'note' => $request->note]);
         return view('transaction.edit', compact('user_id', 'type', 'item', 'price', 'date', 'rate', 'note'));
     }
+
     // 作成
     // TransactionRequestは下記のformRequestでバリデーションを参照。
     public function create(TransactionRequest $request) {

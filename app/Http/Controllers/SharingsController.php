@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Book;
-use App\User;
-use App\Sharing;
+use App\Models\Book;
+use App\Models\User;
+use App\Models\Sharing;
 
 
 class SharingsController extends Controller
@@ -41,7 +41,7 @@ class SharingsController extends Controller
 
     //ユーザーの帳簿を登録
     public function store(Request $request, int $id)
-    {
+    { 
         // インスタンスを取得
         $user = $request->user();
  
@@ -58,7 +58,7 @@ class SharingsController extends Controller
     public function destroy($id)
     {
         // idの値でブックを検索して取得
-        $sharing = \App\Sharing::findOrFail($id);
+        $sharing = Sharing::findOrFail($id);
         // 認証済みユーザ（閲覧者）がその帳簿の作成者である場合は、削除
         if (\Auth::id() === $sharing->user_id) {
             $sharing->delete();
