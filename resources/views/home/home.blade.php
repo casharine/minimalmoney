@@ -27,19 +27,25 @@
 <div class="border-bottom" style="padding:0px;">
     <h5><i class="fas fa-pencil-alt"></i> Main Input</h5>
 </div>
-<br>
 
-<div class="custom-control-inline">
-    {{-- 金額のフォーム --}}
-    {{-- {!! Form::open(['url' => route('home\home.store', ['id' => $activeBook->id]), 'method'
+{{--費目登録のフォーム --}}
+<div class="custom-control-inline py-2">
+    {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
     => 'post']) !!}
-    {!! Form::submit('金額の登録', ['class' => 'btn btn-submit btn-sm']) !!}
-    {!! Form::close() !!}
-    &nbsp; --}}
+    {{ Form::text('price', '', ['placeholder' => '金額を入力'])}}
+    {{ Form::text('date', '', ['placeholder' => '日付を入力'])}}
+    {{ Form::text('note', '', ['placeholder' => '任意の備考'])}}
+    {{ Form::select('item'
+    , ['食材費', '外食費', '個別A', '個別B','日用費', '交際費', '養育費', '贅沢費', '特別費']
+    , ''
+    , ['placeholder' => '費目選択']
+    ) }}
 </div>
-
+<br>
+{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-secondary btn-sm w-100']) !!}
+{{ Form::close() }}
 {{-- フォームグループ開始 --}}
-<div>
+{{-- <div>
     <form action="#.php" method="POST">
         <div class="row">
             <aside class="col-6">
@@ -86,7 +92,7 @@
             </div>
         </div>
     </form>
-</diV>
+</diV> --}}
 
 {{-- Output --}}
 <div>

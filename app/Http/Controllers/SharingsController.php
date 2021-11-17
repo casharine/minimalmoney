@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Sharing;
 
 
+
 class SharingsController extends Controller
 {
         //ユーザーの帳簿の取得

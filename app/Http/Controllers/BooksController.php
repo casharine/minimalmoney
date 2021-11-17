@@ -24,7 +24,6 @@ class BooksController extends Controller
             
             // 定義できていない
                 // $userId = $user->id;
-
                 
             $data = [
                 'user' => $user,

@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Book;
 use App\Models\Sharing;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\DB;
+
 
 
 
@@ -57,29 +59,23 @@ class HomeController extends Controller
     public function store(Request $request, int $id)
     {
         // ロールバックの整合性を保ため一連の処理とする
-        DB::transaction(function () use($id) {
+        DB::transaction(function () use($request, $id) {
 
             // レコード追加に必要な変数を定義する
             $user = \Auth::user();
             $userId = $user->id;
-            
-        // nameの値があるとき
-        if (Request::has('name')) {
-            $name = Request::input('name');
-        } else {
-            $name = '名無し';
-        }
-        $age = Request::input('age');
-        $gender = Request::input('gender');
-        $favorite = Request::input('favorite');
-        $body = Request::input('body');
-        // job自体がないときは第2引数が返される
-        $job = Request::input('job', '学生');
-        return view('contact.confirm', compact('name', 'age', 'gender', 'favorite', 'body', 'job'));
-    }
 
-        });
+        Transaction::create([
+            'editor_id' => $user->id,
+            'book_id' => $id,
+            'price' => $request->price,
+            'item' => $request->item,  
+            'date' => $request->date,
+            'note' => $request->note,
+        ]);
+    });
 
-        return back();
+    return back();
+    
     }
 }

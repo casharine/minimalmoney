@@ -19,7 +19,7 @@ class TransactionsTableSeeder extends Seeder
         DB::table('transactions')->insert([
             'editor_id' => 1,
             'price' => 100,
-            'TransactionItemType' => '日用費',
+            'item' => '日用費',
             'date' => 20211117,
             'note' => '水',
             'book_id' => 1,
