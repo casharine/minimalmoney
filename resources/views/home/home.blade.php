@@ -32,13 +32,14 @@
 <div class="custom-control-inline py-2">
     {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
     => 'post']) !!}
-    {{ Form::text('price', '', ['placeholder' => '金額を入力'])}}
-    {{ Form::text('date', '', ['placeholder' => '日付を入力'])}}
-    {{ Form::text('note', '', ['placeholder' => '任意の備考'])}}
+    {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:25%;'])}}
+    {{ Form::text('date', '', ['placeholder' => '日付を入力','style' => 'width:25%;'])}}
+    {{ Form::text('note', '', ['placeholder' => '任意の備考','style' => 'width:25%;'])}}
+    {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
     {{ Form::select('item'
-    , ['食材費', '外食費', '個別A', '個別B','日用費', '交際費', '養育費', '贅沢費', '特別費']
+    , ['食材費', '外食費', '個別A', '個別B','日用費', '交際費', '養育費', '贅沢費', '特別費', '雑益', '雑損', '立替A', '立替B']
     , ''
-    , ['placeholder' => '費目選択']
+    , ['placeholder' => '費目の選択','style' => 'width:23%;']
     ) }}
 </div>
 <br>

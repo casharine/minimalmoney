@@ -66,8 +66,9 @@ class HomeController extends Controller
             $user = \Auth::user();
             $userId = $user->id;
 
-            dd(TransactionItemType::getValues(1));
+            dd($request->item);
 
+            
         Transaction::create([
             'editor_id' => $user->id,
             'book_id' => $id,

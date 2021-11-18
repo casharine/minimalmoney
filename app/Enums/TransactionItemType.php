@@ -14,7 +14,7 @@ final class TransactionItemType extends Enum
     const ingredients =  0;
     const eatout =   1;
     const eachA =   2;
-    const eachB =   3;d
+    const eachB =   3;
     const daily =   4;
     const entertainment = 5;
     const children =   6;
