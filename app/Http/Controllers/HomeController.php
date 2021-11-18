@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Book;
 use App\Models\Sharing;
 use App\Models\Transaction;
+use App\Enums\TransactionItemType;
 use Illuminate\Support\Facades\DB;
 
 
@@ -64,6 +65,8 @@ class HomeController extends Controller
             // レコード追加に必要な変数を定義する
             $user = \Auth::user();
             $userId = $user->id;
+
+            dd(TransactionItemType::getValues(1));
 
         Transaction::create([
             'editor_id' => $user->id,

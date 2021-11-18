@@ -38,7 +38,7 @@ class UnapprovedController extends Controller
     public function destroy($id)
     {
         // idの値でブックを検索して取得
-        $sharing = \App\Sharing::findOrFail($id);
+        $sharing = Sharing::findOrFail($id);
         // 認証済みユーザ（閲覧者）がその帳簿の作成者である場合は、削除
             $sharing->delete();
         // 前のURLへリダイレクトさせる
