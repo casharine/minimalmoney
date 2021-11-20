@@ -18,11 +18,13 @@ class TransactionsTableSeeder extends Seeder
     {
         DB::table('transactions')->insert([
             'editor_id' => 1,
-            'price' => 100,
-            'item' => '日用費',
-            'date' => 20211117,
-            'note' => '水',
             'book_id' => 1,
+            'transaction_item_id' => 5,
+            'price' => 100,
+            'year' => 2021,
+            'month' => 11,
+            'day' => 14,
+            'note' => '水',
         ]);
     }
 }

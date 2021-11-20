@@ -19,9 +19,6 @@ class CreateBooksTable extends Migration
             $table->boolean('active_flag'); //アクティブbook選択
             $table->unsignedBigInteger('authorizer_id'); //承認者==作成者
             $table->timestamps();
-
-            // 外部キー(unsignedBigInteger) -> null許容のカラム修飾子 -> テーブル名とカラム名を規約と外部キーにより決定
-            $table->unsignedBigInteger('sharing_id')->nullable()->constrained();
         });
     }
 

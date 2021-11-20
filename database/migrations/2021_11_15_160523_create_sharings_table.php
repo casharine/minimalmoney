@@ -21,6 +21,10 @@ class CreateSharingsTable extends Migration
             // 外部キー
             $table->unsignedBigInteger('book_id');
 
+            // 外部キー制約
+            $table->foreign('book_id')->references('id')->on('books');
+
+
             // user_idとbook_idの組み合わせの重複を許さない
             $table->unique(['user_id', 'book_id']);
         });
