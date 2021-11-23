@@ -10,7 +10,7 @@ class Transaction extends Model
     use HasFactory;
 
      // ホワイトリストにuser_idを指定
-    protected $fillable = ['editor_id', 'book_id', 'price', 'TransactionItemType', 'date', 'note'];
+    protected $fillable = ['editor_id', 'book_id', 'price', 'transaction_item_id', 'date', 'note'];
     // モデルに対応するテーブルを指定（命名測に合っているいるため本来は記述不要）
     protected $table = 'transactions';
     
