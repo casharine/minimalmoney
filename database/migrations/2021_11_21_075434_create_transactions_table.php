@@ -16,9 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('price'); //金額
-            $table->smallInteger('year'); //勘定科目の適用年月日が入力日と別で必要
-            $table->smallInteger('month');
-            $table->smallInteger('day');
+            $table->date('date');
             $table->string('note'); //備考
             $table->timestamps(); //登録更新日
             // $table->unsignedSmallInteger('rate'); //割合：貯蓄入金総額をどの口座(items->name)にどの割合で入金するか
@@ -32,9 +30,6 @@ class CreateTransactionsTable extends Migration
             $table->foreign('book_id')->references('id')->on('books');
             $table->foreign('editor_id')->references('id')->on('users');
             // $table->foreign('transaction_item_id')->references('id')->on('transaction_items');
-            
-            // 以下は無
-            // $table->unique(['xxx_id', 'xxx_id']);
         });
     }
 

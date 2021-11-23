@@ -21,9 +21,14 @@ class Transaction extends Model
     }
 
     // sharings user_idとusers idの関係性を定義 
-    public function transactionUser()
+    public function user()
     {
         return $this->belongsTo(User::class, 'editor_id', 'id');
 
+    }
+
+    public function transaction_item()
+    {
+        return $this->belongsTo(TransactionItem::class, 'transaction_item_id', 'id');
     }
 }

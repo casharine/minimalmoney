@@ -20,6 +20,7 @@
 @foreach ($transactions as $transaction)
 <p>
     単価：￥ {{$transaction->price;}}
+    費目：￥ {{$transaction->transaction_item()->name}}
 </p>
 @endforeach
 
