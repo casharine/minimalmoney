@@ -66,14 +66,14 @@ class HomeController extends Controller
             $user = \Auth::user();
             $userId = $user->id;
 
-            dd($request->item);
+
 
             
         Transaction::create([
             'editor_id' => $user->id,
             'book_id' => $id,
             'price' => $request->price,
-            'item' => $request->item,  
+            'transaction_item_id' => $request->item_id +1,  
             'date' => $request->date,
             'note' => $request->note,
         ]);
