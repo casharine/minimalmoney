@@ -17,7 +17,7 @@ class CreateTransactionsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('price'); //金額
             $table->date('date');
-            $table->string('note'); //備考
+            $table->string('note')->nullable(); //備考
             $table->timestamps(); //登録更新日
             // $table->unsignedSmallInteger('rate'); //割合：貯蓄入金総額をどの口座(items->name)にどの割合で入金するか
 

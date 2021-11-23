@@ -66,9 +66,6 @@ class HomeController extends Controller
             $user = \Auth::user();
             $userId = $user->id;
 
-
-
-            
         Transaction::create([
             'editor_id' => $user->id,
             'book_id' => $id,

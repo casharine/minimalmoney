@@ -19,7 +19,7 @@
 <br>
 @foreach ($transactions as $transaction)
 <p>
-    単価：￥ {{$transaction->price;}}
+    単価：￥ {{$transaction->price;}}<br>
     費目： {{$transaction->transaction_item()->first()->name}}
 </p>
 @endforeach
