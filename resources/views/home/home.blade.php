@@ -19,7 +19,7 @@
 <br>
 @foreach ($transactions as $transaction)
 <p>
-    単価：￥ {{$transaction->price;}}
+    単価：￥ {{$transaction->price;}} &nbsp;
     費目： {{$transaction->transaction_item()->first()->name}}
 </p>
 @endforeach
@@ -33,9 +33,9 @@
 <div class="custom-control-inline py-2">
     {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
     => 'post']) !!}
-    {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:25%;'])}}
-    {{ Form::text('date', '', ['placeholder' => '日付を入力','style' => 'width:25%;'])}}
-    {{ Form::text('note', '', ['placeholder' => '任意の備考','style' => 'width:25%;'])}}
+    {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:24%;'])}}
+    {{ Form::date('date', '', ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
+    {{ Form::text('note', '', ['placeholder' => '任意の備考','style' => 'width:24%;'])}}
     {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
     {{ Form::select('item'
@@ -43,7 +43,7 @@
     '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
     '12'=>'立替A', '13'=>'立替B')
     , ''
-    , ['placeholder' => '費目の選択','style' => 'width:23%;']
+    , ['placeholder' => '費目の選択','style' => 'width:25%;']
     ) }}
 </div>
 <br>

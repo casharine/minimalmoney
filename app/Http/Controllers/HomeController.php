@@ -46,6 +46,9 @@ class HomeController extends Controller
 
         $transactions = Transaction::all();
 
+
+        
+
         return view('home.home', [
             'user' => $array['user'],
             'userID' => $array['userId'],
@@ -66,6 +69,7 @@ class HomeController extends Controller
             $user = \Auth::user();
             $userId = $user->id;
 
+            
         Transaction::create([
             'editor_id' => $user->id,
             'book_id' => $id,
