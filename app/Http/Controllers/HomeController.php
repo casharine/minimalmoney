@@ -38,6 +38,10 @@ class HomeController extends Controller
         );
     }
 
+    public function monthSwitch() {
+
+    }
+
     // メイン画面
     public function home()
     {
@@ -55,6 +59,9 @@ class HomeController extends Controller
         $year = date("Y");
         $month = date("m");
 
+        //  nullにて取得できず
+        // $dailySum = Transaction::dailySum($year,$month);
+
         // 日用費
         // 月別の日用品の合計を取得
         $daily = Transaction::with(['transaction_item' => function ($builder){
@@ -63,7 +70,7 @@ class HomeController extends Controller
         ->whereMonth('date', $month)
         ->get();
 
-        // 月別の合計額を計算
+        // 月別の合計額を計算,ヌルぽの回避
         if($daily->isEmpty() != true){
             $dailySum = $daily
         ->sum("price");

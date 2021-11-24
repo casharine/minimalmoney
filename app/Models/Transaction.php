@@ -32,7 +32,28 @@ class Transaction extends Model
         return $this->belongsTo(TransactionItem::class, 'transaction_item_id', 'id');
     }
 
-    
+    // public static function dailySum($year, $month){
+    //  // 日用費
+    //     // 月別の日用品の合計を取得
+    //     $daily = Transaction::with(['transaction_item' => function ($builder){
+    //         $builder->where('id', 5);
+    //     }])->whereYear('date', $year)
+    //     ->whereMonth('date', $month)
+    //     ->get();
+
+    //     // 月別の合計額を計算,ヌルぽの回避
+    //     if($daily->isEmpty() != true){
+    //         $dailySum = $daily
+    //     ->sum("price");
+    //     }else{
+    //         $dailySum = 0;
+
+    //         // $year,$monthは取得できたが$daily $dailySumはnull
+    //         dd($dailySum);
+
+    //         return $dailySum;
+    //     }
+    // }
 
 
 
