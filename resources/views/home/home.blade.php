@@ -73,7 +73,8 @@
         <tbody>
             <tr class="table-primary">
                 <td>
-                    <div class="text-right">01</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{$totalSum}}</p>
+                    </div>
                 </td>
                 <td>
                     <div class="text-right">01</div>
@@ -278,7 +279,9 @@
                             <div class="text-right">01</div>
                         </td>
                         <td>
-                            <div class="text-right">02</div>
+                            <div class="text-right">
+                                <p style="display:inline">&yen;{{$dailySum}}</p>
+                            </div>
                         </td>
                         <td>
                             <div class="text-right">03</div>

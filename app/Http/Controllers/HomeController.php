@@ -46,16 +46,46 @@ class HomeController extends Controller
 
         $transactions = Transaction::all();
 
-
+        // 当月の日用費の取得
         
+        // 表示月を取得 ※追加機能以下のフィールドは削除する
+        // $date = #
+
+        // 当月を取得
+        $year = date("Y");
+        $month = date("m");
+
+        // 日用費
+        // 月別の日用品の合計を取得
+        $daily = Transaction::with(['transaction_item' => function ($builder){
+            $builder->where('id', 5);
+        }])->whereYear('date', $year)
+        ->whereMonth('date', $month)
+        ->get();
+
+        // 月別の合計額を計算
+        if($daily->isEmpty() != true){
+            $dailySum = $daily
+        ->sum("price");
+        }else{
+            $dailySum = 0;
+        }
+
+        // 全体収支
+        // 予算総額
+        $totalSum = $dailySum;
 
         return view('home.home', [
+            // 共通private array
             'user' => $array['user'],
             'userID' => $array['userId'],
             'activeBook' => $array['activeBook'],
             'activeBookNull' =>  $array['activeBookNull'],
+            // 合計額
+            'totalSum' => $totalSum,
+            'dailySum' => $dailySum,
+            // その他
             'transactions' => $transactions,
-            
         ]);
     }
 
