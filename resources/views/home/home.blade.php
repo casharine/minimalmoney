@@ -25,8 +25,10 @@
 @endforeach
 
 {{-- transaction.main --}}
-<div class="border-bottom" style="padding:0px;">
-    <h5><i class="fas fa-pencil-alt"></i> Main Input</h5>
+<div class="border-bottom custom-control-inline" style="padding:0px;">
+    <div>
+        <h5><i class="fas fa-pencil-alt"></i> Main Input</h5>
+    </div>
 </div>
 
 {{--費目登録のフォーム --}}
@@ -56,6 +58,29 @@
     <br>
     <div class="border-bottom" style="padding:0px;">
         <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
+    </div>
+    <div class="custom-control-inline py-2">
+        {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+        => 'get']) !!}
+        {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-40']) !!}
+        {{ Form::select('year' , array($year=> $year, $year-1 => $year-1, $year-2 => $year-2,
+        $year-3 => $year-3, $year-4 => $year-4
+        ,$year-5 => $year-5, $year-6 => $year-6, $year-7 => $year-7, $year-8 => $year-8, $year-9 => $year-9
+        ,$year-10 => $year-10, $year-11 => $year-11)
+        , ''
+        , ['placeholder' => $year,'style' => 'width:25%;']
+        ) }}
+        年
+    </div>
+    <div>
+        {{ Form::select('month' , array($month=> $month, $month-1 => $month-1, $month-2 => $month-2,
+        $month-3 => $month-3, $month-4 => $month-4, $month-5 => $month-5, $month-6 => $month-6, $month-7 => $month-7,
+        $month-8 => $month-8, $month-9 => $month-9, $month-10 => $month-10, $month-11 => $year-11)
+        , ''
+        , ['placeholder' => $month,'style' => 'width:25%;']
+        ) }}
+        月
+        {{ Form::close() }}
     </div>
     <br>
     <h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>

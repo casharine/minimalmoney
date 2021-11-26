@@ -10,7 +10,7 @@ class Book extends Model
     use HasFactory;
 
         // フィールド ホワイトリストで保存カラムの指定
-    protected $fillable = ['name', 'active_flag', 'authorizer_id'];
+    protected $fillable = ['name', 'active_flag', 'authorizer_id', 'date_selecter'];
     protected $table = 'books';
     
     // MtoM この帳簿を保有するユーザー
@@ -26,12 +26,11 @@ class Book extends Model
         return $this->belongsTo(User::class, 'authorizer_id');
     }
 
-    // hasOneThrough間に介する。両方のは？
-    // 被承認依頼中のBookインスタンスのsharings->user_idのusers->name
-    public function sharingUser()
-    {
-        return $this->hasOneThrough('App\Sharing', 'App\User');
-    }
+    // 被承認依頼中のBookインスタンスのsharings->user_idのusers->name １対１の関係は循環する事もできたので扶養
+    // public function sharingUser()
+    // {
+    //     return $this->hasOneThrough('App\Sharing', 'App\User');
+    // }
 
     // このbookインスタンスに共有依頼は複数ありうるため、複数形hasMany
     public function sharings()
@@ -82,14 +81,5 @@ class Book extends Model
             return $unapprovedBook;
         } 
     }
-
-      public function is_following($userId)
-    {
-        // フォロー中ユーザの中に $userIdのものが存在するか
-        return $this->followings()->where('follow_id', $userId)->exists();
-    }
-
-
-
     
 }

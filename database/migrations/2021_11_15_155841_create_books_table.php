@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->boolean('active_flag'); //アクティブbook選択
             $table->unsignedBigInteger('authorizer_id'); //承認者==作成者
+            // $table->date('date_selecter')->nullable(); デットロックするためUsersへ
             $table->timestamps();
         });
     }

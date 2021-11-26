@@ -47,18 +47,23 @@ class HomeController extends Controller
     {
          // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
         $array = $this->setCommonArray();
+        $user = $array['user'];
 
         $transactions = Transaction::all();
 
-        // 当月の日用費の取得
-        
         // 表示月を取得 ※追加機能以下のフィールドは削除する
-        // $date = #
+        $date =  User::findOrFail($array['userId'])->date_selecter;
+        // 表示月がNullの場合今月を表示する
+        if($date == null){
+            $date= date("Ymd");
+            $user->date_selecter = $date;
+            $user->save();
+        }
 
-        // 当月を取得
-        $year = date("Y");
-        $month = date("m");
-
+        // 表示する年・月を変数に格納する
+        $year = substr($date,0,4);
+        $month = substr($date,5,2);
+                
         //  nullにて取得できず
         // $dailySum = Transaction::dailySum($year,$month);
 
@@ -85,16 +90,35 @@ class HomeController extends Controller
         return view('home.home', [
             // 共通private array
             'user' => $array['user'],
-            'userID' => $array['userId'],
+            'userId' => $array['userId'],
             'activeBook' => $array['activeBook'],
             'activeBookNull' =>  $array['activeBookNull'],
             // 合計額
             'totalSum' => $totalSum,
             'dailySum' => $dailySum,
             // その他
+            'date' => $date,
+            'year' => $year,
+            'month' => $month,
             'transactions' => $transactions,
         ]);
     }
+
+    // 表示家計簿の年月の指定（変更）
+    public function dateSelecter(Request $request, int $id)
+    {
+        // ロールバックの整合性を保ため一連の処理とする
+        DB::transaction(function () use($request, $id) {
+            $user = User::findOrFail($id);
+    
+            // date_Selecterをyyyymmdd型で更新する ※ddはダミーで11日を入れている
+            $user->date_selecter = $request->year*10000 + $request->month*100 + 11;    
+
+            $user->save();
+        });
+            return back();
+    }
+
 
     // 費目を家計簿に登録
     public function store(Request $request, int $id)
@@ -105,7 +129,6 @@ class HomeController extends Controller
             // レコード追加に必要な変数を定義する
             $user = \Auth::user();
             $userId = $user->id;
-
             
         Transaction::create([
             'editor_id' => $user->id,
@@ -116,8 +139,5 @@ class HomeController extends Controller
             'note' => $request->note,
         ]);
     });
-
-    return back();
-    
     }
 }

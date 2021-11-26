@@ -67,4 +67,7 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     // ユーザー詳細ページ ※メインのgetはHomeページのため最上部に記載
     Route::post('home/home/{id}', [HomeController::class, 'store'])->name('home.store');
+    // 表示する年月の変更ボタン
+    Route::get('home/home/{id}', [HomeController::class, 'dateSelecter'])->name('home.dateSelecter');
+
 });
