@@ -39,17 +39,13 @@ class HomeController extends Controller
     }
 
     public function monthSwitch() {
-
     }
-
     // メイン画面
     public function home()
     {
          // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
         $array = $this->setCommonArray();
         $user = $array['user'];
-
-        $transactions = Transaction::all();
 
         // 表示月を取得 ※追加機能以下のフィールドは削除する
         $date =  User::findOrFail($array['userId'])->date_selecter;
@@ -60,7 +56,11 @@ class HomeController extends Controller
             $user->save();
         }
 
-        // 表示する年・月を変数に格納する
+        // プルダウン用変数
+        $thisYear = date("Y");
+        $thisMonth = date("m");
+
+        // 表示される年・月を変数に格納する
         $year = substr($date,0,4);
         $month = substr($date,5,2);
                 
@@ -96,11 +96,12 @@ class HomeController extends Controller
             // 合計額
             'totalSum' => $totalSum,
             'dailySum' => $dailySum,
-            // その他
+            // 日付関連
             'date' => $date,
             'year' => $year,
             'month' => $month,
-            'transactions' => $transactions,
+            'thisYear' => $thisYear,
+            'thisMonth' => $thisMonth,
         ]);
     }
 

@@ -17,15 +17,8 @@
 {{-- 家計簿が選択されている場合 --}}
 @else
 <br>
-@foreach ($transactions as $transaction)
-<p>
-    単価：￥ {{$transaction->price;}} &nbsp;
-    費目： {{$transaction->transaction_item()->first()->name}}
-</p>
-@endforeach
-
 {{-- transaction.main --}}
-<div class="border-bottom custom-control-inline" style="padding:0px;">
+<div class="border-bottom" style="padding:0px;">
     <div>
         <h5><i class="fas fa-pencil-alt"></i> Main Input</h5>
     </div>
@@ -54,72 +47,174 @@
 
 
 {{-- Output --}}
-<div>
-    <br>
-    <div class="border-bottom" style="padding:0px;">
+<br>
+<br>
+<div class="border-bottom" style="padding:0px;">
+    <div>
         <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
     </div>
-    <div class="custom-control-inline py-2">
-        {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
-        => 'get']) !!}
-        {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-40']) !!}
-        {{ Form::select('year' , array($year=> $year, $year-1 => $year-1, $year-2 => $year-2,
-        $year-3 => $year-3, $year-4 => $year-4
-        ,$year-5 => $year-5, $year-6 => $year-6, $year-7 => $year-7, $year-8 => $year-8, $year-9 => $year-9
-        ,$year-10 => $year-10, $year-11 => $year-11)
-        , ''
-        , ['placeholder' => $year,'style' => 'width:25%;']
-        ) }}
-        年
-    </div>
-    <div>
-        {{ Form::select('month' , array($month=> $month, $month-1 => $month-1, $month-2 => $month-2,
-        $month-3 => $month-3, $month-4 => $month-4, $month-5 => $month-5, $month-6 => $month-6, $month-7 => $month-7,
-        $month-8 => $month-8, $month-9 => $month-9, $month-10 => $month-10, $month-11 => $year-11)
-        , ''
-        , ['placeholder' => $month,'style' => 'width:25%;']
-        ) }}
-        月
-        {{ Form::close() }}
-    </div>
-    <br>
-    <h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>
+</div>
+
+<div class="custom-control-inline py-2">
+    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+    => 'get']) !!}
+    {{ Form::select('year' , array( $thisYear => $thisYear, $thisYear-1 => $thisYear-1, $thisYear-2 =>
+    $thisYear-2,
+    $thisYear-3 => $thisYear-3, $thisYear-4 => $thisYear-4
+    ,$thisYear-5 => $thisYear-5, $thisYear-6 => $thisYear-6, $thisYear-7 => $thisYear-7, $thisYear-8 =>
+    $thisYear-8
+    ,$thisYear-9 => $thisYear-9,$thisYear-10 => $thisYear-10, $thisYear-11 => $thisYear-11, )
+    , $year
+    , ['style' => 'width:40%;']
+    ) }}
+    年
+    {{ Form::select('month' , array($thisMonth=> $thisMonth, $thisMonth-1 => $thisMonth-1, $thisMonth-2 =>
+    $thisMonth-2,
+    $thisMonth-3 => $thisMonth-3, $thisMonth-4 => $thisMonth-4, $thisMonth-5 => $thisMonth-5, $thisMonth-6 =>
+    $thisMonth-6, $thisMonth-7 => $thisMonth-7,
+    $thisMonth-8 => $thisMonth-8, $thisMonth-9 => $thisMonth-9, $thisMonth-10 => $thisMonth-10, $thisMonth-11 =>
+    $year-11)
+    , $month
+    , ['style' => 'width:30%;']
+    ) }}
+    月
+    {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-10']) !!}
+    {{ Form::close() }}
+</div>
+<br>
+<h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr class="table-info">
+            <th style=" width: 16.66%" class="text-center">予算総額</th>
+            <th style="width: 16.66%" class="text-center">利用総額</th>
+            <th style="width: 16.66%" class="text-center">損益</th>
+            <th style="width: 16.66%" class="text-center">変動費</th>
+            <th style="width: 16.66%" class="text-center">固定費</th>
+            <th style="width: 16.66%" class="text-center">貯蓄総額</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary">
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{$totalSum}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">01</div>
+            </td>
+            <td>
+                <div class="text-right">01</div>
+            </td>
+            <td>
+                <div class="text-right">01</div>
+            </td>
+            <td>
+                <div class="text-right">01</div>
+            </td>
+            <td>
+                <div class="text-right">01</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h8>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr class="table-info">
+            <th style="width: 16.66%" class="text-center">予算額</th>
+            <th style="width: 16.66%" class="text-center">利用額</th>
+            <th style="width: 16.66%" class="text-center">残額</th>
+            <th style="width: 16.66%" class="text-center">残日数</th>
+            <th style="width: 16.66%" class="text-center">平均残高</th>
+            <th style="width: 16.66%" class="text-center">損益見込</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary">
+            <td>
+                <div class="text-right">01</div>
+            </td>
+            <td>
+                <div class="text-right">02</div>
+            </td>
+            <td>
+                <div class="text-right">03</div>
+            </td>
+            <td>
+                <div class="text-right">04</div>
+            </td>
+            <td>
+                <div class="text-right">05</div>
+            </td>
+            <td>
+                <div class="text-right">06</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{{-- 内訳を三行目で表示する場合 --}}
+{{-- <tr class="table-info">
+    <td class="table-primary">
+        <div class="text-center">
+            <b>食材費</b>
+        </div>
+    </td>
+    <td class="bg-#">
+        <div class="text-right">02</div>
+    </td>
+    <td class="bg-#">
+        <div class="text-right">03</div>
+    </td>
+    <td>
+        <div class="text-center">
+            <b>外食費</b>
+        </div>
+    </td>
+    <td class="bg-#">
+        <div class="text-right">05</div>
+    </td>
+    <td class="bg-#">
+        <div class="text-right">06</div>
+    </td>
+</tr>
+</tbody>
+</table> --}}
+{{-- 食費内訳 --}}
+<div class="px-4">
     <table class="table table-sm table-bordered">
         <thead>
-            <tr class="table-info">
-                <th style=" width: 16.66%" class="text-center">予算総額</th>
-                <th style="width: 16.66%" class="text-center">利用総額</th>
-                <th style="width: 16.66%" class="text-center">損益</th>
-                <th style="width: 16.66%" class="text-center">変動費</th>
-                <th style="width: 16.66%" class="text-center">固定費</th>
-                <th style="width: 16.66%" class="text-center">貯蓄総額</th>
+            <tr>
+                <th style="width: 16.66%" class="table-info">
+                    <div Class="text-center">食材費</div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div Class="text-right">1</div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div Class="text-right">回</div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-info">
+                    <div Class="text-center">外食費</div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div Class="text-right">1</div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div Class="text-right">回</div>
+                    </div>
+                </th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="table-primary">
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{$totalSum}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="text-right">01</div>
-                </td>
-                <td>
-                    <div class="text-right">01</div>
-                </td>
-                <td>
-                    <div class="text-right">01</div>
-                </td>
-                <td>
-                    <div class="text-right">01</div>
-                </td>
-                <td>
-                    <div class="text-right">01</div>
-                </td>
-            </tr>
-        </tbody>
     </table>
-    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h8>
+    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別A</h8>
     <table class="table table-sm table-bordered">
         <thead>
             <tr class="table-info">
@@ -154,77 +249,52 @@
             </tr>
         </tbody>
     </table>
-    {{-- 内訳を三行目で表示する場合 --}}
-    {{-- <tr class="table-info">
-        <td class="table-primary">
-            <div class="text-center">
-                <b>食材費</b>
-            </div>
-        </td>
-        <td class="bg-#">
-            <div class="text-right">02</div>
-        </td>
-        <td class="bg-#">
-            <div class="text-right">03</div>
-        </td>
-        <td>
-            <div class="text-center">
-                <b>外食費</b>
-            </div>
-        </td>
-        <td class="bg-#">
-            <div class="text-right">05</div>
-        </td>
-        <td class="bg-#">
-            <div class="text-right">06</div>
-        </td>
-    </tr>
-    </tbody>
-    </table> --}}
-    {{-- 食費内訳 --}}
-    <div class="px-4">
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr>
-                    <th style="width: 16.66%" class="table-info">
-                        <div Class="text-center">食材費</div>
-                    </th>
-                    <th style="width: 16.66%" class="table-primary">
-                        <div class="font-weight-normal">
-                            <div Class="text-right">1</div>
-                        </div>
-                    </th>
-                    <th style="width: 16.66%" class="table-primary">
-                        <div class="font-weight-normal">
-                            <div Class="text-right">回</div>
-                        </div>
-                    </th>
-                    <th style="width: 16.66%" class="table-info">
-                        <div Class="text-center">外食費</div>
-                    </th>
-                    <th style="width: 16.66%" class="table-primary">
-                        <div class="font-weight-normal">
-                            <div Class="text-right">1</div>
-                        </div>
-                    </th>
-                    <th style="width: 16.66%" class="table-primary">
-                        <div class="font-weight-normal">
-                            <div Class="text-right">回</div>
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別A</h8>
+    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別B</h8>
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr class="table-info">
+                <th style="width: 16.66%" class="text-center">予算額</th>
+                <th style="width: 16.66%" class="text-center">利用額</th>
+                <th style="width: 16.66%" class="text-center">残額</th>
+                <th style="width: 16.66%" class="text-center">残日数</th>
+                <th style="width: 16.66%" class="text-center">平均残高</th>
+                <th style="width: 16.66%" class="text-center">損益見込</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>
+                    <div class="text-right">01</div>
+                </td>
+                <td>
+                    <div class="text-right">02</div>
+                </td>
+                <td>
+                    <div class="text-right">03</div>
+                </td>
+                <td>
+                    <div class="text-right">04</div>
+                </td>
+                <td>
+                    <div class="text-right">05</div>
+                </td>
+                <td>
+                    <div class="text-right">06</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　日用費</h8>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">
                     <th style="width: 16.66%" class="text-center">予算額</th>
                     <th style="width: 16.66%" class="text-center">利用額</th>
-                    <th style="width: 16.66%" class="text-center">残額</th>
-                    <th style="width: 16.66%" class="text-center">残日数</th>
-                    <th style="width: 16.66%" class="text-center">平均残高</th>
-                    <th style="width: 16.66%" class="text-center">損益見込</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
                 </tr>
             </thead>
             <tbody>
@@ -233,120 +303,20 @@
                         <div class="text-right">01</div>
                     </td>
                     <td>
-                        <div class="text-right">02</div>
+                        <div class="text-right">
+                            <p style="display:inline">&yen;{{$dailySum}}</p>
+                        </div>
                     </td>
                     <td>
                         <div class="text-right">03</div>
                     </td>
-                    <td>
-                        <div class="text-right">04</div>
-                    </td>
-                    <td>
-                        <div class="text-right">05</div>
-                    </td>
-                    <td>
-                        <div class="text-right">06</div>
-                    </td>
                 </tr>
             </tbody>
         </table>
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別B</h8>
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">予算額</th>
-                    <th style="width: 16.66%" class="text-center">利用額</th>
-                    <th style="width: 16.66%" class="text-center">残額</th>
-                    <th style="width: 16.66%" class="text-center">残日数</th>
-                    <th style="width: 16.66%" class="text-center">平均残高</th>
-                    <th style="width: 16.66%" class="text-center">損益見込</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-primary">
-                    <td>
-                        <div class="text-right">01</div>
-                    </td>
-                    <td>
-                        <div class="text-right">02</div>
-                    </td>
-                    <td>
-                        <div class="text-right">03</div>
-                    </td>
-                    <td>
-                        <div class="text-right">04</div>
-                    </td>
-                    <td>
-                        <div class="text-right">05</div>
-                    </td>
-                    <td>
-                        <div class="text-right">06</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    {{-- 2テーブルaside --}}
-    <div class="row">
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　日用費</h8>
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">予算額</th>
-                        <th style="width: 16.66%" class="text-center">利用額</th>
-                        <th style="width: 16.66%" class="text-center">残高</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-primary">
-                        <td>
-                            <div class="text-right">01</div>
-                        </td>
-                        <td>
-                            <div class="text-right">
-                                <p style="display:inline">&yen;{{$dailySum}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">03</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </aside>
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　交際費</h8>
-            <div class="row">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr class="table-info">
-                            <th style="width: 16.66%" class="text-center">予算額</th>
-                            <th style="width: 16.66%" class="text-center">利用額</th>
-                            <th style="width: 16.66%" class="text-center">残高</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-primary">
-                            <td>
-                                <div class="text-right">01</div>
-                            </td>
-                            <td>
-                                <div class="text-right">02</div>
-                            </td>
-                            <td>
-                                <div class="text-right">03</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </aside>
-    </div>
-    {{-- 2テーブルaside --}}
-    <div class="row">
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　養育費</h8>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　交際費</h8>
+        <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
@@ -369,39 +339,39 @@
                     </tr>
                 </tbody>
             </table>
-        </aside>
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　贅沢費</h8>
-            <div class="row">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr class="table-info">
-                            <th style="width: 16.66%" class="text-center">予算額</th>
-                            <th style="width: 16.66%" class="text-center">利用額</th>
-                            <th style="width: 16.66%" class="text-center">残高</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-primary">
-                            <td>
-                                <div class="text-right">01</div>
-                            </td>
-                            <td>
-                                <div class="text-right">02</div>
-                            </td>
-                            <td>
-                                <div class="text-right">03</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </aside>
-    </div>
-    {{-- 2テーブルaside --}}
-    <div class="row">
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　特別費</h8>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　養育費</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">予算額</th>
+                    <th style="width: 16.66%" class="text-center">利用額</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">02</div>
+                    </td>
+                    <td>
+                        <div class="text-right">03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　贅沢費</h8>
+        <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
@@ -424,43 +394,98 @@
                     </tr>
                 </tbody>
             </table>
-        </aside>
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　雑費</h8>
-            <div class="row">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr class="table-info">
-                            <th style="width: 16.66%" class="text-center">雑益</th>
-                            <th style="width: 16.66%" class="text-center">雑損</th>
-                            <th style="width: 16.66%" class="text-center">雑損益</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-primary">
-                            <td>
-                                <div class="text-right">01</div>
-                            </td>
-                            <td>
-                                <div class="text-right">02</div>
-                            </td>
-                            <td>
-                                <div class="text-right">03</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </aside>
-    </div>
-    {{-- 2テーブルaside --}}
-    <div class="row">
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　家族通貨</h8>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　特別費</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">予算額</th>
+                    <th style="width: 16.66%" class="text-center">利用額</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">02</div>
+                    </td>
+                    <td>
+                        <div class="text-right">03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　雑費</h8>
+        <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">総計</th>
+                        <th style="width: 16.66%" class="text-center">雑益</th>
+                        <th style="width: 16.66%" class="text-center">雑損</th>
+                        <th style="width: 16.66%" class="text-center">雑損益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">01</div>
+                        </td>
+                        <td>
+                            <div class="text-right">02</div>
+                        </td>
+                        <td>
+                            <div class="text-right">03</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　家族通貨</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">総計</th>
+                    <th style="width: 16.66%" class="text-center">$user1</th>
+                    <th style="width: 16.66%" class="text-center">$user2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">02</div>
+                    </td>
+                    <td>
+                        <div class="text-right">03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
+        <div class="row">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">総入金額</th>
                         <th style="width: 16.66%" class="text-center">$user1</th>
                         <th style="width: 16.66%" class="text-center">$user2</th>
                     </tr>
@@ -479,35 +504,9 @@
                     </tr>
                 </tbody>
             </table>
-        </aside>
-        <aside class="col-6">
-            <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
-            <div class="row">
-                <table class="table table-sm table-bordered">
-                    <thead>
-                        <tr class="table-info">
-                            <th style="width: 16.66%" class="text-center">総入金額</th>
-                            <th style="width: 16.66%" class="text-center">$user1</th>
-                            <th style="width: 16.66%" class="text-center">$user2</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-primary">
-                            <td>
-                                <div class="text-right">01</div>
-                            </td>
-                            <td>
-                                <div class="text-right">02</div>
-                            </td>
-                            <td>
-                                <div class="text-right">03</div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </aside>
-    </div>
+        </div>
+    </aside>
+</div>
 </div>
 @endif
 {{-- ログインしていない場合 --}}
