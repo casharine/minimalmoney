@@ -58,23 +58,13 @@
 <div class="custom-control-inline py-2">
     {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
     => 'get']) !!}
-    {{ Form::select('year' , array( $thisYear => $thisYear, $thisYear-1 => $thisYear-1, $thisYear-2 =>
-    $thisYear-2,
-    $thisYear-3 => $thisYear-3, $thisYear-4 => $thisYear-4
-    ,$thisYear-5 => $thisYear-5, $thisYear-6 => $thisYear-6, $thisYear-7 => $thisYear-7, $thisYear-8 =>
-    $thisYear-8
-    ,$thisYear-9 => $thisYear-9,$thisYear-10 => $thisYear-10, $thisYear-11 => $thisYear-11, )
-    , $year
+    {{ Form::select('year' , $years
+    , $date->year
     , ['style' => 'width:40%;']
     ) }}
     年
-    {{ Form::select('month' , array($thisMonth=> $thisMonth, $thisMonth-1 => $thisMonth-1, $thisMonth-2 =>
-    $thisMonth-2,
-    $thisMonth-3 => $thisMonth-3, $thisMonth-4 => $thisMonth-4, $thisMonth-5 => $thisMonth-5, $thisMonth-6 =>
-    $thisMonth-6, $thisMonth-7 => $thisMonth-7,
-    $thisMonth-8 => $thisMonth-8, $thisMonth-9 => $thisMonth-9, $thisMonth-10 => $thisMonth-10, $thisMonth-11 =>
-    $year-11)
-    , $month
+    {{ Form::select('month' , $months
+    , $date->month
     , ['style' => 'width:30%;']
     ) }}
     月
@@ -118,7 +108,7 @@
         </tr>
     </tbody>
 </table>
-<h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h8>
+<h6 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h6>
 <table class="table table-sm table-bordered">
     <thead>
         <tr class="table-info">

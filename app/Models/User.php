@@ -38,7 +38,9 @@ public $activeBookId;
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
+        // dateをCarbonのライブラリを使用するため
+        , 'date_selecter' => 'date'
     ];
 
     // MtoM このユーザーが保有している帳簿

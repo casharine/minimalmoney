@@ -9,6 +9,7 @@ use App\Models\Sharing;
 use App\Models\Transaction;
 use App\Enums\TransactionItemType;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 
 
@@ -50,38 +51,45 @@ class HomeController extends Controller
         // 表示月を取得 ※追加機能以下のフィールドは削除する
         $date =  User::findOrFail($array['userId'])->date_selecter;
         // 表示月がNullの場合今月を表示する
+        $today = Carbon::today();
+
         if($date == null){
-            $date= date("Ymd");
+            $date = $today;
             $user->date_selecter = $date;
             $user->save();
         }
 
         // プルダウン用変数
-        $thisYear = date("Y");
-        $thisMonth = date("m");
-
-        // 表示される年・月を変数に格納する
-        $year = substr($date,0,4);
-        $month = substr($date,5,2);
+        $years = [];
+        for($i=0; $i<=10; $i++){
+            $y = $today->copy()->subYears($i)->year;
+            $years[$y] = $y;
+        }
+        $months = [];
+        for($i=0; $i<=11; $i++){
+            // Carbonはmutable参照型なのでcopyを使用しTodayが変更されていく事を防ぐ ※クロノスはimmutable値参照型
+            $m = $today->copy()->subMonths($i)->month;
+            $months[$m] = $m;
+        }
                 
         //  nullにて取得できず
-        // $dailySum = Transaction::dailySum($year,$month);
+        $dailySum = Transaction::dailySum($date);
 
-        // 日用費
-        // 月別の日用品の合計を取得
-        $daily = Transaction::with(['transaction_item' => function ($builder){
-            $builder->where('id', 5);
-        }])->whereYear('date', $year)
-        ->whereMonth('date', $month)
-        ->get();
+        // // 日用費
+        // // 月別の日用品の合計を取得
+        // $daily = Transaction::with(['transaction_item' => function ($builder){
+        //     $builder->where('id', 5);
+        // }])->whereYear('date', $year)
+        // ->whereMonth('date', $month)
+        // ->get();
 
-        // 月別の合計額を計算,ヌルぽの回避
-        if($daily->isEmpty() != true){
-            $dailySum = $daily
-        ->sum("price");
-        }else{
-            $dailySum = 0;
-        }
+        // // 月別の合計額を計算,ヌルぽの回避
+        // if($daily->isEmpty() != true){
+        //     $dailySum = $daily
+        // ->sum("price");
+        // }else{
+        //     $dailySum = 0;
+        // }
 
         // 全体収支
         // 予算総額
@@ -98,10 +106,9 @@ class HomeController extends Controller
             'dailySum' => $dailySum,
             // 日付関連
             'date' => $date,
-            'year' => $year,
-            'month' => $month,
-            'thisYear' => $thisYear,
-            'thisMonth' => $thisMonth,
+            // 
+            'years' => $years,
+            'months' => $months
         ]);
     }
 
@@ -113,13 +120,13 @@ class HomeController extends Controller
             $user = User::findOrFail($id);
     
             // date_Selecterをyyyymmdd型で更新する ※ddはダミーで11日を入れている
-            $user->date_selecter = $request->year*10000 + $request->month*100 + 11;    
+            $user->date_selecter = Carbon::parse("{$request->year}-{$request->month}-11");
+            // $user->date_selecter = $request->year*10000 + $request->month*100 + 11;    
 
             $user->save();
         });
             return back();
     }
-
 
     // 費目を家計簿に登録
     public function store(Request $request, int $id)
@@ -128,9 +135,7 @@ class HomeController extends Controller
         DB::transaction(function () use($request, $id) {
 
             // レコード追加に必要な変数を定義する
-            $user = \Auth::user();
-            $userId = $user->id;
-            
+            $user = \Auth::user();            
         Transaction::create([
             'editor_id' => $user->id,
             'book_id' => $id,
@@ -140,5 +145,7 @@ class HomeController extends Controller
             'note' => $request->note,
         ]);
     });
+                return back();
+
     }
 }

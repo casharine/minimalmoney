@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>Minimal Money</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0">
+    {{--
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"> --}}
+    <meta name="viewport" content="witdh=1200">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
 </head>
 <header>
