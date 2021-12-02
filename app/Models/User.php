@@ -39,7 +39,7 @@ public $activeBookId;
      */
     protected $casts = [
         'email_verified_at' => 'datetime'
-        // dateをCarbonのライブラリを使用するため
+        // dateをCarbonのライブラリを使用するため型を作る
         , 'date_selecter' => 'date'
     ];
 
