@@ -33,9 +33,6 @@ private function setCommonArray()
     );
 }
 
-public function monthSwitch() {
-}
-
 // メイン画面
 public function home()
 {
@@ -68,7 +65,6 @@ public function home()
     }
             
     // 各費目の受取
-    // $ingredients = Transaction::ingredientsSum($date);
     $ingredientsSum = Transaction::ingredients($date);
     $eatoutSum = Transaction::eatoutSum($date);
     $eachASum = Transaction::eachASum($date);
@@ -85,7 +81,7 @@ public function home()
 
     // 全体収支
     // 予算総額
-    $totalSum = $dailySum;
+    $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum+$specialSum+$profitsSum+$lossSum+$advanceASum+$advanceBum;
 
     return view('home.home', [
         // 共通private array
@@ -122,7 +118,7 @@ public function dateSelecter(Request $request, int $id)
     DB::transaction(function () use($request, $id) {
         $user = User::findOrFail($id);
 
-        // date_Selecterをyyyymmdd型で更新する ※ddはダミーで11日を入れている
+        // date_Selecterをyymmdd型で更新する ※ddはダミーで11日を入れている
         $user->date_selecter = Carbon::parse("{$request->year}-{$request->month}-11");
         // $user->date_selecter = $request->year*10000 + $request->month*100 + 11;    
 

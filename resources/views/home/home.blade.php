@@ -20,7 +20,7 @@
 {{-- transaction.main --}}
 <div class="border-bottom" style="padding:0px;">
     <div>
-        <h5><i class="fas fa-pencil-alt"></i> Main Input</h5>
+        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Main Input</h5>
     </div>
 </div>
 
@@ -54,7 +54,7 @@
         <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
     </div>
 </div>
-
+{{-- 表示月の選択 --}}
 <div class="custom-control-inline py-2">
     {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
     => 'get']) !!}
@@ -72,6 +72,7 @@
     {{ Form::close() }}
 </div>
 <br>
+{{-- 出力画面 --}}
 <h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>
 <table class="table table-sm table-bordered">
     <thead>
@@ -87,23 +88,24 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{$totalSum}}</p>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
             </td>
         </tr>
     </tbody>
@@ -123,53 +125,27 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">02</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">03</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
             </td>
             <td>
-                <div class="text-right">04</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
             </td>
             <td>
-                <div class="text-right">05</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
             </td>
             <td>
-                <div class="text-right">06</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
             </td>
         </tr>
     </tbody>
 </table>
-{{-- 内訳を三行目で表示する場合 --}}
-{{-- <tr class="table-info">
-    <td class="table-primary">
-        <div class="text-center">
-            <b>食材費</b>
-        </div>
-    </td>
-    <td class="bg-#">
-        <div class="text-right">02</div>
-    </td>
-    <td class="bg-#">
-        <div class="text-right">03</div>
-    </td>
-    <td>
-        <div class="text-center">
-            <b>外食費</b>
-        </div>
-    </td>
-    <td class="bg-#">
-        <div class="text-right">05</div>
-    </td>
-    <td class="bg-#">
-        <div class="text-right">06</div>
-    </td>
-</tr>
-</tbody>
-</table> --}}
 {{-- 食費内訳 --}}
 <div class="px-4">
     <table class="table table-sm table-bordered">
@@ -180,12 +156,15 @@
                 </th>
                 <th style="width: 16.66%" class="table-primary">
                     <div class="font-weight-normal">
-                        <div Class="text-right">1</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($ingredientsSum)}}</p>
+                        </div>
                     </div>
                 </th>
                 <th style="width: 16.66%" class="table-primary">
                     <div class="font-weight-normal">
-                        <div Class="text-right">回</div>
+                        <div class="text-right">
+                            <p style="display:inline">{{number_format(0)}}</p>&#037;
+                        </div>
                     </div>
                 </th>
                 <th style="width: 16.66%" class="table-info">
@@ -193,12 +172,15 @@
                 </th>
                 <th style="width: 16.66%" class="table-primary">
                     <div class="font-weight-normal">
-                        <div Class="text-right">1</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($eatoutSum)}}</p>
+                        </div>
                     </div>
                 </th>
                 <th style="width: 16.66%" class="table-primary">
                     <div class="font-weight-normal">
-                        <div Class="text-right">回</div>
+                        <div class="text-right">
+                            <p style="display:inline">{{number_format(0)}}</p>&#037;
+                        </div>
                     </div>
                 </th>
             </tr>
@@ -219,22 +201,24 @@
         <tbody>
             <tr class="table-primary">
                 <td>
-                    <div class="text-right">01</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
                 </td>
                 <td>
-                    <div class="text-right">02</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachASum)}}</p>
+                    </div>
                 </td>
                 <td>
-                    <div class="text-right">03</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
                 </td>
                 <td>
-                    <div class="text-right">04</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
                 </td>
                 <td>
-                    <div class="text-right">05</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
+                    </div>
                 </td>
                 <td>
-                    <div class="text-right">06</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
                 </td>
             </tr>
         </tbody>
@@ -254,22 +238,23 @@
         <tbody>
             <tr class="table-primary">
                 <td>
-                    <div class="text-right">01</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
                 </td>
                 <td>
-                    <div class="text-right">02</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachBSum)}}</p>
+                    </div>
                 </td>
                 <td>
-                    <div class="text-right">03</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
                 </td>
                 <td>
-                    <div class="text-right">04</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
                 </td>
                 <td>
-                    <div class="text-right">05</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
                 </td>
                 <td>
-                    <div class="text-right">06</div>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
                 </td>
             </tr>
         </tbody>
@@ -290,15 +275,14 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">01</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
                     </td>
                     <td>
-                        <div class="text-right">
-                            <p style="display:inline">&yen;{{$dailySum}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($dailySum)}}</p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">03</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
                     </td>
                 </tr>
             </tbody>
@@ -318,13 +302,17 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">01</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">02</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($entertainmentSum)}}
+                                </p>
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">03</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -347,13 +335,14 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">01</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
                     </td>
                     <td>
-                        <div class="text-right">02</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($childrenSum)}}</p>
+                        </div>
                     </td>
                     <td>
-                        <div class="text-right">03</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
                     </td>
                 </tr>
             </tbody>
@@ -373,13 +362,16 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">01</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">02</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($luxurySum)}}</p>
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">03</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -402,13 +394,14 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">01</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
                     </td>
                     <td>
-                        <div class="text-right">02</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($specialSum)}}</p>
+                        </div>
                     </td>
                     <td>
-                        <div class="text-right">03</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
                     </td>
                 </tr>
             </tbody>
@@ -428,13 +421,17 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">01</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($profitsSum)}}</p>
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">02</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($lossSum)}}</p>
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">03</div>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($profitsSum-$lossSum)}}</p>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -457,20 +454,26 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">01</div>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($advanceASum+$advanceBSum)}}
+                            </p>
+                        </div>
                     </td>
                     <td>
-                        <div class="text-right">02</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceASum)}}</p>
+                        </div>
                     </td>
                     <td>
-                        <div class="text-right">03</div>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceBSum)}}</p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </aside>
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
+        {{-- 初版では実装しない --}}
+        {{-- <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
         <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
@@ -483,20 +486,26 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">01</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">02</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>02
+                            </div>
                         </td>
                         <td>
-                            <div class="text-right">03</div>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> --}}
     </aside>
 </div>
+<br>
+<br>
+
 </div>
 @endif
 {{-- ログインしていない場合 --}}
