@@ -28,7 +28,7 @@ class CreatePlanningsTable extends Migration
             // 外部キー制約
             $table->foreign('book_id')->references('id')->on('books');
             $table->foreign('editor_id')->references('id')->on('users');
-            // $table->foreign('planning_item_id')->references('id')->on('planning_items');
+            $table->foreign('planning_item_id')->references('id')->on('planning_items');
         });
     }
 

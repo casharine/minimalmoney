@@ -74,10 +74,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 //  Planning関連ページ
 Route::group(['middleware' => ['auth']], function () {
-    // ユーザー詳細ページ ※メインのgetはHomeページのため最上部に記載
-    Route::post('planning/planning/{id}', [PlanningController::class, 'planning'])->name('planning.planning');
+    // 予算入力ページ
+    Route::get('planning.planning', [PlanningController::class, 'planning'])->name('planning.planning');
+    // 月次予算の確定ボタン
+    Route::post('planning/planning/{id}', [PlanningController::class, 'store'])->name('planning.store');
     // 表示する年月の変更ボタン
-    Route::get('planning/planning/{id}', [HomeController::class, 'dateSelecter'])->name('home.dateSelecter');
+    Route::get('planning/planning/{id}', [PlanningController::class, 'dateSelecter'])->name('planning.dateSelecter');
 
 
 });

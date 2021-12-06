@@ -60,15 +60,15 @@
     => 'get']) !!}
     {{ Form::select('year' , $years
     , $date->year
-    , ['style' => 'width:40%;']
+    , ['style' => '#']
     ) }}
     年
     {{ Form::select('month' , $months
     , $date->month
-    , ['style' => 'width:30%;']
+    , ['style' => '#']
     ) }}
     月
-    {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-10']) !!}
+    {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-success btn-sm']) !!}
     {{ Form::close() }}
 </div>
 <br>

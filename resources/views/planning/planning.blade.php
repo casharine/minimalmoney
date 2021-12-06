@@ -18,16 +18,33 @@ plannings
 {{-- 家計簿が選択されている場合 --}}
 @else
 <br>
-{{-- transaction.main --}}
+{{-- planning.main --}}
 <div class="border-bottom" style="padding:0px;">
     <div>
-        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Main Input</h5>
+        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Planning Input</h5>
     </div>
 </div>
-
-{{--費目登録のフォーム --}}
+{{-- 表示編集月の選択 --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
+    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+    => 'get']) !!}
+    {{ Form::select('year' , $years
+    , $date->year
+    , ['style' => '#']
+    ) }}
+    年
+    {{ Form::select('month' , $months
+    , $date->month
+    , ['style' => '#']
+    ) }}
+    月
+    {!! Form::submit('表示・編集年月を変更', ['class'=> 'btn btn-success btn-sm']) !!}
+    {{ Form::close() }}
+</div>
+
+{{--予算の登録のフォーム --}}
+<div class="custom-control-inline py-2">
+    {!! Form::open(['url' => route('planning.store', ['id' => $activeBook->id]), 'method'
     => 'post']) !!}
     {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:24%;'])}}
     {{ Form::date('date', '', ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
@@ -36,14 +53,14 @@ plannings
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
     {{ Form::select('item'
     , array('1'=>'食材費', '4'=>'外食費', '5'=>'個別A', '4'=>'個別B','5'=>'日用費',
-    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
-    '12'=>'立替A', '13'=>'立替B')
+    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'家賃', '11'=>'他固定費',
+    '12'=>'小遣いA', '13'=>'小遣いB', '14'=>'普通預金', '15'=>'中期預金', '16'=>'長期預金', '17'=>'養育預金', '18'=>'国債', '19'=>'株')
     , ''
     , ['placeholder' => '費目の選択','style' => 'width:25%;']
     ) }}
 </div>
 <br>
-{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-secondary btn-sm w-100']) !!}
+{!! Form::submit('予算を登録', ['class'=> 'btn btn-success btn-sm w-100']) !!}
 {{ Form::close() }}
 
 
@@ -54,23 +71,6 @@ plannings
     <div>
         <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
     </div>
-</div>
-{{-- 表示月の選択 --}}
-<div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
-    => 'get']) !!}
-    {{ Form::select('year' , $years
-    , $date->year
-    , ['style' => 'width:40%;']
-    ) }}
-    年
-    {{ Form::select('month' , $months
-    , $date->month
-    , ['style' => 'width:30%;']
-    ) }}
-    月
-    {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-10']) !!}
-    {{ Form::close() }}
 </div>
 <br>
 {{-- 出力画面 --}}
@@ -422,16 +422,16 @@ plannings
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($profitsSum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($lossSum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
                             </div>
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($profitsSum-$lossSum)}}</p>
+                                    {{number_format(0)}}</p>
                             </div>
                         </td>
                     </tr>
@@ -440,69 +440,6 @@ plannings
         </div>
     </aside>
 </div>
-{{-- 2テーブルaside --}}
-<div class="row">
-    <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　家族通貨</h8>
-        <table class="table table-sm table-bordered">
-            <thead>
-                <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">総計</th>
-                    <th style="width: 16.66%" class="text-center">$user1</th>
-                    <th style="width: 16.66%" class="text-center">$user2</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="table-primary">
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($advanceASum+$advanceBSum)}}
-                            </p>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceASum)}}</p>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceBSum)}}</p>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </aside>
-    <aside class="col-6">
-        {{-- 初版では実装しない --}}
-        {{-- <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
-        <div class="row">
-            <table class="table table-sm table-bordered">
-                <thead>
-                    <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">総入金額</th>
-                        <th style="width: 16.66%" class="text-center">$user1</th>
-                        <th style="width: 16.66%" class="text-center">$user2</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-primary">
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>02
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> --}}
-    </aside>
 </div>
 <br>
 <br>

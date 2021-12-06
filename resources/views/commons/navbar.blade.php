@@ -9,9 +9,9 @@
         {{-- homeページへのリンク --}}
         <a class="navbar-brand" 　data-toggle="tooltip" title="Home" href="/"><i class="fas fa-home"></i></a>
         {{-- sheetページへのリンク --}}
-        <a class="navbar-brand" data-toggle="tooltip" title="Sheets" href="#"><i class="fas fa-table"></i></a>
+        {{-- <a class="navbar-brand" data-toggle="tooltip" title="Sheets" href="#"><i class="fas fa-table"></i></a> --}}
         {{-- planningページへのリンク --}}
-        <a class="navbar-brand" data-toggle="tooltip" title="Plannings" href="#"><i
+        <a class="navbar-brand" data-toggle="tooltip" title="Plannings" href="{{route('planning.planning')}}"><i
             class="fas fa-file-invoice-dollar"></i></a>
         {{-- graphぺージへのリンク--}}
         <a class="navbar-brand" 　data-toggle="tooltip" title="Graph" href="#"><i class="fas fa-chart-pie"></i></a>

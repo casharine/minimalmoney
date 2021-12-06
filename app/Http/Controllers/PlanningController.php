@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Planning;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use App\Models\PlanningItem;
 
 class PlanningController extends Controller
 {
@@ -28,7 +33,7 @@ private function setCommonArray()
 }
 
 // メイン画面
-public function home()
+public function planning()
 {
     // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
     $array = $this->setCommonArray();
@@ -59,25 +64,34 @@ public function home()
     }
             
     // 各費目の受取
-    $ingredientsSum = Transaction::ingredients($date);
-    $eatoutSum = Transaction::eatoutSum($date);
-    $eachASum = Transaction::eachASum($date);
-    $eachBSum = Transaction::eachBSum($date);
-    $dailySum = Transaction::dailySum($date);
-    $entertainmentSum = Transaction::entertainmentSum($date);
-    $childrenSum = Transaction::childrenSum($date);
-    $luxurySum = Transaction::luxurySum($date);
-    $specialSum = Transaction::specialSum($date);
-    $profitsSum = Transaction::profitsSum($date);
-    $lossSum = Transaction::lossSum($date);
-    $advanceASum = Transaction::advanceASum($date);
-    $advanceBum = Transaction::advanceBSum($date);
+    $ingredientsSum = Planning::ingredients($date);
+    $eatoutSum = Planning::eatoutSum($date);
+    $eachASum = Planning::eachASum($date);
+    $eachBSum = Planning::eachBSum($date);
+    $dailySum = Planning::dailySum($date);
+    $entertainmentSum = Planning::entertainmentSum($date);
+    $childrenSum = Planning::childrenSum($date);
+    $luxurySum = Planning::luxurySum($date);
+    $specialSum = Planning::specialSum($date);
+    $rentSum = Planning::rentSum($date);
+    $fixedSum = Planning::fixedSum($date);
+    $pocketASum = Planning::pocketASum($date);
+    $pocketBSum = Planning::pocketBSum($date);
+    $normalDepositSum = Planning::normalDepositSum($date);
+    $middleDepositSum = Planning::middleDepositSum($date);
+    $longDepositSum = Planning::longDepositSum($date);
+    $childrenDeoisitSum = Planning::childrenDepositSum($date);
+    $govermentBondsSum = Planning::govermentBondsSum($date);
+    $stockSum = Planning::stockSum($date);
+    $monthlyBudgetSum = Planning::monthlyBudgetSum($date);
 
     // 全体収支
     // 予算総額
-    $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum+$specialSum+$profitsSum+$lossSum+$advanceASum+$advanceBum;
+    $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum
+    +$rentSum+$fixedSum+$pocketASum+$pocketBSum+$normalDepositSum+$middleDepositSum+$longDepositSum+$childrenDeoisitSum
+    +$govermentBondsSum+$stockSum+$monthlyBudgetSum;
 
-    return view('home.home', [
+    return view('planning.planning', [
         // 共通private array
         'user' => $array['user'],
         'userId' => $array['userId'],
@@ -98,18 +112,25 @@ public function home()
         'childrenSum' => $childrenSum,
         'luxurySum' => $luxurySum,
         'specialSum' => $specialSum,
-        'profitsSum' => $profitsSum,
-        'lossSum' => $lossSum,
-        'advanceASum' => $advanceASum,
-        'advanceBSum' => $advanceBum,
+        'rentSum'=> $rentSum,
+        'fixedSum' => $fixedSum,
+        'pocketASum' => $pocketASum,
+        'pocketBSum' => $pocketBSum,
+        'normalDepositSum' => $normalDepositSum,
+        'middleDepositSum' => $middleDepositSum,
+        'longDepositSum' => $longDepositSum,
+        'childrenDepositSum' => $childrenDeoisitSum,
+        'govermentBondsSum' => $govermentBondsSum,
+        'stockSum' => $stockSum,
+        'monthlyBudgetSum' => $monthlyBudgetSum,
     ]);
 }
 
-// 表示家計簿の年月の指定（変更）
+// 表示予算入力の年月の指定（変更）
 public function dateSelecter(Request $request, int $id)
 {
     // ロールバックの整合性を保ため一連の処理とする
-    DB::transaction(function () use($request, $id) {
+    DB::planning(function () use($request, $id) {
         $user = User::findOrFail($id);
 
         // date_Selecterをyymmdd型で更新する ※ddはダミーで11日を入れている
@@ -125,14 +146,14 @@ public function dateSelecter(Request $request, int $id)
 public function store(Request $request, int $id)
 {
     // ロールバックの整合性を保ため一連の処理とする
-    DB::transaction(function () use($request, $id) {
+    DB::planning(function () use($request, $id) {
         // レコード追加に必要な変数を定義する
         $user = \Auth::user();            
-        Transaction::create([
+        Planning::create([
             'editor_id' => $user->id,
             'book_id' => $id,
             'price' => $request->price,
-            'transaction_item_id' => $request->item_id +1,  
+            'planning_item_id' => $request->item_id +1,  
             'date' => $request->date,
             'note' => $request->note,
         ]);
