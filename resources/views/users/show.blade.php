@@ -10,7 +10,9 @@
 @if ($bookNull)
 <div class="py-4">
     <div class="px-5">
-        <b>！attention！<br>家計簿がありません。新規作成また共有依頼を行ってください。</b>
+        <font color="red">
+            <b>！attention！<br>家計簿がありません。新規作成また共有依頼を行ってください。</b>
+        </font>
         <br>
     </div>
 </div>
