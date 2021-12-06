@@ -1,0 +1,527 @@
+@extends('layouts.app')
+@section('content')
+{{-- ログイン済みの場合 --}}
+@if (Auth::check())
+{{-- 家計簿が選択されていない場合 --}}
+@if ($activeBookNull == true)
+<br>
+plannings
+<div class="alert alert-danger" role="alert">
+    <div class="text-center">
+        <b>！attention！<br>ユーザー管理ページで使用する家計簿を選択して下さい。</b>
+    </div>
+</div>
+<a class="btn btn-primary w-100" href={{route('users.show')}} role="button">ユーザー管理ページへ
+</a>
+<br>
+<br>
+{{-- 家計簿が選択されている場合 --}}
+@else
+<br>
+{{-- transaction.main --}}
+<div class="border-bottom" style="padding:0px;">
+    <div>
+        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Main Input</h5>
+    </div>
+</div>
+
+{{--費目登録のフォーム --}}
+<div class="custom-control-inline py-2">
+    {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
+    => 'post']) !!}
+    {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:24%;'])}}
+    {{ Form::date('date', '', ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
+    {{ Form::text('note', '', ['placeholder' => '任意の備考','style' => 'width:24%;'])}}
+    {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
+    {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
+    {{ Form::select('item'
+    , array('1'=>'食材費', '4'=>'外食費', '5'=>'個別A', '4'=>'個別B','5'=>'日用費',
+    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
+    '12'=>'立替A', '13'=>'立替B')
+    , ''
+    , ['placeholder' => '費目の選択','style' => 'width:25%;']
+    ) }}
+</div>
+<br>
+{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-secondary btn-sm w-100']) !!}
+{{ Form::close() }}
+
+
+{{-- Output --}}
+<br>
+<br>
+<div class="border-bottom" style="padding:0px;">
+    <div>
+        <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
+    </div>
+</div>
+{{-- 表示月の選択 --}}
+<div class="custom-control-inline py-2">
+    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+    => 'get']) !!}
+    {{ Form::select('year' , $years
+    , $date->year
+    , ['style' => 'width:40%;']
+    ) }}
+    年
+    {{ Form::select('month' , $months
+    , $date->month
+    , ['style' => 'width:30%;']
+    ) }}
+    月
+    {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-secondary btn-sm w-10']) !!}
+    {{ Form::close() }}
+</div>
+<br>
+{{-- 出力画面 --}}
+<h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr class="table-info">
+            <th style=" width: 16.66%" class="text-center">予算総額</th>
+            <th style="width: 16.66%" class="text-center">利用総額</th>
+            <th style="width: 16.66%" class="text-center">損益</th>
+            <th style="width: 16.66%" class="text-center">変動費</th>
+            <th style="width: 16.66%" class="text-center">固定費</th>
+            <th style="width: 16.66%" class="text-center">貯蓄総額</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary">
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h6 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h6>
+<table class="table table-sm table-bordered">
+    <thead>
+        <tr class="table-info">
+            <th style="width: 16.66%" class="text-center">予算額</th>
+            <th style="width: 16.66%" class="text-center">利用額</th>
+            <th style="width: 16.66%" class="text-center">残額</th>
+            <th style="width: 16.66%" class="text-center">残日数</th>
+            <th style="width: 16.66%" class="text-center">平均残高</th>
+            <th style="width: 16.66%" class="text-center">損益見込</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-primary">
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{{-- 食費内訳 --}}
+<div class="px-4">
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 16.66%" class="table-info">
+                    <div Class="text-center">食材費</div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($ingredientsSum)}}</p>
+                        </div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div class="text-right">
+                            <p style="display:inline">{{number_format(0)}}</p>&#037;
+                        </div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-info">
+                    <div Class="text-center">外食費</div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($eatoutSum)}}</p>
+                        </div>
+                    </div>
+                </th>
+                <th style="width: 16.66%" class="table-primary">
+                    <div class="font-weight-normal">
+                        <div class="text-right">
+                            <p style="display:inline">{{number_format(0)}}</p>&#037;
+                        </div>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別A</h8>
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr class="table-info">
+                <th style="width: 16.66%" class="text-center">予算額</th>
+                <th style="width: 16.66%" class="text-center">利用額</th>
+                <th style="width: 16.66%" class="text-center">残額</th>
+                <th style="width: 16.66%" class="text-center">残日数</th>
+                <th style="width: 16.66%" class="text-center">平均残高</th>
+                <th style="width: 16.66%" class="text-center">損益見込</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachASum)}}</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別B</h8>
+    <table class="table table-sm table-bordered">
+        <thead>
+            <tr class="table-info">
+                <th style="width: 16.66%" class="text-center">予算額</th>
+                <th style="width: 16.66%" class="text-center">利用額</th>
+                <th style="width: 16.66%" class="text-center">残額</th>
+                <th style="width: 16.66%" class="text-center">残日数</th>
+                <th style="width: 16.66%" class="text-center">平均残高</th>
+                <th style="width: 16.66%" class="text-center">損益見込</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-primary">
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachBSum)}}</p>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
+                </td>
+                <td>
+                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　日用費</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">予算額</th>
+                    <th style="width: 16.66%" class="text-center">利用額</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($dailySum)}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　交際費</h8>
+        <div class="row">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">予算額</th>
+                        <th style="width: 16.66%" class="text-center">利用額</th>
+                        <th style="width: 16.66%" class="text-center">残高</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($entertainmentSum)}}
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　養育費</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">予算額</th>
+                    <th style="width: 16.66%" class="text-center">利用額</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($childrenSum)}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　贅沢費</h8>
+        <div class="row">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">予算額</th>
+                        <th style="width: 16.66%" class="text-center">利用額</th>
+                        <th style="width: 16.66%" class="text-center">残高</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($luxurySum)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　特別費</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">予算額</th>
+                    <th style="width: 16.66%" class="text-center">利用額</th>
+                    <th style="width: 16.66%" class="text-center">残高</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($specialSum)}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　雑費</h8>
+        <div class="row">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">雑益</th>
+                        <th style="width: 16.66%" class="text-center">雑損</th>
+                        <th style="width: 16.66%" class="text-center">雑損益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($profitsSum)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($lossSum)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($profitsSum-$lossSum)}}</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </aside>
+</div>
+{{-- 2テーブルaside --}}
+<div class="row">
+    <aside class="col-6">
+        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　家族通貨</h8>
+        <table class="table table-sm table-bordered">
+            <thead>
+                <tr class="table-info">
+                    <th style="width: 16.66%" class="text-center">総計</th>
+                    <th style="width: 16.66%" class="text-center">$user1</th>
+                    <th style="width: 16.66%" class="text-center">$user2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-primary">
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($advanceASum+$advanceBSum)}}
+                            </p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceASum)}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceBSum)}}</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </aside>
+    <aside class="col-6">
+        {{-- 初版では実装しない --}}
+        {{-- <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　次月入金額</h8>
+        <div class="row">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">総入金額</th>
+                        <th style="width: 16.66%" class="text-center">$user1</th>
+                        <th style="width: 16.66%" class="text-center">$user2</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>02
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> --}}
+    </aside>
+</div>
+<br>
+<br>
+
+</div>
+@endif
+{{-- ログインしていない場合 --}}
+@else
+<div class="center jumbotron">
+    <div class="text-center">
+        {{-- ユーザ登録ページへのリンク --}}
+        <img class="d-block img-fluid w-50 mx-auto rounded" src="images/logo_minimalmoney.jpg">
+        <br>
+        <a class="btn btn-primary" href={{route('signup.get')}} role="button">Sign up
+        </a>
+        <a class="btn btn-primary" href={{route('login')}} role="button">&nbsp;&nbsp;Login&nbsp;&nbsp;
+        </a>
+    </div>
+</div>
+
+@endif
+@endsection

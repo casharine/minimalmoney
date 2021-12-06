@@ -8,6 +8,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\SharingsController;
 use App\Http\Controllers\UnapprovedController;
+use App\Http\Controllers\PlanningController;
 
 
 
@@ -69,5 +70,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('home/home/{id}', [HomeController::class, 'store'])->name('home.store');
     // 表示する年月の変更ボタン
     Route::get('home/home/{id}', [HomeController::class, 'dateSelecter'])->name('home.dateSelecter');
+});
+
+//  Planning関連ページ
+Route::group(['middleware' => ['auth']], function () {
+    // ユーザー詳細ページ ※メインのgetはHomeページのため最上部に記載
+    Route::post('planning/planning/{id}', [PlanningController::class, 'planning'])->name('planning.planning');
+    // 表示する年月の変更ボタン
+    Route::get('planning/planning/{id}', [HomeController::class, 'dateSelecter'])->name('home.dateSelecter');
+
 
 });
