@@ -42,7 +42,7 @@
     ) }}
 </div>
 <br>
-{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-secondary btn-sm w-100']) !!}
+{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-success btn-sm w-100']) !!}
 {{ Form::close() }}
 
 
