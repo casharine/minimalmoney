@@ -23,7 +23,10 @@ class UsersController extends Controller
         $user->loadBookCounts();
         
         // ユーザの家計簿一覧を作成日時の降順で取得
-        $books = $user->books()->orderBy('created_at', 'desc');
+        $books = $user->books()->orderBy('created_at', 'desc')->get();
+
+         // 共有依頼のnullチェック
+        $bookNull = $books->isEmpty();
 
         // アクティブBookの取得＝使用する家計簿の取得
         $activeBook = $user->books()->where('active_flag', 't')->first();
@@ -81,6 +84,7 @@ class UsersController extends Controller
             'user' => $user,
             'userId' => $user->id,
             'books' => $books,
+            'bookNull' => $bookNull,
             'activeBook' => $activeBook,
             'activeBookNull' => $activeBookNull,
             'sharingBooks' => $sharingBooks,

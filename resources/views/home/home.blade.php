@@ -20,7 +20,12 @@
 {{-- transaction.main --}}
 <div class="border-bottom" style="padding:0px;">
     <div>
-        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Main Input</h5>
+        <h5 class="font-weight-bold">
+            <font color="1e90ff">
+                <i class="fas fa-pencil-alt"></i>
+                家計簿をつける
+            </font>
+        </h5>
     </div>
 </div>
 
@@ -42,16 +47,20 @@
     ) }}
 </div>
 <br>
-{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-success btn-sm w-100']) !!}
+{!! Form::submit('家計簿に登録', ['class'=> 'btn btn-info btn-sm w-100']) !!}
 {{ Form::close() }}
-
-
+<br>
 {{-- Output --}}
 <br>
 <br>
 <div class="border-bottom" style="padding:0px;">
     <div>
-        <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
+        <h5 class="font-weight-bold">
+            <font color="006400">
+                <i class="fas fa-tv"></i>
+                {{$date->year}}年{{$date->month}}月の家計簿『{{$activeBook->name}}』
+            </font>
+        </h5>
     </div>
 </div>
 {{-- 表示月の選択 --}}
@@ -67,21 +76,34 @@
     , $date->month
     , ['style' => '#']
     ) }}
-    月
+    月に
     {!! Form::submit('表示年月を変更', ['class'=> 'btn btn-success btn-sm']) !!}
     {{ Form::close() }}
 </div>
 <br>
 {{-- 出力画面 --}}
-<h8 class="font-weight-bold"><i class="fas fa-money-check-alt"></i>　全体収支</h8>
+<h8 class="font-weight-bold">
+    <font color="008b8b"><i class="fas fa-money-check-alt"></i>
+        　全体収支</font>
+</h8>
 <table class="table table-sm table-bordered">
     <thead>
         <tr class="table-info">
-            <th style=" width: 16.66%" class="text-center">予算総額</th>
-            <th style="width: 16.66%" class="text-center">利用総額</th>
-            <th style="width: 16.66%" class="text-center">損益</th>
-            <th style="width: 16.66%" class="text-center">変動費</th>
-            <th style="width: 16.66%" class="text-center">固定費</th>
+            <th style=" width: 16.66%" class="text-center">
+                <font color="191970">予算総額</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">利用総額</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">損益</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">変動費</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">固定費</font>
+            </th>
             <th style="width: 16.66%" class="text-center">貯蓄総額</th>
         </tr>
     </thead>
@@ -110,16 +132,30 @@
         </tr>
     </tbody>
 </table>
-<h6 class="font-weight-bold"><i class="fas fa-utensils"></i>　食費</h6>
+<h6 class="font-weight-bold">
+    <font color="008b8b"><i class="fas fa-utensils"></i>　食費</font>
+</h6>
 <table class="table table-sm table-bordered">
     <thead>
         <tr class="table-info">
-            <th style="width: 16.66%" class="text-center">予算額</th>
-            <th style="width: 16.66%" class="text-center">利用額</th>
-            <th style="width: 16.66%" class="text-center">残額</th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">
+                    <font color="191970">予算額</font>
+                </font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">利用額</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">残高</font>
+            </th>
             <th style="width: 16.66%" class="text-center">残日数</th>
-            <th style="width: 16.66%" class="text-center">平均残高</th>
-            <th style="width: 16.66%" class="text-center">損益見込</th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">平均残高</font>
+            </th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">損益見込</font>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -146,130 +182,187 @@
         </tr>
     </tbody>
 </table>
-{{-- 食費内訳 --}}
-<div class="px-4">
-    <table class="table table-sm table-bordered">
-        <thead>
-            <tr>
-                <th style="width: 16.66%" class="table-info">
-                    <div Class="text-center">食材費</div>
-                </th>
-                <th style="width: 16.66%" class="table-primary">
-                    <div class="font-weight-normal">
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($ingredientsSum)}}</p>
-                        </div>
-                    </div>
-                </th>
-                <th style="width: 16.66%" class="table-primary">
-                    <div class="font-weight-normal">
-                        <div class="text-right">
-                            <p style="display:inline">{{number_format(0)}}</p>&#037;
-                        </div>
-                    </div>
-                </th>
-                <th style="width: 16.66%" class="table-info">
-                    <div Class="text-center">外食費</div>
-                </th>
-                <th style="width: 16.66%" class="table-primary">
-                    <div class="font-weight-normal">
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($eatoutSum)}}</p>
-                        </div>
-                    </div>
-                </th>
-                <th style="width: 16.66%" class="table-primary">
-                    <div class="font-weight-normal">
-                        <div class="text-right">
-                            <p style="display:inline">{{number_format(0)}}</p>&#037;
-                        </div>
-                    </div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別A</h8>
-    <table class="table table-sm table-bordered">
-        <thead>
-            <tr class="table-info">
-                <th style="width: 16.66%" class="text-center">予算額</th>
-                <th style="width: 16.66%" class="text-center">利用額</th>
-                <th style="width: 16.66%" class="text-center">残額</th>
-                <th style="width: 16.66%" class="text-center">残日数</th>
-                <th style="width: 16.66%" class="text-center">平均残高</th>
-                <th style="width: 16.66%" class="text-center">損益見込</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-primary">
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachASum)}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　個別B</h8>
-    <table class="table table-sm table-bordered">
-        <thead>
-            <tr class="table-info">
-                <th style="width: 16.66%" class="text-center">予算額</th>
-                <th style="width: 16.66%" class="text-center">利用額</th>
-                <th style="width: 16.66%" class="text-center">残額</th>
-                <th style="width: 16.66%" class="text-center">残日数</th>
-                <th style="width: 16.66%" class="text-center">平均残高</th>
-                <th style="width: 16.66%" class="text-center">損益見込</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-primary">
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($eachBSum)}}</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
-                </td>
-                <td>
-                    <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
-                </td>
-            </tr>
-        </tbody>
+<h6 class="font-weight-bold">
+    <font color="008b8b"><i class="fas fa-utensils"></i>　食費内訳 &nbsp;
+        <button onclick="$('#example-5').collapse('show')">&nbsp;表示&nbsp;</button>
+        <button onclick="$('#example-5').collapse('hide')">&nbsp;非表示&nbsp;</button>
+    </font>
+</h6>
+<div class="collapse" id="example-5">
+    <div class="card card-body">
+
+        {{-- 食費内訳 --}}
+        <div class="px-4">
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 16.66%" class="table-info">
+                            <div Class="text-center">食材費</div>
+                        </th>
+                        <th style="width: 16.66%" class="table-primary">
+                            <div class="font-weight-normal">
+                                <div class="text-right">&yen;<p style="display:inline">
+                                        {{number_format($ingredientsSum)}}</p>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 16.66%" class="table-primary">
+                            <div class="font-weight-normal">
+                                <div class="text-right">
+                                    <p style="display:inline">{{number_format(0)}}</p>&#037;
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 16.66%" class="table-info">
+                            <div Class="text-center">外食費</div>
+                        </th>
+                        <th style="width: 16.66%" class="table-primary">
+                            <div class="font-weight-normal">
+                                <div class="text-right">&yen;<p style="display:inline">{{number_format($eatoutSum)}}</p>
+                                </div>
+                            </div>
+                        </th>
+                        <th style="width: 16.66%" class="table-primary">
+                            <div class="font-weight-normal">
+                                <div class="text-right">
+                                    <p style="display:inline">{{number_format(0)}}</p>&#037;
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <h8 class="font-weight-bold">
+                <font color="008b8b"><i class="fas fa-utensils"></i>　個別A
+                </font>
+            </h8>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">予算額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">利用額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残高</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">残日数</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">平均残高</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">損益見込</font>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($eachASum)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h6 class="font-weight-bold">
+                <font color="008b8b"><i class="fas fa-utensils"></i>　個別B</font>
+            </h6>
+            <table class="table table-sm table-bordered">
+                <thead>
+                    <tr class="table-info">
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">予算額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">利用額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残高</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">残日数</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">平均残高</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">損益見込</font>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-primary">
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($eachBSum)}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+        </div>
+    </div>
     </table>
 </div>
+</div>
+</div>
+<br>
 {{-- 2テーブルaside --}}
 <div class="row">
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　日用費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>　日用費</font>
+        </h8>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">予算額</th>
-                    <th style="width: 16.66%" class="text-center">利用額</th>
-                    <th style="width: 16.66%" class="text-center">残高</th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">予算額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">利用額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">残高</font>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -289,14 +382,22 @@
         </table>
     </aside>
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　交際費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>　交際費</font>
+        </h8>
         <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">予算額</th>
-                        <th style="width: 16.66%" class="text-center">利用額</th>
-                        <th style="width: 16.66%" class="text-center">残高</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">予算額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">利用額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残高</font>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -323,13 +424,21 @@
 {{-- 2テーブルaside --}}
 <div class="row">
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　養育費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>　養育費</font>
+        </h8>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">予算額</th>
-                    <th style="width: 16.66%" class="text-center">利用額</th>
-                    <th style="width: 16.66%" class="text-center">残高</th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">予算額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">利用額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">残高</font>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -349,14 +458,23 @@
         </table>
     </aside>
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　贅沢費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>
+                贅沢費</font>
+        </h8>
         <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">予算額</th>
-                        <th style="width: 16.66%" class="text-center">利用額</th>
-                        <th style="width: 16.66%" class="text-center">残高</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">予算額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">利用額</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残高</font>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -382,13 +500,21 @@
 {{-- 2テーブルaside --}}
 <div class="row">
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　特別費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>　特別費</font>
+        </h8>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">予算額</th>
-                    <th style="width: 16.66%" class="text-center">利用額</th>
-                    <th style="width: 16.66%" class="text-center">残高</th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">予算額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">利用額</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">残高</font>
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -408,14 +534,17 @@
         </table>
     </aside>
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　雑費</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils"></i>　雑費</font>
+        </h8>
         <div class="row">
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
                         <th style="width: 16.66%" class="text-center">雑益</th>
                         <th style="width: 16.66%" class="text-center">雑損</th>
-                        <th style="width: 16.66%" class="text-center">雑損益</th>
+                        <th style="width: 16.66%" class="text-center">雑<font color="191970">損益</font>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -442,7 +571,10 @@
 {{-- 2テーブルaside --}}
 <div class="row">
     <aside class="col-6">
-        <h8 class="font-weight-bold"><i class="fas fa-utensils"></i>　家族通貨</h8>
+        <h8 class="font-weight-bold">
+            <font color="008b8b"><i class="fas fa-utensils">
+                </i>　家族通貨</font>
+        </h8>
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">

@@ -65,19 +65,21 @@ public function home()
     }
             
     // 各費目の受取
-    $ingredientsSum = Transaction::ingredients($date);
-    $eatoutSum = Transaction::eatoutSum($date);
-    $eachASum = Transaction::eachASum($date);
-    $eachBSum = Transaction::eachBSum($date);
-    $dailySum = Transaction::dailySum($date);
-    $entertainmentSum = Transaction::entertainmentSum($date);
-    $childrenSum = Transaction::childrenSum($date);
-    $luxurySum = Transaction::luxurySum($date);
-    $specialSum = Transaction::specialSum($date);
-    $profitsSum = Transaction::profitsSum($date);
-    $lossSum = Transaction::lossSum($date);
-    $advanceASum = Transaction::advanceASum($date);
-    $advanceBum = Transaction::advanceBSum($date);
+    $transaction = new Transaction;
+    $activeBook = $array['activeBook'];
+    $ingredientsSum = $transaction->ingredients($date, $activeBook->id);
+    $eatoutSum = $transaction->eatoutSum($date, $activeBook->id);
+    $eachASum = $transaction->eachASum($date, $activeBook->id);
+    $eachBSum = $transaction->eachBSum($date, $activeBook->id);
+    $dailySum = $transaction->dailySum($date, $activeBook->id);
+    $entertainmentSum = $transaction->entertainmentSum($date, $activeBook->id);
+    $childrenSum = $transaction->childrenSum($date, $activeBook->id);
+    $luxurySum = $transaction->luxurySum($date, $activeBook->id);
+    $specialSum = $transaction->specialSum($date, $activeBook->id);
+    $profitsSum = $transaction->profitsSum($date, $activeBook->id);
+    $lossSum = $transaction->lossSum($date, $activeBook->id);
+    $advanceASum = $transaction->advanceASum($date, $activeBook->id);
+    $advanceBum = $transaction->advanceBSum($date, $activeBook->id);
 
     // 全体収支
     // 予算総額

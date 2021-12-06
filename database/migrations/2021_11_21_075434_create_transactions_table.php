@@ -27,8 +27,8 @@ class CreateTransactionsTable extends Migration
             $table->unsignedBigInteger('transaction_item_id');
 
             // 外部キー制約
-            $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('editor_id')->references('id')->on('users');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('editor_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('transaction_item_id')->references('id')->on('transaction_items');
         });
     }

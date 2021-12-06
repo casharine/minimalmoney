@@ -7,6 +7,15 @@
 
 {{-- 家計簿一覧 --}}
 @include('users.books.books')
+@if ($bookNull)
+<div class="py-4">
+    <div class="px-5">
+        <b>！attention！<br>家計簿がありません。新規作成また共有依頼を行ってください。</b>
+        <br>
+    </div>
+</div>
+@else
+@endif
 @if (Auth::id() == $user->id)
 <div class="col-sm-12">
     <div class="row">

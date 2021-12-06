@@ -39,23 +39,14 @@ class Transaction extends Model
 
     // 各費目の合計計算メソット
     // 共通：費目及び年月別のレコードを取得するScope
-    public static function scopeMonthlyItems($date, $id){
-        return Transaction::with(['transaction_item' => function ($query) use ($id) {
-            $query->where('id', $id);
-        }])->whereYear('date', $date->year)
+    public  function scopeMonthlyItems($query, $date, $id, $active_book_id){
+        return $query->where('transaction_item_id', $id)
+        ->where('book_id', $active_book_id)
+        ->whereYear('date', $date->year)
         ->whereMonth('date', $date->month);
-
-        // スコープの中で変数を宣言できないのか？
-        //         if($get->isNotEmpty()){
-        //     $return = $get
-        // ->sum("price");
-        //     return $return;
-        // }else{
-        //     $return = 0;
-        //     return $return;
     }
     // 共通：費目及び年月別の合計額を計算
-    public static function monthlyItemsSum($monthlyItems){
+    public function monthlyItemsSum($monthlyItems){
         if($monthlyItems->isNotEmpty()){
             $monthlyItemsSum = $monthlyItems
             ->sum("price");
@@ -65,84 +56,64 @@ class Transaction extends Model
             return $monthlyItemsSum;
         }
     }
+
+    private function getMonthlyItemSum($date, $id, $active_book_id){
+        $monthlyItems = $this->newInstance()->monthlyItems($date, $id, $active_book_id)->get();
+        return $this->monthlyItemsSum($monthlyItems);
+    }
+
     // 費目ごとにメソッドを呼び出し
     // 食材費
-    public static function ingredients($date){
-        $id = 1;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function ingredients($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 1, $active_book_id);
     }
     // 外食費
-    public static function eatoutSum($date){
-        $id = 2;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function eatoutSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 2, $active_book_id);
     }
     // 個別A
-    public static function eachASum($date){
-        $id = 3;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function eachASum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 3, $active_book_id);
     }
     // 個別B
-    public static function eachBSum($date){
-        $id = 4;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function eachBSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 4, $active_book_id);
     }
     // 日用費
-    public static function dailySum($date){
-        $id = 5;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function dailySum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 5, $active_book_id);
     }
     // 交際費
-    public static function entertainmentSum($date){
-        $id = 6;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function entertainmentSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 6, $active_book_id);
     }
     // 養育費
-    public static function childrenSum($date){
-        $id = 7;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function childrenSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 7, $active_book_id);
     }
     // 特別費
-    public static function luxurySum($date){
-        $id = 8;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function luxurySum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 8, $active_book_id);
     }
     // 特別費
-    public static function specialSum($date){
-        $id = 9;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function specialSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 9, $active_book_id);
     }
     // 雑益
-    public static function profitsSum($date){
-        $id = 10;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function profitsSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 10, $active_book_id);
     }
     // 雑損
-    public static function lossSum($date){
-        $id = 11;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function lossSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 11, $active_book_id);
     }
     // 立替A
-    public static function advanceASum($date){
-        $id = 12;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function advanceASum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 12, $active_book_id);
     }
     // 立替B
-    public static function advanceBSum($date){
-        $id = 13;
-        $monthlyItems = Transaction::scopeMonthlyItems($date, $id)->get();
-        return Transaction::monthlyItemsSum($monthlyItems);
+    public function advanceBSum($date, $active_book_id){
+        return $this->getMonthlyItemSum($date, 13, $active_book_id);
     }
 
 }
