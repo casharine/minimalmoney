@@ -73,21 +73,25 @@ public function home()
         }
                 
         // 各費目の受取
+        // インスタンス化
         $transaction = new Transaction;
+        // メソットに引き渡す変数を定義
         $activeBook = $array['activeBook'];
-        $ingredientsSum = $transaction->ingredients($date, $activeBook->id);
-        $eatoutSum = $transaction->eatoutSum($date, $activeBook->id);
-        $eachASum = $transaction->eachASum($date, $activeBook->id);
-        $eachBSum = $transaction->eachBSum($date, $activeBook->id);
-        $dailySum = $transaction->dailySum($date, $activeBook->id);
-        $entertainmentSum = $transaction->entertainmentSum($date, $activeBook->id);
-        $childrenSum = $transaction->childrenSum($date, $activeBook->id);
-        $luxurySum = $transaction->luxurySum($date, $activeBook->id);
-        $specialSum = $transaction->specialSum($date, $activeBook->id);
-        $profitsSum = $transaction->profitsSum($date, $activeBook->id);
-        $lossSum = $transaction->lossSum($date, $activeBook->id);
-        $advanceASum = $transaction->advanceASum($date, $activeBook->id);
-        $advanceBum = $transaction->advanceBSum($date, $activeBook->id);
+        $table = 'transaction_item_id';
+        // 各費目毎にメソットを呼び出し
+        $ingredientsSum = $transaction->ingredients($table, $date, $activeBook->id);
+        $eatoutSum = $transaction->eatoutSum($table, $date, $activeBook->id);
+        $eachASum = $transaction->eachASum($table, $date, $activeBook->id);
+        $eachBSum = $transaction->eachBSum($table, $date, $activeBook->id);
+        $dailySum = $transaction->dailySum($table, $date, $activeBook->id);
+        $entertainmentSum = $transaction->entertainmentSum($table, $date, $activeBook->id);
+        $childrenSum = $transaction->childrenSum($table, $date, $activeBook->id);
+        $luxurySum = $transaction->luxurySum($table, $date, $activeBook->id);
+        $specialSum = $transaction->specialSum($table, $date, $activeBook->id);
+        $profitsSum = $transaction->profitsSum($table, $date, $activeBook->id);
+        $lossSum = $transaction->lossSum($table, $date, $activeBook->id);
+        $advanceASum = $transaction->advanceASum($table, $date, $activeBook->id);
+        $advanceBum = $transaction->advanceBSum($table, $date, $activeBook->id);
 
         // 全体収支
         // 予算総額

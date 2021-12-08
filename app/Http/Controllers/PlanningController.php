@@ -72,26 +72,27 @@ public function planning()
         }
                 
         // 各費目の受取
-        $ingredientsSum = Planning::ingredients($date);
-        $eatoutSum = Planning::eatoutSum($date);
-        $eachASum = Planning::eachASum($date);
-        $eachBSum = Planning::eachBSum($date);
-        $dailySum = Planning::dailySum($date);
-        $entertainmentSum = Planning::entertainmentSum($date);
-        $childrenSum = Planning::childrenSum($date);
-        $luxurySum = Planning::luxurySum($date);
-        $specialSum = Planning::specialSum($date);
-        $rentSum = Planning::rentSum($date);
-        $fixedSum = Planning::fixedSum($date);
-        $pocketASum = Planning::pocketASum($date);
-        $pocketBSum = Planning::pocketBSum($date);
-        $normalDepositSum = Planning::normalDepositSum($date);
-        $middleDepositSum = Planning::middleDepositSum($date);
-        $longDepositSum = Planning::longDepositSum($date);
-        $childrenDeoisitSum = Planning::childrenDepositSum($date);
-        $govermentBondsSum = Planning::govermentBondsSum($date);
-        $stockSum = Planning::stockSum($date);
-        $monthlyBudgetSum = Planning::monthlyBudgetSum($date);
+        $plannig = new Planning;
+        $ingredientsSum = $plannig->ingredients($date, $activeBook->id);
+        $eatoutSum = $plannig->eatoutSum($date, $activeBook->id);
+        $eachASum = $plannig->eachASum($date, $activeBook->id);
+        $eachBSum = $plannig->eachBSum($date, $activeBook->id);
+        $dailySum = $plannig->dailySum($date, $activeBook->id);
+        $entertainmentSum = $plannig->entertainmentSum($date, $activeBook->id);
+        $childrenSum = $plannig->childrenSum($date, $activeBook->id);
+        $luxurySum = $plannig->luxurySum($date, $activeBook->id);
+        $specialSum = $plannig->specialSum($date, $activeBook->id);
+        $rentSum = $plannig->rentSum($date, $activeBook->id);
+        $fixedSum = $plannig->fixedSum($date, $activeBook->id);
+        $pocketASum = $plannig->pocketASum($date, $activeBook->id);
+        $pocketBSum = $plannig->pocketBSum($date, $activeBook->id);
+        $normalDepositSum = $plannig->normalDepositSum($date, $activeBook->id);
+        $middleDepositSum = $plannig->middleDepositSum($date, $activeBook->id);
+        $longDepositSum = $plannig->longDepositSum($date, $activeBook->id);
+        $childrenDeoisitSum = $plannig->childrenDepositSum($date, $activeBook->id);
+        $govermentBondsSum = $plannig->govermentBondsSum($date, $activeBook->id);
+        $stockSum = $plannig->stockSum($date, $activeBook->id);
+        $monthlyBudgetSum = $plannig->monthlyBudgetSum($date, $activeBook->id);
 
         // 全体収支
         // 予算総額
