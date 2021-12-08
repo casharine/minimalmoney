@@ -39,59 +39,59 @@ class Transaction extends Model
 
     // 費目ごとのメソッドを呼び出し
     // 食材費
-    public function ingredients($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 1, $active_book_id);
+    public function ingredients($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 1, $activeBookId);
     }
     // 外食費
-    public function eatoutSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 2, $active_book_id);
+    public function eatoutSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 2, $activeBookId);
     }
     // 個別A
-    public function eachASum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 3, $active_book_id);
+    public function eachASum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 3, $activeBookId);
     }
     // 個別B
-    public function eachBSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 4, $active_book_id);
+    public function eachBSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 4, $activeBookId);
     }
     // 日用費
-    public function dailySum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 5, $active_book_id);
+    public function dailySum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 5, $activeBookId);
     }
     // 交際費
-    public function entertainmentSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 6, $active_book_id);
+    public function entertainmentSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 6, $activeBookId);
     }
     // 養育費
-    public function childrenSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 7, $active_book_id);
+    public function childrenSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 7, $activeBookId);
     }
     // 特別費
-    public function luxurySum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 8, $active_book_id);
+    public function luxurySum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 8, $activeBookId);
     }
     // 特別費
-    public function specialSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 9, $active_book_id);
+    public function specialSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 9, $activeBookId);
     }
     // 雑益
-    public function profitsSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 10, $active_book_id);
+    public function profitsSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 10, $activeBookId);
     }
     // 雑損
-    public function lossSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 11, $active_book_id);
+    public function lossSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 11, $activeBookId);
     }
     // 立替A
-    public function advanceASum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 12, $active_book_id);
+    public function advanceASum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 12, $activeBookId);
     }
     // 立替B
-    public function advanceBSum($tableItemId, $date, $active_book_id){
-        return $this->getMonthlyItemSum($tableItemId, $date, 13, $active_book_id);
+    public function advanceBSum($tableItemId, $date, $activeBookId){
+        return $this->getMonthlyItemSum($tableItemId, $date, 13, $activeBookId);
     }
     // 元々クラス内でカプセル化で共通化していたが、他Modelからも使用するためTraitに変更
     // メンバ変数、メソッドをカプセル化し共通化
-    // private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
+    // private function getMonthlyItemSum($tableItemId, $date, $id, $activeBookId){
     //     ...以下略 
 }

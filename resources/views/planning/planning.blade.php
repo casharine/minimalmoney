@@ -95,20 +95,20 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
         </tr>
     </tbody>
@@ -131,20 +131,20 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
         </tr>
     </tbody>
@@ -165,23 +165,23 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>03</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>04</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>05</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>06</div>
             </td>
         </tr>
     </tbody>
@@ -205,20 +205,20 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
             </td>
         </tr>
     </tbody>

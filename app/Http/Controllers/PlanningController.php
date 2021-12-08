@@ -34,13 +34,13 @@ private function setCommonArray()
     );
 }
 
-// メイン画面
+// planningビューへの基本メソッド
 public function planning()
 {
     // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
     $array = $this->setCommonArray();
     $user = $array['user'];
-     $activeBookNull = $array['activeBookNull'];
+    $activeBookNull = $array['activeBookNull'];
 
     if($activeBookNull){
         return view('planning.planning', [
@@ -58,7 +58,6 @@ public function planning()
             $user->date_selecter = $date;
             $user->save();
         }
-
         // プルダウン用変数 直近10年
         $years = [];
         for($i=0; $i<=10; $i++){
@@ -74,39 +73,12 @@ public function planning()
         }
 
         // 予算合計の取得(費目&月&家計簿の全一致のみ)
-        $plannig = new Planning;
         // 引数設定
         $activeBook = $array['activeBook'];
         $tableItemId ='planning_item_id';
-        // 各予算費目ごとに受け取り
-        $ingredientsPlanningSum = $plannig->ingredients($tableItemId, $date, $activeBook->id);
-        $eatoutPlanningSum = $plannig->eatoutSum($tableItemId, $date, $activeBook->id);
-        $eachAPlanningSum = $plannig->eachASum($tableItemId, $date, $activeBook->id);
-        $eachBPlanningSum = $plannig->eachBSum($tableItemId, $date, $activeBook->id);
-        $dailyPlanningSum = $plannig->dailySum($tableItemId, $date, $activeBook->id);
-        $entertainmentPlanningSum = $plannig->entertainmentSum($tableItemId, $date, $activeBook->id);
-        $childrenPlanningSum = $plannig->childrenSum($tableItemId, $date, $activeBook->id);
-        $luxuryPlanningSum = $plannig->luxurySum($tableItemId, $date, $activeBook->id);
-        $specialPlanningSum = $plannig->specialSum($tableItemId, $date, $activeBook->id);
-        $eatoutPlanningSum = $plannig->eatoutSum($tableItemId, $date, $activeBook->id);
-        $rentPlanningSum = $plannig->rentSum($tableItemId, $date, $activeBook->id);
-        $fixedPlanningSum = $plannig->fixedSum($tableItemId, $date, $activeBook->id);
-        $pocketAPlanningSum = $plannig->pocketASum($tableItemId, $date, $activeBook->id);
-        $pocketBPlanningSum = $plannig->pocketBSum($tableItemId, $date, $activeBook->id);
-        $normalDepositPlanningSum = $plannig->normalDepositSum($tableItemId, $date, $activeBook->id);
-        $middleDepositPlanningSum = $plannig->middleDepositSum($tableItemId, $date, $activeBook->id);
-        $longDepositPlanningSum = $plannig->longDepositSum($tableItemId, $date, $activeBook->id);
-        $childrenDeoisitPlanningSum = $plannig->childrenDepositSum($tableItemId, $date, $activeBook->id);
-        $govermentBondsPlanningSum = $plannig->govermentBondsSum($tableItemId, $date, $activeBook->id);
-        $stockPlanningSum = $plannig->stockSum($tableItemId, $date, $activeBook->id);
-        $monthlyBudgetPlanningSum = $plannig->monthlyBudgetSum($tableItemId, $date, $activeBook->id);
-
-        // 全体収支
-        // 予算総額
-        $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
-        +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDeoisitPlanningSum
-        +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
-
+        // HomeControllerでも共用するので配列で取得に変更
+        $montlyPlanningsArray = $this->monthlyPlanningsToArray($tableItemId, $date, $activeBook->id);
+        
         return view('planning.planning', [
             // 共通private array
             'user' => $array['user'],
@@ -118,6 +90,64 @@ public function planning()
             'years' => $years,
             'months' => $months,
             // 予算合計関連
+            'totalPlanningSum' => $montlyPlanningsArray['totalPlanningSum'],
+            'ingredientsPlanningSum' => $montlyPlanningsArray['ingredientsPlanningSum'],
+            'eatoutPlanningSum' => $montlyPlanningsArray['eatoutPlanningSum'],
+            'eachAPlanningSum' => $montlyPlanningsArray['eachAPlanningSum'],
+            'eachBPlanningSum' => $montlyPlanningsArray['eachBPlanningSum'],
+            'dailyPlanningSum' => $montlyPlanningsArray['dailyPlanningSum'],
+            'entertainmentPlanningSum' => $montlyPlanningsArray['entertainmentPlanningSum'],
+            'childrenPlanningSum' => $montlyPlanningsArray['childrenPlanningSum'],
+            'luxuryPlanningSum' => $montlyPlanningsArray['luxuryPlanningSum'],
+            'specialPlanningSum' => $montlyPlanningsArray['specialPlanningSum'],
+            'rentPlanningSum'=> $montlyPlanningsArray['rentPlanningSum'],
+            'fixedPlanningSum' => $montlyPlanningsArray['fixedPlanningSum'],
+            'pocketAPlanningSum' => $montlyPlanningsArray['pocketAPlanningSum'],
+            'pocketBPlanningSum' => $montlyPlanningsArray['pocketBPlanningSum'],
+            'normalDepositPlanningSum' => $montlyPlanningsArray['normalDepositPlanningSum'],
+            'middleDepositPlanningSum' => $montlyPlanningsArray['middleDepositPlanningSum'],
+            'longDepositPlanningSum' => $montlyPlanningsArray['longDepositPlanningSum'],
+            'childrenDepositPlanningSum' => $montlyPlanningsArray['childrenDepositPlanningSum'],
+            'govermentBondsPlanningSum' => $montlyPlanningsArray['govermentBondsPlanningSum'],
+            'stockPlanningSum' => $montlyPlanningsArray['stockPlanningSum'],
+            'monthlyBudgetPlanningSum' => $montlyPlanningsArray['monthlyBudgetPlanningSum'],
+        ]);
+    }
+}
+
+//  予算合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
+public function monthlyPlanningsToArray($tableItemId, $date, $activeBookId){
+        $plannig = new Planning;    
+        // 各予算費目ごとに受け取り
+        $ingredientsPlanningSum = $plannig->ingredients($tableItemId, $date, $activeBookId);
+        $eatoutPlanningSum = $plannig->eatoutSum($tableItemId, $date, $activeBookId);
+        $eachAPlanningSum = $plannig->eachASum($tableItemId, $date, $activeBookId);
+        $eachBPlanningSum = $plannig->eachBSum($tableItemId, $date, $activeBookId);
+        $dailyPlanningSum = $plannig->dailySum($tableItemId, $date, $activeBookId);
+        $entertainmentPlanningSum = $plannig->entertainmentSum($tableItemId, $date, $activeBookId);
+        $childrenPlanningSum = $plannig->childrenSum($tableItemId, $date, $activeBookId);
+        $luxuryPlanningSum = $plannig->luxurySum($tableItemId, $date, $activeBookId);
+        $specialPlanningSum = $plannig->specialSum($tableItemId, $date, $activeBookId);
+        $eatoutPlanningSum = $plannig->eatoutSum($tableItemId, $date, $activeBookId);
+        $rentPlanningSum = $plannig->rentSum($tableItemId, $date, $activeBookId);
+        $fixedPlanningSum = $plannig->fixedSum($tableItemId, $date, $activeBookId);
+        $pocketAPlanningSum = $plannig->pocketASum($tableItemId, $date, $activeBookId);
+        $pocketBPlanningSum = $plannig->pocketBSum($tableItemId, $date, $activeBookId);
+        $normalDepositPlanningSum = $plannig->normalDepositSum($tableItemId, $date, $activeBookId);
+        $middleDepositPlanningSum = $plannig->middleDepositSum($tableItemId, $date, $activeBookId);
+        $longDepositPlanningSum = $plannig->longDepositSum($tableItemId, $date, $activeBookId);
+        $childrenDepositPlanningSum = $plannig->childrenDepositSum($tableItemId, $date, $activeBookId);
+        $govermentBondsPlanningSum = $plannig->govermentBondsSum($tableItemId, $date, $activeBookId);
+        $stockPlanningSum = $plannig->stockSum($tableItemId, $date, $activeBookId);
+        $monthlyBudgetPlanningSum = $plannig->monthlyBudgetSum($tableItemId, $date, $activeBookId);
+
+        // 全体収支
+        // 予算総額
+        $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
+        +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
+        +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
+
+        return array(
             'totalPlanningSum' => $totalPlanningSum,
             'ingredientsPlanningSum' => $ingredientsPlanningSum,
             'eatoutPlanningSum' => $eatoutPlanningSum,
@@ -135,12 +165,11 @@ public function planning()
             'normalDepositPlanningSum' => $normalDepositPlanningSum,
             'middleDepositPlanningSum' => $middleDepositPlanningSum,
             'longDepositPlanningSum' => $longDepositPlanningSum,
-            'childrenDepositPlanningSum' => $childrenDeoisitPlanningSum,
+            'childrenDepositPlanningSum' => $childrenDepositPlanningSum,
             'govermentBondsPlanningSum' => $govermentBondsPlanningSum,
             'stockPlanningSum' => $stockPlanningSum,
             'monthlyBudgetPlanningSum' => $monthlyBudgetPlanningSum,
-        ]);
-    }
+        );
 }
 
 // 表示予算入力の年月の指定（変更）

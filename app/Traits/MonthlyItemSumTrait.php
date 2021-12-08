@@ -6,14 +6,14 @@ trait MonthlyItemSumTrait
 {
     // 各費目の合計計算メソット
     // 一連のメソッドをカプセル化したものを移管しtrait
-    private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
-        $monthlyItems = $this->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
+    private function getMonthlyItemSum($tableItemId, $date, $id, $activeBookId){
+        $monthlyItems = $this->monthlyItems($tableItemId, $date, $id, $activeBookId)->get();
         return $this->monthlyItemsSum($monthlyItems);
     }
     // 費目を家計簿及び年月別に取得するスコープ
-    public  function scopeMonthlyItems($query, $tableItemId, $date, $id, $active_book_id){
+    public  function scopeMonthlyItems($query, $tableItemId, $date, $id, $activeBookId){
         return $query->where($tableItemId, $id)
-        ->where('book_id', $active_book_id)
+        ->where('book_id', $activeBookId)
         ->whereYear('date', $date->year)
         ->whereMonth('date', $date->month);
     }

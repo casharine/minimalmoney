@@ -40,103 +40,103 @@ class Planning extends Model
 
     // 予算ごとにメソッドを呼び出し
     // 食材費
-    public function ingredients($tableItemId, $date, $active_book_id){
+    public function ingredients($tableItemId, $date, $activeBookId){
         $id = 1;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 外食費
-    public function eatoutSum($tableItemId, $date, $active_book_id){
+    public function eatoutSum($tableItemId, $date, $activeBookId){
         $id = 2;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 個別A
-    public function eachASum($tableItemId, $date, $active_book_id){
+    public function eachASum($tableItemId, $date, $activeBookId){
         $id = 3;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 個別B
-    public function eachBSum($tableItemId, $date, $active_book_id){
+    public function eachBSum($tableItemId, $date, $activeBookId){
         $id = 4;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 日用費
-    public function dailySum($tableItemId, $date, $active_book_id){
+    public function dailySum($tableItemId, $date, $activeBookId){
         $id = 5;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 交際費
-    public function entertainmentSum($tableItemId, $date, $active_book_id){
+    public function entertainmentSum($tableItemId, $date, $activeBookId){
         $id = 6;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 養育費
-    public function childrenSum($tableItemId, $date, $active_book_id){
+    public function childrenSum($tableItemId, $date, $activeBookId){
         $id = 7;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 特別費
-    public function luxurySum($tableItemId, $date, $active_book_id){
+    public function luxurySum($tableItemId, $date, $activeBookId){
         $id = 8;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 特別費
-    public function specialSum($tableItemId, $date, $active_book_id){
+    public function specialSum($tableItemId, $date, $activeBookId){
         $id = 9;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function rentSum($tableItemId, $date, $active_book_id){
+    public function rentSum($tableItemId, $date, $activeBookId){
         $id = 10;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function fixedSum($tableItemId, $date, $active_book_id){
+    public function fixedSum($tableItemId, $date, $activeBookId){
         $id = 10;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function pocketASum($tableItemId, $date, $active_book_id){
+    public function pocketASum($tableItemId, $date, $activeBookId){
         $id = 12;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function pocketBSum($tableItemId, $date, $active_book_id){
+    public function pocketBSum($tableItemId, $date, $activeBookId){
         $id = 13;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function normalDepositSum($tableItemId, $date, $active_book_id){
+    public function normalDepositSum($tableItemId, $date, $activeBookId){
         $id = 14;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function middleDepositSum($tableItemId, $date, $active_book_id){
+    public function middleDepositSum($tableItemId, $date, $activeBookId){
         $id = 15;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function longDepositSum($tableItemId, $date, $active_book_id){
+    public function longDepositSum($tableItemId, $date, $activeBookId){
         $id = 16;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function childrenDepositSum($tableItemId, $date, $active_book_id){
+    public function childrenDepositSum($tableItemId, $date, $activeBookId){
         $id = 17;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function govermentBondsSum($tableItemId, $date, $active_book_id){
+    public function govermentBondsSum($tableItemId, $date, $activeBookId){
         $id = 18;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function stockSum($tableItemId, $date, $active_book_id){
+    public function stockSum($tableItemId, $date, $activeBookId){
         $id = 19;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
     // 
-    public function monthlyBudgetSum($tableItemId, $date, $active_book_id){
+    public function monthlyBudgetSum($tableItemId, $date, $activeBookId){
         $id = 20;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
 }
