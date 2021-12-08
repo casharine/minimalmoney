@@ -63,123 +63,123 @@ class Planning extends Model
     }
     // 予算ごとにメソッドを呼び出し
     // 食材費
-    public function ingredients($date){
+    public function ingredients($tableItemId, $date, $active_book_id){
         $id = 1;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 外食費
-    public function eatoutSum($date){
+    public function eatoutSum($tableItemId, $date, $active_book_id){
         $id = 2;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 個別A
-    public function eachASum($date){
+    public function eachASum($tableItemId, $date, $active_book_id){
         $id = 3;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 個別B
-    public function eachBSum($date){
+    public function eachBSum($tableItemId, $date, $active_book_id){
         $id = 4;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 日用費
-    public function dailySum($date){
+    public function dailySum($tableItemId, $date, $active_book_id){
         $id = 5;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 交際費
-    public function entertainmentSum($date){
+    public function entertainmentSum($tableItemId, $date, $active_book_id){
         $id = 6;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 養育費
-    public function childrenSum($date){
+    public function childrenSum($tableItemId, $date, $active_book_id){
         $id = 7;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 特別費
-    public function luxurySum($date){
+    public function luxurySum($tableItemId, $date, $active_book_id){
         $id = 8;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 特別費
-    public function specialSum($date){
+    public function specialSum($tableItemId, $date, $active_book_id){
         $id = 9;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function rentSum($date){
+    public function rentSum($tableItemId, $date, $active_book_id){
         $id = 10;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function fixedSum($date){
+    public function fixedSum($tableItemId, $date, $active_book_id){
         $id = 10;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function pocketASum($date){
+    public function pocketASum($tableItemId, $date, $active_book_id){
         $id = 12;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function pocketBSum($date){
+    public function pocketBSum($tableItemId, $date, $active_book_id){
         $id = 13;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function normalDepositSum($date){
+    public function normalDepositSum($tableItemId, $date, $active_book_id){
         $id = 14;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function middleDepositSum($date){
+    public function middleDepositSum($tableItemId, $date, $active_book_id){
         $id = 15;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function longDepositSum($date){
+    public function longDepositSum($tableItemId, $date, $active_book_id){
         $id = 16;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function childrenDepositSum($date){
+    public function childrenDepositSum($tableItemId, $date, $active_book_id){
         $id = 17;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function govermentBondsSum($date){
+    public function govermentBondsSum($tableItemId, $date, $active_book_id){
         $id = 18;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function stockSum($date){
+    public function stockSum($tableItemId, $date, $active_book_id){
         $id = 19;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
     // 
-    public function monthlyBudgetSum($date){
+    public function monthlyBudgetSum($tableItemId, $date, $active_book_id){
         $id = 20;
-        $monthlyItems = Planning::scopeMonthlyItems($date, $id)->get();
-        return Planning::monthlyItemsSum($monthlyItems);
+        return $this->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id);
+
     }
 }

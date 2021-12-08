@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Planning;
+use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -70,35 +71,40 @@ public function planning()
             $m = $today->copy()->subMonths($i)->month;
             $months[$m] = $m;
         }
-                
+
         // 各費目の受取
-        $plannig = new Planning;
-        $ingredientsSum = $plannig->ingredients($date, $activeBook->id);
-        $eatoutSum = $plannig->eatoutSum($date, $activeBook->id);
-        $eachASum = $plannig->eachASum($date, $activeBook->id);
-        $eachBSum = $plannig->eachBSum($date, $activeBook->id);
-        $dailySum = $plannig->dailySum($date, $activeBook->id);
-        $entertainmentSum = $plannig->entertainmentSum($date, $activeBook->id);
-        $childrenSum = $plannig->childrenSum($date, $activeBook->id);
-        $luxurySum = $plannig->luxurySum($date, $activeBook->id);
-        $specialSum = $plannig->specialSum($date, $activeBook->id);
-        $rentSum = $plannig->rentSum($date, $activeBook->id);
-        $fixedSum = $plannig->fixedSum($date, $activeBook->id);
-        $pocketASum = $plannig->pocketASum($date, $activeBook->id);
-        $pocketBSum = $plannig->pocketBSum($date, $activeBook->id);
-        $normalDepositSum = $plannig->normalDepositSum($date, $activeBook->id);
-        $middleDepositSum = $plannig->middleDepositSum($date, $activeBook->id);
-        $longDepositSum = $plannig->longDepositSum($date, $activeBook->id);
-        $childrenDeoisitSum = $plannig->childrenDepositSum($date, $activeBook->id);
-        $govermentBondsSum = $plannig->govermentBondsSum($date, $activeBook->id);
-        $stockSum = $plannig->stockSum($date, $activeBook->id);
-        $monthlyBudgetSum = $plannig->monthlyBudgetSum($date, $activeBook->id);
+        $plannig = new Transaction;
+        // 引数設定
+        $activeBook = $array['activeBook'];
+        $tableItemId ='transaction_item_id';
+        $tableName = 'plannings';
+        
+        $ingredientsSum = $plannig->ingredients($tableItemId, $date, $activeBook->id);
+        $eatoutSum = $plannig->eatoutSum($tableItemId, $date, $activeBook->id);
+        $eachASum = $plannig->eachASum($tableItemId, $date, $activeBook->id);
+        $eachBSum = $plannig->eachBSum($tableItemId, $date, $activeBook->id);
+        $dailySum = $plannig->dailySum($tableItemId, $date, $activeBook->id);
+        $entertainmentSum = $plannig->entertainmentSum($tableItemId, $date, $activeBook->id);
+        $childrenSum = $plannig->childrenSum($tableItemId, $date, $activeBook->id);
+        $luxurySum = $plannig->luxurySum($tableItemId, $date, $activeBook->id);
+        $specialSum = $plannig->specialSum($tableItemId, $date, $activeBook->id);
+        // $rentSum = $plannig->rentSum($tableItemId, $date, $activeBook->id);
+        // $fixedSum = $plannig->fixedSum($tableItemId, $date, $activeBook->id);
+        // $pocketASum = $plannig->pocketASum($tableItemId, $date, $activeBook->id);
+        // $pocketBSum = $plannig->pocketBSum($tableItemId, $date, $activeBook->id);
+        // $normalDepositSum = $plannig->normalDepositSum($tableItemId, $date, $activeBook->id);
+        // $middleDepositSum = $plannig->middleDepositSum($tableItemId, $date, $activeBook->id);
+        // $longDepositSum = $plannig->longDepositSum($tableItemId, $date, $activeBook->id);
+        // $childrenDeoisitSum = $plannig->childrenDepositSum($tableItemId, $date, $activeBook->id);
+        // $govermentBondsSum = $plannig->govermentBondsSum($tableItemId, $date, $activeBook->id);
+        // $stockSum = $plannig->stockSum($tableItemId, $date, $activeBook->id);
+        // $monthlyBudgetSum = $plannig->monthlyBudgetSum($tableItemId, $date, $activeBook->id);
 
         // 全体収支
         // 予算総額
-        $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum
-        +$rentSum+$fixedSum+$pocketASum+$pocketBSum+$normalDepositSum+$middleDepositSum+$longDepositSum+$childrenDeoisitSum
-        +$govermentBondsSum+$stockSum+$monthlyBudgetSum;
+        $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum;
+        // +$rentSum+$fixedSum+$pocketASum+$pocketBSum+$normalDepositSum+$middleDepositSum+$longDepositSum+$childrenDeoisitSum
+        // +$govermentBondsSum+$stockSum+$monthlyBudgetSum;
 
         return view('planning.planning', [
             // 共通private array
@@ -121,17 +127,17 @@ public function planning()
             'childrenSum' => $childrenSum,
             'luxurySum' => $luxurySum,
             'specialSum' => $specialSum,
-            'rentSum'=> $rentSum,
-            'fixedSum' => $fixedSum,
-            'pocketASum' => $pocketASum,
-            'pocketBSum' => $pocketBSum,
-            'normalDepositSum' => $normalDepositSum,
-            'middleDepositSum' => $middleDepositSum,
-            'longDepositSum' => $longDepositSum,
-            'childrenDepositSum' => $childrenDeoisitSum,
-            'govermentBondsSum' => $govermentBondsSum,
-            'stockSum' => $stockSum,
-            'monthlyBudgetSum' => $monthlyBudgetSum,
+            // 'rentSum'=> $rentSum,
+            // 'fixedSum' => $fixedSum,
+            // 'pocketASum' => $pocketASum,
+            // 'pocketBSum' => $pocketBSum,
+            // 'normalDepositSum' => $normalDepositSum,
+            // 'middleDepositSum' => $middleDepositSum,
+            // 'longDepositSum' => $longDepositSum,
+            // 'childrenDepositSum' => $childrenDeoisitSum,
+            // 'govermentBondsSum' => $govermentBondsSum,
+            // 'stockSum' => $stockSum,
+            // 'monthlyBudgetSum' => $monthlyBudgetSum,
         ]);
     }
 }
