@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Traits\MonthlyItemSumTrait;
 
 class Transaction extends Model
 {
-    use HasFactory;
+    use MonthlyItemSumTrait;
 
      // ホワイトリストにuser_idを指定
     protected $fillable = ['editor_id', 'book_id', 'price', 'transaction_item_id', 'date', 'note'];
@@ -37,45 +38,30 @@ class Transaction extends Model
         return $this->belongsTo(TransactionItem::class, 'transaction_item_id', 'id');
     }
 
-    
-    // // 費目ごとのメソッドを呼び出し
-    // // 食材費
-    // public function ingredients($tableItemId, $date, $active_book_id){
-    //     $tableName = 'transactions';
-    //     $calculation = new Calculation($tableName);
-    //     $id = 1;
-    //     dd($calculation->getMonthlyItemSum($tableItemId, $date, $id, $active_book_id));
-    //     return $calculation->getMonthlyItemSum($tableItemId, $date, 1, $active_book_id);
+    // // 各費目の合計計算メソット カプセル化で共通化、他Modelからも使用するためTraitに変更
+    // // メンバ変数、メソッドをカプセル化し共通化
+    // private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
+    //     $monthlyItems = $this->newInstance()->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
+    //     return $this->monthlyItemsSum($monthlyItems);
     // }
-    // // 外食費
-    // public function eatoutSum($table, $date, $active_book_id){
-    //     return $this->getMonthlyItemSum($table, $date, 2, $active_book_id);
+    // // 費目を家計簿及び年月別に取得するスコープ
+    // public  function scopeMonthlyItems($query,$tableItemId, $date, $id, $active_book_id){
+    //     return $query->where($tableItemId, $id)
+    //     ->where('book_id', $active_book_id)
+    //     ->whereYear('date', $date->year)
+    //     ->whereMonth('date', $date->month);
     // }
-
-    // 各費目の合計計算メソット
-    // メンバ変数、メソッドをカプセル化し共通化
-    private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
-        $monthlyItems = $this->newInstance()->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
-        return $this->monthlyItemsSum($monthlyItems);
-    }
-    // 費目を家計簿及び年月別に取得するスコープ
-    public  function scopeMonthlyItems($query,$tableItemId, $date, $id, $active_book_id){
-        return $query->where($tableItemId, $id)
-        ->where('book_id', $active_book_id)
-        ->whereYear('date', $date->year)
-        ->whereMonth('date', $date->month);
-    }
-    // スコープの合計計算部
-    public function monthlyItemsSum($monthlyItems){
-        if($monthlyItems->isNotEmpty()){
-            $monthlyItemsSum = $monthlyItems
-            ->sum("price");
-            return $monthlyItemsSum;
-        }else{
-            $monthlyItemsSum = 0;
-            return $monthlyItemsSum;
-        }
-    }
+    // // スコープの合計計算部
+    // public function monthlyItemsSum($monthlyItems){
+    //     if($monthlyItems->isNotEmpty()){
+    //         $monthlyItemsSum = $monthlyItems
+    //         ->sum("price");
+    //         return $monthlyItemsSum;
+    //     }else{
+    //         $monthlyItemsSum = 0;
+    //         return $monthlyItemsSum;
+    //     }
+    // }
 
     // 費目ごとのメソッドを呼び出し
     // 食材費

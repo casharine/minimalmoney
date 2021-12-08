@@ -1,19 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Calculation extends Model
+trait MonthlyItemSumTrait
 {
-    protected $fillable = ['editor_id', 'book_id', 'price', 'transaction_item_id', 'date', 'note'];
-    protected $table;
-
-    public function __construct(String $tableName) { 
-        $this->table = $tableName;
-    }
-
     // 各費目の合計計算メソット
     // メンバ変数、メソッドをカプセル化し共通化
     public function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){

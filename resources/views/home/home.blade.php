@@ -40,7 +40,7 @@
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
     {{ Form::select('item'
     , array('1'=>'食材費', '4'=>'外食費', '5'=>'個別A', '4'=>'個別B','5'=>'日用費',
-    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
+    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'<font color="191970">雑損</font>',
     '12'=>'立替A', '13'=>'立替B')
     , ''
     , ['placeholder' => '費目の選択','style' => 'width:25%;']
@@ -104,7 +104,9 @@
             <th style="width: 16.66%" class="text-center">
                 <font color="191970">固定費</font>
             </th>
-            <th style="width: 16.66%" class="text-center">貯蓄総額</th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">貯蓄総額</font>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -149,7 +151,9 @@
             <th style="width: 16.66%" class="text-center">
                 <font color="191970">残高</font>
             </th>
-            <th style="width: 16.66%" class="text-center">残日数</th>
+            <th style="width: 16.66%" class="text-center">
+                <font color="191970">残日数</font>
+            </th>
             <th style="width: 16.66%" class="text-center">
                 <font color="191970">平均残高</font>
             </th>
@@ -197,7 +201,9 @@
                 <thead>
                     <tr>
                         <th style="width: 16.66%" class="table-info">
-                            <div Class="text-center">食材費</div>
+                            <div Class="text-center">
+                                <font color="191970">食材費</font>
+                            </div>
                         </th>
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
@@ -214,7 +220,9 @@
                             </div>
                         </th>
                         <th style="width: 16.66%" class="table-info">
-                            <div Class="text-center">外食費</div>
+                            <div Class="text-center">
+                                <font color="191970">外食費</font>
+                            </div>
                         </th>
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
@@ -248,7 +256,9 @@
                         <th style="width: 16.66%" class="text-center">
                             <font color="191970">残高</font>
                         </th>
-                        <th style="width: 16.66%" class="text-center">残日数</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残日数</font>
+                        </th>
                         <th style="width: 16.66%" class="text-center">
                             <font color="191970">平均残高</font>
                         </th>
@@ -301,7 +311,9 @@
                         <th style="width: 16.66%" class="text-center">
                             <font color="191970">残高</font>
                         </th>
-                        <th style="width: 16.66%" class="text-center">残日数</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">残日数</font>
+                        </th>
                         <th style="width: 16.66%" class="text-center">
                             <font color="191970">平均残高</font>
                         </th>
@@ -541,8 +553,12 @@
             <table class="table table-sm table-bordered">
                 <thead>
                     <tr class="table-info">
-                        <th style="width: 16.66%" class="text-center">雑益</th>
-                        <th style="width: 16.66%" class="text-center">雑損</th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">雑益</font>
+                        </th>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">雑損</font>
+                        </th>
                         <th style="width: 16.66%" class="text-center">雑<font color="191970">損益</font>
                         </th>
                     </tr>
@@ -578,9 +594,15 @@
         <table class="table table-sm table-bordered">
             <thead>
                 <tr class="table-info">
-                    <th style="width: 16.66%" class="text-center">総計</th>
-                    <th style="width: 16.66%" class="text-center">$user1</th>
-                    <th style="width: 16.66%" class="text-center">$user2</th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">総計</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">立替A</font>
+                    </th>
+                    <th style="width: 16.66%" class="text-center">
+                        <font color="191970">立替B</font>
+                    </th>
                 </tr>
             </thead>
             <tbody>
