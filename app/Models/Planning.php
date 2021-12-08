@@ -24,7 +24,7 @@ class Planning extends Model
     // このsharings_idの書籍は一冊のみしかないため単数形belongsTo
     public function book(){
         return $this->belongsTo(Book::class);
-                // return $this->belongsTo(Book::class,'name', 'authorizer_id');
+        // return $this->belongsTo(Book::class,'name', 'authorizer_id');
     }
 
     // sharings user_idとusers idの関係性を定義 
@@ -37,33 +37,6 @@ class Planning extends Model
     {
         return $this->belongsTo(PlanningItem::class, 'planning_item_id', 'id');
     }
-
-    // 各費目の合計計算メソット
-    // メンバ変数、メソッドをカプセル化し共通化
-    // private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
-    //     // select影響なしもinsertやupdateの場合のfor文などに備え、メソッド内部でインスタンスを作り直しておく
-    //     $monthlyItems = $this->newInstance()->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
-    //     return $this->monthlyItemsSum($monthlyItems);
-    // }
-
-    // 費目を家計簿及び年月別に取得するスコープ
-    // public  function scopeMonthlyItems($query,$tableItemId, $date, $id, $active_book_id){
-    //     return $query->where($tableItemId, $id)
-    //     ->where('book_id', $active_book_id)
-    //     ->whereYear('date', $date->year)
-    //     ->whereMonth('date', $date->month);
-    // }
-    // // スコープの合計計算部
-    // public function monthlyItemsSum($monthlyItems){
-    //     if($monthlyItems->isNotEmpty()){
-    //         $monthlyItemsSum = $monthlyItems
-    //         ->sum("price");
-    //         return $monthlyItemsSum;
-    //     }else{
-    //         $monthlyItemsSum = 0;
-    //         return $monthlyItemsSum;
-    //     }
-    // }
 
     // 予算ごとにメソッドを呼び出し
     // 食材費

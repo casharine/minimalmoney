@@ -5,8 +5,8 @@ namespace App\Traits;
 trait MonthlyItemSumTrait
 {
     // 各費目の合計計算メソット
-    // メンバ変数、メソッドをカプセル化し共通化
-    public function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
+    // 一連のメソッドをカプセル化したものを移管しtrait
+    private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
         $monthlyItems = $this->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
         return $this->monthlyItemsSum($monthlyItems);
     }

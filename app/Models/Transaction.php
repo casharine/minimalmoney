@@ -26,7 +26,6 @@ class Transaction extends Model
         return $this->belongsTo(Book::class);
                 // return $this->belongsTo(Book::class,'name', 'authorizer_id');
     }
-
     // sharings user_idとusers idの関係性を定義 
     public function user()
     {
@@ -37,31 +36,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionItem::class, 'transaction_item_id', 'id');
     }
-
-    // // 各費目の合計計算メソット カプセル化で共通化、他Modelからも使用するためTraitに変更
-    // // メンバ変数、メソッドをカプセル化し共通化
-    // private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
-    //     $monthlyItems = $this->newInstance()->monthlyItems($tableItemId, $date, $id, $active_book_id)->get();
-    //     return $this->monthlyItemsSum($monthlyItems);
-    // }
-    // // 費目を家計簿及び年月別に取得するスコープ
-    // public  function scopeMonthlyItems($query,$tableItemId, $date, $id, $active_book_id){
-    //     return $query->where($tableItemId, $id)
-    //     ->where('book_id', $active_book_id)
-    //     ->whereYear('date', $date->year)
-    //     ->whereMonth('date', $date->month);
-    // }
-    // // スコープの合計計算部
-    // public function monthlyItemsSum($monthlyItems){
-    //     if($monthlyItems->isNotEmpty()){
-    //         $monthlyItemsSum = $monthlyItems
-    //         ->sum("price");
-    //         return $monthlyItemsSum;
-    //     }else{
-    //         $monthlyItemsSum = 0;
-    //         return $monthlyItemsSum;
-    //     }
-    // }
 
     // 費目ごとのメソッドを呼び出し
     // 食材費
@@ -116,5 +90,8 @@ class Transaction extends Model
     public function advanceBSum($tableItemId, $date, $active_book_id){
         return $this->getMonthlyItemSum($tableItemId, $date, 13, $active_book_id);
     }
-
+    // 元々クラス内でカプセル化で共通化していたが、他Modelからも使用するためTraitに変更
+    // メンバ変数、メソッドをカプセル化し共通化
+    // private function getMonthlyItemSum($tableItemId, $date, $id, $active_book_id){
+    //     ...以下略 
 }

@@ -19,7 +19,7 @@ private function setCommonArray()
     // Userインスタンスを取得
     $user = \Auth::user();
     
-    // アクティブBookの取得＝使用する家計簿の取得
+        // アクティブBookの取得＝使用する家計簿の取得
     $activeBook = $user->books()->where('active_flag', 't')->first();
     
     // アクティブ家計簿のNullチェック 
