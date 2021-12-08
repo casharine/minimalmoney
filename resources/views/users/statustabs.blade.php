@@ -2,15 +2,21 @@
 <div class="row">
     <aside class="col-3">
         <div>
+            <h5 class="font-weight-bold">
+                <font color="orange">
+                    <i class="fas fa-user"></i>
+                    ユーザー管理
+                </font>
+            </h5>
             <br>
-            <h10> ユーザー名 </h10>
+            <h5> ユーザー名 </h5>
             <div class="alert alert-secondary" role="alert">
                 <h4> {{ $user->name }}</h4>
             </div>
             @if($activeBookNull == true)
             <div class="alert alert-warning" role="alert">使用する家計簿を選択してください。</div>
             @else
-            <h10> ご使用中の家計簿名 </h10>
+            <h5> ご使用中の家計簿名 </h5>
             <div class="alert alert-warning" role="alert">
                 <h4> {{$activeBook->name}} </h4>
             </div>

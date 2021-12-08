@@ -3,7 +3,7 @@
 {{-- ログイン済みの場合 --}}
 @if (Auth::check())
 {{-- 家計簿が選択されていない場合 --}}
-@if ($activeBookNull == true)
+@if ($activeBookNull)
 <br>
 <div class="alert alert-danger" role="alert">
     <div class="text-center">

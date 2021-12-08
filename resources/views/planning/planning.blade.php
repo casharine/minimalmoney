@@ -3,9 +3,8 @@
 {{-- ログイン済みの場合 --}}
 @if (Auth::check())
 {{-- 家計簿が選択されていない場合 --}}
-@if ($activeBookNull == true)
+@if ($activeBookNull)
 <br>
-plannings
 <div class="alert alert-danger" role="alert">
     <div class="text-center">
         <b>！attention！<br>ユーザー管理ページで使用する家計簿を選択して下さい。</b>
@@ -20,9 +19,12 @@ plannings
 <br>
 {{-- planning.main --}}
 <div class="border-bottom" style="padding:0px;">
-    <div>
-        <h5 class="font-weight-bold"><i class="fas fa-pencil-alt"></i> Planning Input</h5>
-    </div>
+    <h5 class="font-weight-bold">
+        <font color="brown">
+            <i class="fas fa-file-invoice-dollar"></i>
+            予算を追加する
+        </font>
+    </h5>
 </div>
 {{-- 表示編集月の選択 --}}
 <div class="custom-control-inline py-2">
@@ -64,7 +66,12 @@ plannings
 <br>
 <div class="border-bottom" style="padding:0px;">
     <div>
-        <h5 class="font-weight-bold"><i class="fas fa-tv"></i> Output</h5>
+        <h5 class="font-weight-bold">
+            <font color="006400">
+                <i class="fas fa-tv"></i>
+                {{$date->year}}年{{$date->month}}月の予算一覧 家計簿名『{{$activeBook->name}}』
+            </font>
+        </h5>
     </div>
 </div>
 <br>

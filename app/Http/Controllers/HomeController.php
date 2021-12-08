@@ -39,78 +39,87 @@ public function home()
     // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
     $array = $this->setCommonArray();
     $user = $array['user'];
+    $activeBookNull = $array['activeBookNull'];
 
-    // 表示月を取得 ※追加機能以下のフィールドは削除する
-    $date =  User::findOrFail($array['userId'])->date_selecter;
-    // 表示月がNullの場合今月を表示する
-    $today = Carbon::today();
-    if($date == null){
-        $date = $today;
-        $user->date_selecter = $date;
-        $user->save();
-    }
-
-    // プルダウン用変数 直近10年
-    $years = [];
-    for($i=0; $i<=10; $i++){
-            //  Carbonはmutable参照型なのでcopyを使用しTodayの値の上書きを防ぐ ※クロノスはimmutable値参照型
-        $y = $today->copy()->subYears($i)->year;
-        $years[$y] = $y;
-    }
-    // プルダウン用変数 直近12カ月
-    $months = [];
-    for($i=0; $i<=11; $i++){
-        $m = $today->copy()->subMonths($i)->month;
-        $months[$m] = $m;
-    }
-            
-    // 各費目の受取
-    $transaction = new Transaction;
-    $activeBook = $array['activeBook'];
-    $ingredientsSum = $transaction->ingredients($date, $activeBook->id);
-    $eatoutSum = $transaction->eatoutSum($date, $activeBook->id);
-    $eachASum = $transaction->eachASum($date, $activeBook->id);
-    $eachBSum = $transaction->eachBSum($date, $activeBook->id);
-    $dailySum = $transaction->dailySum($date, $activeBook->id);
-    $entertainmentSum = $transaction->entertainmentSum($date, $activeBook->id);
-    $childrenSum = $transaction->childrenSum($date, $activeBook->id);
-    $luxurySum = $transaction->luxurySum($date, $activeBook->id);
-    $specialSum = $transaction->specialSum($date, $activeBook->id);
-    $profitsSum = $transaction->profitsSum($date, $activeBook->id);
-    $lossSum = $transaction->lossSum($date, $activeBook->id);
-    $advanceASum = $transaction->advanceASum($date, $activeBook->id);
-    $advanceBum = $transaction->advanceBSum($date, $activeBook->id);
-
-    // 全体収支
-    // 予算総額
-    $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum+$specialSum+$profitsSum+$lossSum+$advanceASum+$advanceBum;
-
-    return view('home.home', [
+    if($activeBookNull){
+        return view('home.home', [
         // 共通private array
         'user' => $array['user'],
-        'userId' => $array['userId'],
-        'activeBook' => $array['activeBook'],
-        'activeBookNull' =>  $array['activeBookNull'],
-        // 日付関連
-        'date' => $date,
-        'years' => $years,
-        'months' => $months,
-        // 合計額
-        'totalSum' => $totalSum,
-        'ingredientsSum' => $ingredientsSum,
-        'eatoutSum' => $eatoutSum,
-        'eachASum' => $eachASum,
-        'eachBSum' => $eachBSum,
-        'dailySum' => $dailySum,
-        'entertainmentSum' => $entertainmentSum,
-        'childrenSum' => $childrenSum,
-        'luxurySum' => $luxurySum,
-        'specialSum' => $specialSum,
-        'profitsSum' => $profitsSum,
-        'lossSum' => $lossSum,
-        'advanceASum' => $advanceASum,
-        'advanceBSum' => $advanceBum,
-    ]);
+        'activeBookNull' =>  $array['activeBookNull']
+        ]);        
+    }else{
+        // 表示月を取得 ※追加機能以下のフィールドは削除する
+        $date =  User::findOrFail($array['userId'])->date_selecter;
+        // 表示月がNullの場合今月を表示する
+        $today = Carbon::today();
+        if($date == null){
+            $date = $today;
+            $user->date_selecter = $date;
+            $user->save();
+        }
+
+        // プルダウン用変数 直近10年
+        $years = [];
+        for($i=0; $i<=10; $i++){
+                //  Carbonはmutable参照型なのでcopyを使用しTodayの値の上書きを防ぐ ※クロノスはimmutable値参照型
+            $y = $today->copy()->subYears($i)->year;
+            $years[$y] = $y;
+        }
+        // プルダウン用変数 直近12カ月
+        $months = [];
+        for($i=0; $i<=11; $i++){
+            $m = $today->copy()->subMonths($i)->month;
+            $months[$m] = $m;
+        }
+                
+        // 各費目の受取
+        $transaction = new Transaction;
+        $activeBook = $array['activeBook'];
+        $ingredientsSum = $transaction->ingredients($date, $activeBook->id);
+        $eatoutSum = $transaction->eatoutSum($date, $activeBook->id);
+        $eachASum = $transaction->eachASum($date, $activeBook->id);
+        $eachBSum = $transaction->eachBSum($date, $activeBook->id);
+        $dailySum = $transaction->dailySum($date, $activeBook->id);
+        $entertainmentSum = $transaction->entertainmentSum($date, $activeBook->id);
+        $childrenSum = $transaction->childrenSum($date, $activeBook->id);
+        $luxurySum = $transaction->luxurySum($date, $activeBook->id);
+        $specialSum = $transaction->specialSum($date, $activeBook->id);
+        $profitsSum = $transaction->profitsSum($date, $activeBook->id);
+        $lossSum = $transaction->lossSum($date, $activeBook->id);
+        $advanceASum = $transaction->advanceASum($date, $activeBook->id);
+        $advanceBum = $transaction->advanceBSum($date, $activeBook->id);
+
+        // 全体収支
+        // 予算総額
+        $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum+$specialSum+$profitsSum+$lossSum+$advanceASum+$advanceBum;
+
+        return view('home.home', [
+            // 共通private array
+            'user' => $array['user'],
+            'userId' => $array['userId'],
+            'activeBook' => $array['activeBook'],
+            'activeBookNull' =>  $array['activeBookNull'],
+            // 日付関連
+            'date' => $date,
+            'years' => $years,
+            'months' => $months,
+            // 合計額
+            'totalSum' => $totalSum,
+            'ingredientsSum' => $ingredientsSum,
+            'eatoutSum' => $eatoutSum,
+            'eachASum' => $eachASum,
+            'eachBSum' => $eachBSum,
+            'dailySum' => $dailySum,
+            'entertainmentSum' => $entertainmentSum,
+            'childrenSum' => $childrenSum,
+            'luxurySum' => $luxurySum,
+            'specialSum' => $specialSum,
+            'profitsSum' => $profitsSum,
+            'lossSum' => $lossSum,
+            'advanceASum' => $advanceASum,
+            'advanceBSum' => $advanceBum,
+        ]);
+    }
 }
 
 // 表示家計簿の年月の指定（変更）
