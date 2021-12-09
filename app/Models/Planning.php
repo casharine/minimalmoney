@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\MonthlyItemSumTrait;
+use App\Traits\MonthlyItemsSumTrait;
 
 
 class Planning extends Model
 {
-    use MonthlyItemSumTrait;
+    use MonthlyItemsSumTrait;
 
      // ホワイトリストにuser_idを指定
     protected $fillable = ['editor_id', 'book_id', 'price', 'planning_item_id', 'date', 'note'];

@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Traits\MonthlyItemSumTrait;
+use App\Traits\MonthlyItemsSumTrait;
 
 class Transaction extends Model
 {
-    use MonthlyItemSumTrait;
+    use MonthlyItemsSumTrait;
 
      // ホワイトリストにuser_idを指定
     protected $fillable = ['editor_id', 'book_id', 'price', 'transaction_item_id', 'date', 'note'];
