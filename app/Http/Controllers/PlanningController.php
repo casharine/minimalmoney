@@ -82,36 +82,13 @@ class PlanningController extends Controller
             
             return view('planning.planning', [
                 // 共通private array
-                'user' => $array['user'],
-                'userId' => $array['userId'],
-                'activeBook' => $array['activeBook'],
-                'activeBookNull' =>  $array['activeBookNull'],
-                // 日付関連
+                'array' => $array,
+                 // 日付関連
                 'date' => $date,
                 'years' => $years,
                 'months' => $months,
                 // 予算合計関連
-                'totalPlanningSum' => $montlyPlanningsArray['totalPlanningSum'],
-                'ingredientsPlanningSum' => $montlyPlanningsArray['ingredientsPlanningSum'],
-                'eatoutPlanningSum' => $montlyPlanningsArray['eatoutPlanningSum'],
-                'eachAPlanningSum' => $montlyPlanningsArray['eachAPlanningSum'],
-                'eachBPlanningSum' => $montlyPlanningsArray['eachBPlanningSum'],
-                'dailyPlanningSum' => $montlyPlanningsArray['dailyPlanningSum'],
-                'entertainmentPlanningSum' => $montlyPlanningsArray['entertainmentPlanningSum'],
-                'childrenPlanningSum' => $montlyPlanningsArray['childrenPlanningSum'],
-                'luxuryPlanningSum' => $montlyPlanningsArray['luxuryPlanningSum'],
-                'specialPlanningSum' => $montlyPlanningsArray['specialPlanningSum'],
-                'rentPlanningSum'=> $montlyPlanningsArray['rentPlanningSum'],
-                'fixedPlanningSum' => $montlyPlanningsArray['fixedPlanningSum'],
-                'pocketAPlanningSum' => $montlyPlanningsArray['pocketAPlanningSum'],
-                'pocketBPlanningSum' => $montlyPlanningsArray['pocketBPlanningSum'],
-                'normalDepositPlanningSum' => $montlyPlanningsArray['normalDepositPlanningSum'],
-                'middleDepositPlanningSum' => $montlyPlanningsArray['middleDepositPlanningSum'],
-                'longDepositPlanningSum' => $montlyPlanningsArray['longDepositPlanningSum'],
-                'childrenDepositPlanningSum' => $montlyPlanningsArray['childrenDepositPlanningSum'],
-                'govermentBondsPlanningSum' => $montlyPlanningsArray['govermentBondsPlanningSum'],
-                'stockPlanningSum' => $montlyPlanningsArray['stockPlanningSum'],
-                'monthlyBudgetPlanningSum' => $montlyPlanningsArray['monthlyBudgetPlanningSum'],
+                'montlyPlanningsArray' => $montlyPlanningsArray,
             ]);
         }
     }

@@ -39,30 +39,30 @@ trait MonthlyItemsSumTrait
         // 各予算費目ごとに受け取り
         $ingredientsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 1, $activeBookId);
         $eatoutPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 2, $activeBookId);
-        $eachAPlanningSum = $plannig->eachASum($foreignKey, $date, 3, $activeBookId);
-        $eachBPlanningSum = $plannig->eachBSum($foreignKey, $date, 4, $activeBookId);
-        $dailyPlanningSum = $plannig->dailySum($foreignKey, $date, 5, $activeBookId);
-        $entertainmentPlanningSum = $plannig->entertainmentSum($foreignKey, $date, 6, $activeBookId);
-        $childrenPlanningSum = $plannig->childrenSum($foreignKey, $date, 7, $activeBookId);
-        $luxuryPlanningSum = $plannig->luxurySum($foreignKey, $date, 8, $activeBookId);
-        $specialPlanningSum = $plannig->specialSum($foreignKey, $date, 9, $activeBookId);
-        $rentPlanningSum = $plannig->rentSum($foreignKey, $date, 10, $activeBookId);
-        $fixedPlanningSum = $plannig->fixedSum($foreignKey, $date, 11, $activeBookId);
-        $pocketAPlanningSum = $plannig->pocketASum($foreignKey, $date, 12, $activeBookId);
-        $pocketBPlanningSum = $plannig->pocketBSum($foreignKey, $date, 13, $activeBookId);
-        $normalDepositPlanningSum = $plannig->normalDepositSum($foreignKey, $date, 14, $activeBookId);
-        $middleDepositPlanningSum = $plannig->middleDepositSum($foreignKey, $date, 15, $activeBookId);
-        $longDepositPlanningSum = $plannig->longDepositSum($foreignKey, $date, 16, $activeBookId);
-        $childrenDepositPlanningSum = $plannig->childrenDepositSum($foreignKey, $date, 17, $activeBookId);
-        $govermentBondsPlanningSum = $plannig->govermentBondsSum($foreignKey, $date, 18, $activeBookId);
-        $stockPlanningSum = $plannig->stockSum($foreignKey, $date, 19, $activeBookId);
-        $monthlyBudgetPlanningSum = $plannig->monthlyBudgetSum($foreignKey, $date, 20, $activeBookId);
+        $eachAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 3, $activeBookId);
+        $eachBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 4, $activeBookId);
+        $dailyPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 5, $activeBookId);
+        $entertainmentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 6, $activeBookId);
+        $childrenPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 7, $activeBookId);
+        $luxuryPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 8, $activeBookId);
+        $specialPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 9, $activeBookId);
+        $rentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 10, $activeBookId);
+        $fixedPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 11, $activeBookId);
+        $pocketAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 12, $activeBookId);
+        $pocketBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 13, $activeBookId);
+        $normalDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 14, $activeBookId);
+        $middleDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 15, $activeBookId);
+        $longDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 16, $activeBookId);
+        $childrenDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 17, $activeBookId);
+        $govermentBondsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 18, $activeBookId);
+        $stockPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 19, $activeBookId);
+        $monthlyBudgetPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 20, $activeBookId);
 
         // 全体収支
         // 予算総額
         $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
-        +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
-        +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
+            +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
+            +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
 
         return array(
             'totalPlanningSum' => $totalPlanningSum,
@@ -89,34 +89,44 @@ trait MonthlyItemsSumTrait
         );
     }
 
-    //    // 全体収支
-    //     // 予算総額
-    //     $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
-    //     +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
-    //     +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
+    //  費用合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
+    public function monthlyTransactionsToArray($foreignKey, $date, $activeBookId){
 
-    //     return array(
-    //         'totalPlanningSum' => $totalPlanningSum,
-    //         'ingredientsPlanningSum' => $ingredientsPlanningSum,
-    //         'eatoutPlanningSum' => $eatoutPlanningSum,
-    //         'eachAPlanningSum' => $eachAPlanningSum,
-    //         'eachBPlanningSum' => $eachBPlanningSum,
-    //         'dailyPlanningSum' => $dailyPlanningSum,
-    //         'entertainmentPlanningSum' => $entertainmentPlanningSum,
-    //         'childrenPlanningSum' => $childrenPlanningSum,
-    //         'luxuryPlanningSum' => $luxuryPlanningSum,
-    //         'specialPlanningSum' => $specialPlanningSum,
-    //         'rentPlanningSum'=> $rentPlanningSum,
-    //         'fixedPlanningSum' => $fixedPlanningSum,
-    //         'pocketAPlanningSum' => $pocketAPlanningSum,
-    //         'pocketBPlanningSum' => $pocketBPlanningSum,
-    //         'normalDepositPlanningSum' => $normalDepositPlanningSum,
-    //         'middleDepositPlanningSum' => $middleDepositPlanningSum,
-    //         'longDepositPlanningSum' => $longDepositPlanningSum,
-    //         'childrenDepositPlanningSum' => $childrenDepositPlanningSum,
-    //         'govermentBondsPlanningSum' => $govermentBondsPlanningSum,
-    //         'stockPlanningSum' => $stockPlanningSum,
-    //         'monthlyBudgetPlanningSum' => $monthlyBudgetPlanningSum,
-    //     );
-    // }
+       // 全体収支
+       $transaction = new Transaction;    
+        // 各費目ごとに受け取り
+        $ingredientsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 1, $activeBookId);
+        $eatoutTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 2, $activeBookId);
+        $eachATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 3, $activeBookId);
+        $eachBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 4, $activeBookId);
+        $dailyTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 5, $activeBookId);
+        $entertainmentTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 6, $activeBookId);
+        $childrenTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 7, $activeBookId);
+        $luxuryTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 8, $activeBookId);
+        $specialTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 9, $activeBookId);
+        $profitsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 10, $activeBookId);
+        $lossTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 11, $activeBookId);
+        $advanceATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 12, $activeBookId);
+        $advanceBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 13, $activeBookId);
+
+        // 支出総額
+            $totalTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum+$dailyTransactionsSum+$entertainmentTransactionsSum+$childrenTransactionsSum+$luxuryTransactionsSum+$specialTransactionsSum+$profitsTransactionsSum+$lossTransactionsSum+$advanceATransactionsSum+$advanceBTransactionsSum;
+
+        return array(
+            'totalTransactionsSum' => $totalTransactionsSum,
+            'ingredientsTransactionsSum' => $ingredientsTransactionsSum,
+            'eatoutTransactionsSum' => $eatoutTransactionsSum,
+            'eachATransactionsSum' => $eachATransactionsSum,
+            'eachBTransactionsSum' => $eachBTransactionsSum,
+            'dailyTransactionsSum' => $dailyTransactionsSum,
+            'entertainmentTransactionsSum' => $entertainmentTransactionsSum,
+            'childrenTransactionsSum' => $childrenTransactionsSum,
+            'luxuryTransactionsSum' => $luxuryTransactionsSum,
+            'specialTransactionsSum' => $specialTransactionsSum,
+            'profitsTransactionsSum' => $profitsTransactionsSum,
+            'lossTransactionsSum' => $lossTransactionsSum,
+            'advanceATransactionsSum' => $advanceATransactionsSum,
+            'advanceBTransactionsSum' => $advanceBTransactionsSum,
+        );
+    }
 }

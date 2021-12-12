@@ -44,6 +44,7 @@ class HomeController extends Controller
         $array = $this->setCommonArray();
         $user = $array['user'];
         $activeBookNull = $array['activeBookNull'];
+        $activeBook = $array['activeBook'];
 
         if($activeBookNull){
             return view('home.home', [
@@ -78,33 +79,13 @@ class HomeController extends Controller
                     
             // 各費目の受取
             $transaction = new Transaction;
-            // メソットに引き渡す変数を定義
-            $activeBook = $array['activeBook'];
-            $tableItemId = 'transaction_item_id';
-            // 各費目毎にメソットを呼び出し
-            $ingredientsSum = $transaction->ingredients( $tableItemId, $date, $activeBook->id);
-            $eatoutSum = $transaction->eatoutSum( $tableItemId, $date, $activeBook->id);
-            $eachASum = $transaction->eachASum( $tableItemId, $date, $activeBook->id);
-            $eachBSum = $transaction->eachBSum( $tableItemId, $date, $activeBook->id);
-            $dailySum = $transaction->dailySum( $tableItemId, $date, $activeBook->id);
-            $entertainmentSum = $transaction->entertainmentSum( $tableItemId, $date, $activeBook->id);
-            $childrenSum = $transaction->childrenSum( $tableItemId, $date, $activeBook->id);
-            $luxurySum = $transaction->luxurySum( $tableItemId, $date, $activeBook->id);
-            $specialSum = $transaction->specialSum( $tableItemId, $date, $activeBook->id);
-            $profitsSum = $transaction->profitsSum( $tableItemId, $date, $activeBook->id);
-            $lossSum = $transaction->lossSum( $tableItemId, $date, $activeBook->id);
-            $advanceASum = $transaction->advanceASum( $tableItemId, $date, $activeBook->id);
-            $advanceBum = $transaction->advanceBSum( $tableItemId, $date, $activeBook->id);
+            $foreignKey = 'transaction_item_id';
+            $montlyTransactionsArray = $transaction->monthlyTransactionsToArray($foreignKey, $date, $activeBook->id);
 
             // // 各予算を配列で受け取り
             $planning = new Planning;
-            // メソットに引き渡す変数を定義
             $tableItemId = 'planning_item_id';
             $montlyPlanningsArray = $planning->monthlyPlanningsToArray($tableItemId, $date, $activeBook->id);
-
-            // 全体収支
-            // 予算総額
-            $totalSum = $ingredientsSum+$eatoutSum+$eachASum+$eachBSum+$dailySum+$entertainmentSum+$childrenSum+$luxurySum+$specialSum+$profitsSum+$lossSum+$advanceASum+$advanceBum;
 
             return view('home.home', [
                 // 共通private array
@@ -113,60 +94,10 @@ class HomeController extends Controller
                 'date' => $date,
                 'years' => $years,
                 'months' => $months,
-                // 予算合計額
-                $montlyPlanningsArray,
-                // 費用合計関連
-                $montlyCostsArray,
-                ]);
-
-
-
-                // 共通private array
-                'user' => $array['user'],
-                'userId' => $array['userId'],
-                'activeBook' => $array['activeBook'],
-                'activeBookNull' =>  $array['activeBookNull'],
-                // 日付関連
-                'date' => $date,
-                'years' => $years,
-                'months' => $months,
-                // 費用合計額
-                'totalSum' => $totalSum,
-                'ingredientsSum' => $ingredientsSum,
-                'eatoutSum' => $eatoutSum,
-                'eachASum' => $eachASum,
-                'eachBSum' => $eachBSum,
-                'dailySum' => $dailySum,
-                'entertainmentSum' => $entertainmentSum,
-                'childrenSum' => $childrenSum,
-                'luxurySum' => $luxurySum,
-                'specialSum' => $specialSum,
-                'profitsSum' => $profitsSum,
-                'lossSum' => $lossSum,
-                'advanceASum' => $advanceASum,
-                'advanceBSum' => $advanceBum,
                 // 予算合計関連
-                'totalPlanningSum' => $montlyPlanningsArray['totalPlanningSum'],
-                'ingredientsPlanningSum' => $montlyPlanningsArray['ingredientsPlanningSum'],
-                'eatoutPlanningSum' => $montlyPlanningsArray['eatoutPlanningSum'],
-                'eachAPlanningSum' => $montlyPlanningsArray['eachAPlanningSum'],
-                'eachBPlanningSum' => $montlyPlanningsArray['eachBPlanningSum'],
-                'dailyPlanningSum' => $montlyPlanningsArray['dailyPlanningSum'],
-                'entertainmentPlanningSum' => $montlyPlanningsArray['entertainmentPlanningSum'],
-                'childrenPlanningSum' => $montlyPlanningsArray['childrenPlanningSum'],
-                'luxuryPlanningSum' => $montlyPlanningsArray['luxuryPlanningSum'],
-                'specialPlanningSum' => $montlyPlanningsArray['specialPlanningSum'],
-                'rentPlanningSum'=> $montlyPlanningsArray['rentPlanningSum'],
-                'fixedPlanningSum' => $montlyPlanningsArray['fixedPlanningSum'],
-                'pocketAPlanningSum' => $montlyPlanningsArray['pocketAPlanningSum'],
-                'pocketBPlanningSum' => $montlyPlanningsArray['pocketBPlanningSum'],
-                'normalDepositPlanningSum' => $montlyPlanningsArray['normalDepositPlanningSum'],
-                'middleDepositPlanningSum' => $montlyPlanningsArray['middleDepositPlanningSum'],
-                'longDepositPlanningSum' => $montlyPlanningsArray['longDepositPlanningSum'],
-                'childrenDepositPlanningSum' => $montlyPlanningsArray['childrenDepositPlanningSum'],
-                'govermentBondsPlanningSum' => $montlyPlanningsArray['govermentBondsPlanningSum'],
-                'stockPlanningSum' => $montlyPlanningsArray['stockPlanningSum'],
-                'monthlyBudgetPlanningSum' => $montlyPlanningsArray['monthlyBudgetPlanningSum'],
+                'montlyPlanningsArray' => $montlyPlanningsArray,
+                // 費用合計関連
+                'montlyTransactionsArray' => $montlyTransactionsArray,
             ]);
         }
     }

@@ -49,11 +49,11 @@ class Planning extends Model
         $id = 2;
         return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
     }
-    // 個別A
-    public function eachASum($tableItemId, $date, $activeBookId){
-        $id = 3;
-        return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
-    }
+    // // 個別A
+    // public function eachASum($tableItemId, $date, $activeBookId){
+    //     $id = 3;
+    //     return $this->getMonthlyItemSum($tableItemId, $date, $id, $activeBookId);
+    // }
     // 個別B
     public function eachBSum($tableItemId, $date, $activeBookId){
         $id = 4;

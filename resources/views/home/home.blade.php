@@ -3,7 +3,7 @@
 {{-- ログイン済みの場合 --}}
 @if (Auth::check())
 {{-- 家計簿が選択されていない場合 --}}
-@if ($activeBookNull)
+@if ($array['activeBookNull'])
 <br>
 <div class="alert alert-danger" role="alert">
     <div class="text-center">
@@ -31,7 +31,7 @@
 
 {{--費目登録のフォーム --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.store', ['id' => $activeBook->id]), 'method'
+    {!! Form::open(['url' => route('home.store', ['id' => $array['activeBook']->id]), 'method'
     => 'post']) !!}
     {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:24%;'])}}
     {{ Form::date('date', '', ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
@@ -58,14 +58,14 @@
         <h5 class="font-weight-bold">
             <font color="006400">
                 <i class="fas fa-tv"></i>
-                {{$date->year}}年{{$date->month}}月の家計簿『{{$activeBook->name}}』
+                {{$date->year}}年{{$date->month}}月の家計簿『{{$array['activeBook']->name}}』
             </font>
         </h5>
     </div>
 </div>
 {{-- 表示月の選択 --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $array['userId']]), 'method'
     => 'get']) !!}
     {{ Form::select('year' , $years
     , $date->year
@@ -116,20 +116,29 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
         </tr>
     </tbody>
@@ -165,23 +174,34 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-            </td>
-            <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                </div>
             </td>
         </tr>
     </tbody>
@@ -208,7 +228,7 @@
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
                                 <div class="text-right">&yen;<p style="display:inline">
-                                        {{number_format($ingredientsSum)}}</p>
+                                        {{number_format($montlyTransactionsArray['ingredientsTransactionsSum'])}}</p>
                                 </div>
                             </div>
                         </th>
@@ -226,7 +246,8 @@
                         </th>
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
-                                <div class="text-right">&yen;<p style="display:inline">{{number_format($eatoutSum)}}</p>
+                                <div class="text-right">&yen;<p style="display:inline">
+                                        {{number_format($montlyTransactionsArray['eatoutTransactionsSum'])}}</p>
                                 </div>
                             </div>
                         </th>
@@ -270,19 +291,23 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($eachASum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['eachATransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
@@ -290,7 +315,8 @@
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>
@@ -325,27 +351,33 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($eachBSum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['eachBTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>04
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>05
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>06
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>
@@ -380,14 +412,19 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-                    </td>
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($dailySum)}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['dailyTransactionsSum'])}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -415,16 +452,19 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($entertainmentSum)}}
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['entertainmentTransactionsSum'])}}
                                 </p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>
@@ -456,14 +496,19 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-                    </td>
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($childrenSum)}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['childrenTransactionsSum'])}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -492,15 +537,18 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($luxurySum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['luxuryTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>
@@ -532,14 +580,19 @@
             <tbody>
                 <tr class="table-primary">
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01</div>
-                    </td>
-                    <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($specialSum)}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03</div>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['specialTransactionsSum'])}}</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -566,19 +619,21 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($profitsSum)}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($lossSum)}}</p>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['profitsTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($profitsSum-$lossSum)}}</p>
+                                    {{number_format($montlyTransactionsArray['lossTransactionsSum'])}}</p>
                             </div>
                         </td>
-                    </tr>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['profitsTransactionsSum'] -
+                                    $montlyTransactionsArray['lossTransactionsSum'])}}</p>
+                            </div>
+                        </td>
                 </tbody>
             </table>
         </div>
@@ -609,16 +664,18 @@
                 <tr class="table-primary">
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($advanceASum+$advanceBSum)}}
+                                {{number_format($montlyTransactionsArray['advanceATransactionsSum']+$montlyTransactionsArray['advanceBTransactionsSum'])}}
                             </p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceASum)}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['advanceATransactionsSum'])}}</p>
                         </div>
                     </td>
                     <td>
-                        <div class="text-right">&yen;<p style="display:inline">{{number_format($advanceBSum)}}</p>
+                        <div class="text-right">&yen;<p style="display:inline">
+                                {{number_format($montlyTransactionsArray['advanceBTransactionsSum'])}}</p>
                         </div>
                     </td>
                 </tr>
@@ -640,15 +697,18 @@
                 <tbody>
                     <tr class="table-primary">
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>01
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>02
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>02
                             </div>
                         </td>
                         <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format($totalSum)}}</p>03
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>

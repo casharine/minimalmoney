@@ -3,7 +3,7 @@
 {{-- ログイン済みの場合 --}}
 @if (Auth::check())
 {{-- 家計簿が選択されていない場合 --}}
-@if ($activeBookNull)
+@if ($array['activeBookNull'])
 <br>
 <div class="alert alert-danger" role="alert">
     <div class="text-center">
@@ -28,7 +28,7 @@
 </div>
 {{-- 表示編集月の選択 --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $userId]), 'method'
+    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $array['userId']]), 'method'
     => 'get']) !!}
     {{ Form::select('year' , $years
     , $date->year
@@ -46,7 +46,7 @@
 
 {{--予算の登録のフォーム --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('planning.store', ['id' => $activeBook->id]), 'method'
+    {!! Form::open(['url' => route('planning.store', ['id' => $array['activeBook']->id]), 'method'
     => 'post']) !!}
     {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:33%;'])}}
     {{ Form::select('item'
@@ -69,7 +69,7 @@
         <h5 class="font-weight-bold">
             <font color="006400">
                 <i class="fas fa-tv"></i>
-                {{$date->year}}年{{$date->month}}月の予算一覧 家計簿名『{{$activeBook->name}}』
+                {{$date->year}}年{{$date->month}}月の予算一覧 家計簿名『{{$array['activeBook']->name}}』
             </font>
         </h5>
     </div>
@@ -95,20 +95,23 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
         </tr>
     </tbody>
@@ -131,20 +134,25 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
         </tr>
     </tbody>
@@ -165,23 +173,29 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>03</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>03</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>04</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>04</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>05</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>05</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>06</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>06</div>
             </td>
         </tr>
     </tbody>
@@ -205,20 +219,25 @@
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format($totalPlanningSum)}}</p>01</div>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
             </td>
         </tr>
     </tbody>
