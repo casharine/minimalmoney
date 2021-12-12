@@ -58,11 +58,16 @@ trait MonthlyItemsSumTrait
         $stockPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 19, $activeBookId);
         $monthlyBudgetPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 20, $activeBookId);
 
-        // 全体収支
+        // 合計計算
         // 予算総額
         $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
             +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
             +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
+        // 食費関連
+        $foodPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum;
+        $foodPlanningFamilySum = $foodPlanningSum-$eachAPlanningSum+$eachBPlanningSum;
+        // $foodForEachDay = $foodPlanningFamilySum/$date  月の 日数の算出方法を検索する事。
+
 
         return array(
             'totalPlanningSum' => $totalPlanningSum,
