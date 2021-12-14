@@ -3,6 +3,7 @@
 namespace App\Traits;
 use App\Models\Transaction;
 use App\Models\Planning;
+use Carbon\Carbon;
 
 trait MonthlyItemsSumTrait
 {
@@ -60,17 +61,30 @@ trait MonthlyItemsSumTrait
 
         // 合計計算
         // 予算総額
-        $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
+        $totalPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum+$dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum
             +$rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum+$normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum
             +$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
         // 食費関連
         $foodPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum;
-        $foodPlanningFamilySum = $foodPlanningSum-$eachAPlanningSum+$eachBPlanningSum;
-        // $foodForEachDay = $foodPlanningFamilySum/$date  月の 日数の算出方法を検索する事。
-
+        $foodPlanningFamilySum = $foodPlanningSum-$eachAPlanningSum+$eachBPlanningSum; 
+        $foodForEachDay = $foodPlanningFamilySum/$date->daysInMonth; //$dateはモデルでCarbon型にCastしている
+        // 他
+        $variablePlanningSum = $dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
+        $fixedTotalPlanningSum =  $rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum;
+        $pocketPlanningSum = $pocketAPlanningSum+$pocketBPlanningSum;
+        $depositTotalPlanningSum = $normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum+$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
 
         return array(
-            'totalPlanningSum' => $totalPlanningSum,
+            // 総計
+            'totalPlanningSum' => $totalPlanningSum, // 総計
+            'foodPlanningSum' => $foodPlanningSum, // 食費総計
+            'foodForEachDayPlanning' => $foodForEachDay, // 一日あたりの食費
+            'variablePlanningSum' => $variablePlanningSum, //変動費
+            'fixedTotalPlanningSum' => $fixedTotalPlanningSum, // 固定費全体(他固定費と区別)
+            'pocketPlanningSum' => $pocketPlanningSum, // 小遣い合計
+            'depositTotalPlanningSum' => $depositTotalPlanningSum, // 貯蓄関連
+
+            // 小計（各費目毎）
             'ingredientsPlanningSum' => $ingredientsPlanningSum,
             'eatoutPlanningSum' => $eatoutPlanningSum,
             'eachAPlanningSum' => $eachAPlanningSum,
