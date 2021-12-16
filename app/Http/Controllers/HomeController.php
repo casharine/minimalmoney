@@ -9,12 +9,14 @@ use App\Models\Sharing;
 use App\Models\Transaction;
 use App\Enums\TransactionItemType;
 use App\Models\Planning;
+use App\Traits\DateProcessingsTrait;
 use App\Traits\MonthlyItemsSumTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
+    use DateProcessingsTrait;
     use MonthlyItemsSumTrait;
 
     // クラスのプライベートメソッドでメソッド内部のフィールドを配列化し各メソッドに共有
@@ -40,7 +42,8 @@ class HomeController extends Controller
     // メイン画面
     public function home()
     {
-        // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
+        // 初期処理
+        // クラス共通配列の受取
         $array = $this->setCommonArray();
         $user = $array['user'];
         $activeBookNull = $array['activeBookNull'];
@@ -48,53 +51,29 @@ class HomeController extends Controller
 
         if($activeBookNull){
             return view('home.home', [
-            // 共通private array
-            'user' => $array['user'],
-            'activeBookNull' =>  $array['activeBookNull']
+                'array' => $array,            
             ]);        
         }else{
-            // 表示月を取得 ※追加機能以下のフィールドは削除する
-            $date =  User::findOrFail($array['userId'])->date_selecter;
-            // 表示月がNullの場合今月を表示する
-            $today = Carbon::today();
-            if($date == null){
-                $date = $today;
-                $user->date_selecter = $date;
-                $user->save();
-            }
+            // 日付関連処理を受取
+            $dateProcessingsArray = $this->dateProcessingsToArrayTrait($user);
+            $date = $dateProcessingsArray['date'];
 
-            // プルダウン用変数 直近10年
-            $years = [];
-            for($i=0; $i<=10; $i++){
-            //  Carbonはmutable参照型なのでcopyを使用しTodayの値の上書きを防ぐ ※クロノスはimmutable値参照型
-                $y = $today->copy()->subYears($i)->year;
-                $years[$y] = $y;
-            }
-            // プルダウン用変数 直近12カ月
-            $months = [];
-            for($i=0; $i<=11; $i++){
-                $m = $today->copy()->subMonths($i)->month;
-                $months[$m] = $m;
-            }
-                    
-            // 各費目の受取
+            // 各費目利用額を受取
             $transaction = new Transaction;
             $foreignKey = 'transaction_item_id';
-            $montlyTransactionsArray = $transaction->monthlyTransactionsToArray($foreignKey, $date, $activeBook->id);
+            $montlyTransactionsArray = $transaction->monthlyTransactionsToArrayTrait($foreignKey, $date, $activeBook->id);
 
-            // // 各予算を配列で受け取り
+            // 各費目予算を配列で受け取り
             $planning = new Planning;
             $tableItemId = 'planning_item_id';
-            $montlyPlanningsArray = $planning->monthlyPlanningsToArray($tableItemId, $date, $activeBook->id);
+            $montlyPlanningsArray = $planning->monthlyPlanningsToArrayTrait($tableItemId, $date, $activeBook->id);
 
             return view('home.home', [
-                // 共通private array
+                // クラス共通
                 'array' => $array,
-                 // 日付関連
-                'date' => $date,
-                'years' => $years,
-                'months' => $months,
-                // 予算合計関連
+                // 日付関連
+                'dateProcessingsArray' => $dateProcessingsArray,
+                // 予算合計計算関連
                 'montlyPlanningsArray' => $montlyPlanningsArray,
                 // 費用合計関連
                 'montlyTransactionsArray' => $montlyTransactionsArray,
@@ -109,7 +88,7 @@ class HomeController extends Controller
         DB::transaction(function () use($request, $id) {
             $user = User::findOrFail($id);
 
-            // date_Selecterをyymmdd型で更新する ※ddはダミーで11日を入れている
+            // date_Selecterをyymmdd型で更新する ※ダミーで11日を挿入
             $user->date_selecter = Carbon::parse("{$request->year}-{$request->month}-11");
             // $user->date_selecter = $request->year*10000 + $request->month*100 + 11;    
 

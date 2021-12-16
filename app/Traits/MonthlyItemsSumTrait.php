@@ -35,7 +35,7 @@ trait MonthlyItemsSumTrait
     }
 
     //  予算合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
-    public function monthlyPlanningsToArray($foreignKey, $date, $activeBookId){
+    public function monthlyPlanningsToArrayTrait($foreignKey, $date, $activeBookId){
         $plannig = new Planning;    
         // 各予算費目ごとに受け取り
         $ingredientsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 1, $activeBookId);
@@ -109,7 +109,7 @@ trait MonthlyItemsSumTrait
     }
 
     //  費用合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
-    public function monthlyTransactionsToArray($foreignKey, $date, $activeBookId){
+    public function monthlyTransactionsToArrayTrait($foreignKey, $date, $activeBookId){
 
        // 全体収支
        $transaction = new Transaction;    
@@ -128,9 +128,14 @@ trait MonthlyItemsSumTrait
         $advanceATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 12, $activeBookId);
         $advanceBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 13, $activeBookId);
 
-        // 支出総額
-            $totalTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum+$dailyTransactionsSum+$entertainmentTransactionsSum+$childrenTransactionsSum+$luxuryTransactionsSum+$specialTransactionsSum+$profitsTransactionsSum+$lossTransactionsSum+$advanceATransactionsSum+$advanceBTransactionsSum;
 
+        // 合計計算
+        // 利用総額
+        $totalTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum+$dailyTransactionsSum+$entertainmentTransactionsSum+$childrenTransactionsSum+$luxuryTransactionsSum+$specialTransactionsSum+$profitsTransactionsSum+$lossTransactionsSum+$advanceATransactionsSum+$advanceBTransactionsSum;
+        // 食費関連
+        $foodTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum;
+
+        
         return array(
             'totalTransactionsSum' => $totalTransactionsSum,
             'ingredientsTransactionsSum' => $ingredientsTransactionsSum,

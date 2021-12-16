@@ -78,7 +78,7 @@ class PlanningController extends Controller
             $activeBook = $array['activeBook'];
             $foreignKey ='planning_item_id';
             // HomeControllerでも共用するので配列で取得に変更
-            $montlyPlanningsArray = $this->monthlyPlanningsToArray($foreignKey, $date, $activeBook->id);
+            $montlyPlanningsArray = $this->monthlyPlanningsToArrayTrait($foreignKey, $date, $activeBook->id);
             
             return view('planning.planning', [
                 // 共通private array
