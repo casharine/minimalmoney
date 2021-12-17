@@ -39,8 +39,8 @@
     {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
     {{ Form::select('item'
-    , array('1'=>'食材費', '4'=>'外食費', '5'=>'個別A', '4'=>'個別B','5'=>'日用費',
-    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'<font color="191970">雑損</font>',
+    , array('1'=>'食材費', '2'=>'外食費', '3'=>'個別A', '4'=>'個別B','5'=>'日用費',
+    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
     '12'=>'立替A', '13'=>'立替B')
     , ''
     , ['placeholder' => '費目の選択','style' => 'width:25%;']
@@ -58,7 +58,7 @@
         <h5 class="font-weight-bold">
             <font color="006400">
                 <i class="fas fa-tv"></i>
-                {{$date->year}}年{{$date->month}}月の家計簿『{{$array['activeBook']->name}}』
+                {{$dateProcessingsArray['dateSelector']->year}}年{{$dateProcessingsArray['dateSelector']->month}}月の家計簿『{{$array['activeBook']->name}}』
             </font>
         </h5>
     </div>
@@ -67,13 +67,13 @@
 <div class="custom-control-inline py-2">
     {!! Form::open(['url' => route('home.dateSelector', ['id' => $array['userId']]), 'method'
     => 'get']) !!}
-    {{ Form::select('year' , $years
-    , $date->year
+    {{ Form::select('year' , $dateProcessingsArray['yearsIndex']
+    , $dateProcessingsArray['dateSelector']->year
     , ['style' => '#']
     ) }}
     年
-    {{ Form::select('month' , $months
-    , $date->month
+    {{ Form::select('month' , $dateProcessingsArray['monthsIndex']
+    , $dateProcessingsArray['dateSelector']->month
     , ['style' => '#']
     ) }}
     月に
@@ -612,7 +612,8 @@
                         <th style="width: 16.66%" class="text-center">
                             <font color="191970">雑損</font>
                         </th>
-                        <th style="width: 16.66%" class="text-center">雑<font color="191970">損益</font>
+                        <th style="width: 16.66%" class="text-center">
+                            <font color="191970">雑損益</font>
                         </th>
                     </tr>
                 </thead>

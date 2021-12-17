@@ -57,7 +57,7 @@ class HomeController extends Controller
         }else{
             // 日付関連処理を受取
             $dateProcessingsArray = $this->dateProcessingsToArrayTrait($user);
-            $dateSelector  = $dateProcessingsArray['dateSelector '];
+            $dateSelector  = $dateProcessingsArray['dateSelector'];
 
             // 各費目利用額を受取
             $transaction = new Transaction;
