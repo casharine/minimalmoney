@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function () {
     // ユーザー詳細ページ ※メインのgetはHomeページのため最上部に記載
     Route::post('home/home/{id}', [HomeController::class, 'store'])->name('home.store');
     // 表示する年月の変更ボタン
-    Route::get('home/home/{id}', [HomeController::class, 'dateSelecter'])->name('home.dateSelecter');
+    Route::get('home/home/{id}', [HomeController::class, 'dateSelector'])->name('home.dateSelector');
 });
 
 //  Planning関連ページ
@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
     // 月次予算の確定ボタン
     Route::post('planning/planning/{id}', [PlanningController::class, 'store'])->name('planning.store');
     // 表示する年月の変更ボタン
-    Route::get('planning/planning/{id}', [PlanningController::class, 'dateSelecter'])->name('planning.dateSelecter');
+    Route::get('planning/planning/{id}', [PlanningController::class, 'dateSelector'])->name('planning.dateSelector');
 
 
 });

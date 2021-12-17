@@ -28,15 +28,15 @@
 </div>
 {{-- 表示編集月の選択 --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $array['userId']]), 'method'
+    {!! Form::open(['url' => route('home.dateSelector', ['id' => $array['userId']]), 'method'
     => 'get']) !!}
-    {{ Form::select('year' , $years
-    , $date->year
+    {{ Form::select('year' , $dateProcessingsArray['yearsIndex']
+    , $dateProcessingsArray['dateSelector']->year
     , ['style' => '#']
     ) }}
     年
-    {{ Form::select('month' , $months
-    , $date->month
+    {{ Form::select('month' , $dateProcessingsArray['monthsIndex']
+    , $dateProcessingsArray['dateSelector']->month
     , ['style' => '#']
     ) }}
     月
@@ -69,7 +69,8 @@
         <h5 class="font-weight-bold">
             <font color="006400">
                 <i class="fas fa-tv"></i>
-                {{$date->year}}年{{$date->month}}月の予算一覧 家計簿名『{{$array['activeBook']->name}}』
+                {{$dateProcessingsArray['dateSelector']->year}}年{{$dateProcessingsArray['dateSelector']->month}}月の予算一覧
+                家計簿名『{{$array['activeBook']->name}}』
             </font>
         </h5>
     </div>

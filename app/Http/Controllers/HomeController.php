@@ -49,6 +49,7 @@ class HomeController extends Controller
         $activeBookNull = $array['activeBookNull'];
         $activeBook = $array['activeBook'];
 
+        // 家計簿選択されていない場合選択を依頼  
         if($activeBookNull){
             return view('home.home', [
                 'array' => $array,            
@@ -56,17 +57,17 @@ class HomeController extends Controller
         }else{
             // 日付関連処理を受取
             $dateProcessingsArray = $this->dateProcessingsToArrayTrait($user);
-            $date = $dateProcessingsArray['date'];
+            $dateSelector  = $dateProcessingsArray['dateSelector '];
 
             // 各費目利用額を受取
             $transaction = new Transaction;
             $foreignKey = 'transaction_item_id';
-            $montlyTransactionsArray = $transaction->monthlyTransactionsToArrayTrait($foreignKey, $date, $activeBook->id);
+            $montlyTransactionsArray = $transaction->monthlyTransactionsToArrayTrait($foreignKey, $dateSelector , $activeBook->id);
 
             // 各費目予算を配列で受け取り
             $planning = new Planning;
             $tableItemId = 'planning_item_id';
-            $montlyPlanningsArray = $planning->monthlyPlanningsToArrayTrait($tableItemId, $date, $activeBook->id);
+            $montlyPlanningsArray = $planning->monthlyPlanningsToArrayTrait($tableItemId, $dateSelector , $activeBook->id);
 
             return view('home.home', [
                 // クラス共通
@@ -82,7 +83,7 @@ class HomeController extends Controller
     }
 
     // 表示家計簿の年月の指定（変更）
-    public function dateSelecter(Request $request, int $id)
+    public function dateSelector(Request $request, int $id)
     {
         // ロールバックの整合性を保ため一連の処理とする
         DB::transaction(function () use($request, $id) {
@@ -109,7 +110,7 @@ class HomeController extends Controller
                 'book_id' => $id,
                 'price' => $request->price,
                 'transaction_item_id' => $request->item_id +1,  
-                'date' => $request->date,
+                'dateSelector ' => $request->dateSelector ,
                 'note' => $request->note,
             ]);
         });

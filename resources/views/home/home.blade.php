@@ -65,7 +65,7 @@
 </div>
 {{-- 表示月の選択 --}}
 <div class="custom-control-inline py-2">
-    {!! Form::open(['url' => route('home.dateSelecter', ['id' => $array['userId']]), 'method'
+    {!! Form::open(['url' => route('home.dateSelector', ['id' => $array['userId']]), 'method'
     => 'get']) !!}
     {{ Form::select('year' , $years
     , $date->year
