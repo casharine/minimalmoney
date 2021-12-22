@@ -80,9 +80,9 @@ class PlanningController extends Controller
     {
         // バリデーション
         $request->validate([
-            'price' => 'required|max:7',
+            'price' => 'required|digits_between:1,7|numeric',
             'item' => 'required',
-            'note' => 'nullable|max50',
+            'note' => 'nullable|max:50',
         ]);
         // ロールバックの整合性を保ため一連の処理とする
         DB::transaction(function () use($request, $id) {
