@@ -9,17 +9,17 @@ trait MonthlyItemsSumTrait
 {
     // 各費目の合計計算メソット
     // 一連のメソッドをカプセル化したものを移管しtrait
-    public function getMonthlyItemSum($foreignKey, $dateSelector, $itemId, $activeBookId){
-        $monthlyItems = $this->monthlyItems($foreignKey, $dateSelector, $itemId, $activeBookId)->get();
+    public function getMonthlyItemSum($foreignKey, $date, $itemId, $activeBookId){
+        $monthlyItems = $this->monthlyItems($foreignKey, $date, $itemId, $activeBookId)->get();
         return $this->monthlyItemsSum($monthlyItems);
     }
 
     // 費目を家計簿及び年月別に取得するスコープ
-    public  function scopeMonthlyItems($query, $foreignKey, $dateSelector, $itemId, $activeBookId){
+    public  function scopeMonthlyItems($query, $foreignKey, $date, $itemId, $activeBookId){
         return $query->where($foreignKey, $itemId)
         ->where('book_id', $activeBookId)
-        ->whereYear('date', $dateSelector->year)
-        ->whereMonth('date', $dateSelector->month);
+        ->whereYear('date', $date->year)
+        ->whereMonth('date', $date->month);
     }
 
     // スコープから取得後の合計計算部
@@ -35,29 +35,29 @@ trait MonthlyItemsSumTrait
     }
 
     //  予算合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
-    public function monthlyPlanningsToArrayTrait($foreignKey, $dateSelector, $activeBookId){
+    public function monthlyPlanningsToArrayTrait($foreignKey, $date, $activeBookId){
         $plannig = new Planning;    
         // 各予算費目ごとに受け取り
-        $ingredientsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 1, $activeBookId);
-        $eatoutPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 2, $activeBookId);
-        $eachAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 3, $activeBookId);
-        $eachBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 4, $activeBookId);
-        $dailyPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 5, $activeBookId);
-        $entertainmentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 6, $activeBookId);
-        $childrenPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 7, $activeBookId);
-        $luxuryPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 8, $activeBookId);
-        $specialPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 9, $activeBookId);
-        $rentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 10, $activeBookId);
-        $fixedPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 11, $activeBookId);
-        $pocketAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 12, $activeBookId);
-        $pocketBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 13, $activeBookId);
-        $normalDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 14, $activeBookId);
-        $middleDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 15, $activeBookId);
-        $longDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 16, $activeBookId);
-        $childrenDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 17, $activeBookId);
-        $govermentBondsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 18, $activeBookId);
-        $stockPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 19, $activeBookId);
-        $monthlyBudgetPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $dateSelector, 20, $activeBookId);
+        $ingredientsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 1, $activeBookId);
+        $eatoutPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 2, $activeBookId);
+        $eachAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 3, $activeBookId);
+        $eachBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 4, $activeBookId);
+        $dailyPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 5, $activeBookId);
+        $entertainmentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 6, $activeBookId);
+        $childrenPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 7, $activeBookId);
+        $luxuryPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 8, $activeBookId);
+        $specialPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 9, $activeBookId);
+        $rentPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 10, $activeBookId);
+        $fixedPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 11, $activeBookId);
+        $pocketAPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 12, $activeBookId);
+        $pocketBPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 13, $activeBookId);
+        $normalDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 14, $activeBookId);
+        $middleDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 15, $activeBookId);
+        $longDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 16, $activeBookId);
+        $childrenDepositPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 17, $activeBookId);
+        $govermentBondsPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 18, $activeBookId);
+        $stockPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 19, $activeBookId);
+        $monthlyBudgetPlanningSum = $plannig->getMonthlyItemSum($foreignKey, $date, 20, $activeBookId);
 
         // 合計計算
         // 予算総額
@@ -67,7 +67,7 @@ trait MonthlyItemsSumTrait
         // 食費関連
         $foodPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum;
         $foodPlanningFamilySum = $foodPlanningSum-$eachAPlanningSum+$eachBPlanningSum; 
-        $foodForEachDay = $foodPlanningFamilySum/$dateSelector->daysInMonth; //$dateSelectorはモデルでCarbon型にCastしている
+        $foodForEachDay = $foodPlanningFamilySum/$date->daysInMonth; //$dateはモデルでCarbon型にCastしている
         // 他
         $variablePlanningSum = $dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
         $fixedTotalPlanningSum =  $rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum;
@@ -109,24 +109,24 @@ trait MonthlyItemsSumTrait
     }
 
     //  費用合計の取得(費目&月&家計簿の全一致)を取得しArrayを返す
-    public function monthlyTransactionsToArrayTrait($foreignKey, $dateSelector, $activeBookId){
+    public function monthlyTransactionsToArrayTrait($foreignKey, $date, $activeBookId){
 
        // 全体収支
        $transaction = new Transaction;    
         // 各費目ごとに受け取り
-        $ingredientsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 1, $activeBookId);
-        $eatoutTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 2, $activeBookId);
-        $eachATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 3, $activeBookId);
-        $eachBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 4, $activeBookId);
-        $dailyTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 5, $activeBookId);
-        $entertainmentTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 6, $activeBookId);
-        $childrenTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 7, $activeBookId);
-        $luxuryTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 8, $activeBookId);
-        $specialTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 9, $activeBookId);
-        $profitsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 10, $activeBookId);
-        $lossTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 11, $activeBookId);
-        $advanceATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 12, $activeBookId);
-        $advanceBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $dateSelector, 13, $activeBookId);
+        $ingredientsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 1, $activeBookId);
+        $eatoutTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 2, $activeBookId);
+        $eachATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 3, $activeBookId);
+        $eachBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 4, $activeBookId);
+        $dailyTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 5, $activeBookId);
+        $entertainmentTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 6, $activeBookId);
+        $childrenTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 7, $activeBookId);
+        $luxuryTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 8, $activeBookId);
+        $specialTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 9, $activeBookId);
+        $profitsTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 10, $activeBookId);
+        $lossTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 11, $activeBookId);
+        $advanceATransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 12, $activeBookId);
+        $advanceBTransactionsSum = $transaction->getMonthlyItemSum( $foreignKey, $date, 13, $activeBookId);
 
 
         // 合計計算
@@ -134,8 +134,6 @@ trait MonthlyItemsSumTrait
         $totalTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum+$dailyTransactionsSum+$entertainmentTransactionsSum+$childrenTransactionsSum+$luxuryTransactionsSum+$specialTransactionsSum+$profitsTransactionsSum+$lossTransactionsSum+$advanceATransactionsSum+$advanceBTransactionsSum;
         // 食費関連
         $foodTransactionsSum = $ingredientsTransactionsSum+$eatoutTransactionsSum+$eachATransactionsSum+$eachBTransactionsSum;
-
-
 
         
         return array(

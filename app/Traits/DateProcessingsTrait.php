@@ -46,6 +46,7 @@ trait DateProcessingsTrait
             'restOfDays' => $restOfDays,
             'yearsIndex' => $yearsIndex,
             'monthsIndex' => $monthsIndex,
+            'today' => $today,
         );
     }
 }

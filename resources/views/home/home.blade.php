@@ -34,7 +34,7 @@
     {!! Form::open(['url' => route('home.store', ['id' => $array['activeBook']->id]), 'method'
     => 'post']) !!}
     {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:24%;'])}}
-    {{ Form::date('date', '', ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
+    {{ Form::date('date', $dateProcessingsArray['today'], ['placeholder' => '日付を入力','style' => 'width:24%;'])}}
     {{ Form::text('note', '', ['placeholder' => '任意の備考','style' => 'width:24%;'])}}
     {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
@@ -117,8 +117,10 @@
                 </div>
             </td>
             <td>
+                {{-- 利用総額は固定費と貯蓄を含む --}}
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum']+($montlyPlanningsArray['totalPlanningSum']-$montlyPlanningsArray['variablePlanningSum']))}}
+                    </p>
                 </div>
             </td>
             <td>
@@ -129,7 +131,7 @@
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyPlanningsArray['variablePlanningSum'])}}</p>
+                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                 </div>
             </td>
             <td>
@@ -462,7 +464,7 @@
                 <tr class="table-primary">
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['dailyPlanningSum'])}}</p>
                         </div>
                     </td>
                     <td>
@@ -472,7 +474,8 @@
                     </td>
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['dailyPlanningSum']-$montlyTransactionsArray['dailyTransactionsSum'])}}
+                            </p>
                         </div>
                     </td>
                 </tr>
@@ -502,18 +505,18 @@
                     <tr class="table-primary">
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['entertainmentPlanningSum'])}}</p>
                             </div>
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['entertainmentTransactionsSum'])}}
+                                    {{number_format($montlyTransactionsArray['entertainmentTransactionsSum'])}}</p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">&yen;<p style="display:inline">
+                                    {{number_format($montlyPlanningsArray['entertainmentPlanningSum']-$montlyTransactionsArray['entertainmentTransactionsSum'])}}
                                 </p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
                             </div>
                         </td>
                     </tr>
@@ -546,7 +549,7 @@
                 <tr class="table-primary">
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['childrenPlanningSum'])}}</p>
                         </div>
                     </td>
                     <td>
@@ -556,8 +559,10 @@
                     </td>
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['childrenPlanningSum']-$montlyTransactionsArray['childrenTransactionsSum'])}}
+                            </p>
                         </div>
+                    </td>
                     </td>
                 </tr>
             </tbody>
@@ -587,7 +592,7 @@
                     <tr class="table-primary">
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['luxuryPlanningSum'])}}</p>
                             </div>
                         </td>
                         <td>
@@ -597,7 +602,8 @@
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['luxuryPlanningSum']-$montlyTransactionsArray['luxuryTransactionsSum'])}}
+                                </p>
                             </div>
                         </td>
                     </tr>
@@ -630,7 +636,7 @@
                 <tr class="table-primary">
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['specialPlanningSum'])}}</p>
                         </div>
                     </td>
                     <td>
@@ -640,7 +646,8 @@
                     </td>
                     <td>
                         <div class="text-right">&yen;<p style="display:inline">
-                                {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                {{number_format($montlyPlanningsArray['specialPlanningSum']-$montlyTransactionsArray['specialTransactionsSum'])}}
+                            </p>
                         </div>
                     </td>
                 </tr>
