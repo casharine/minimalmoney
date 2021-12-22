@@ -83,6 +83,7 @@ trait MonthlyItemsSumTrait
             'fixedTotalPlanningSum' => $fixedTotalPlanningSum, // 固定費全体(他固定費と区別)
             'pocketPlanningSum' => $pocketPlanningSum, // 小遣い合計
             'depositTotalPlanningSum' => $depositTotalPlanningSum, // 貯蓄関連
+            'investimentTotalPlanningSum' => $stockPlanningSum+$govermentBondsPlanningSum,
 
             // 小計（各費目毎）
             'ingredientsPlanningSum' => $ingredientsPlanningSum,
