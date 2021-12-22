@@ -255,7 +255,7 @@
                                     <p style="display:inline">{{number_format(0)}}%</p>
                                     @else
                                     <p style="display:inline">
-                                        {{number_format($montlyTransactionsArray['eatoutTransactionsSum'])/($montlyTransactionsArray['ingredientsTransactionsSum']+$montlyTransactionsArray['eatoutTransactionsSum'])*100}}
+                                        {{number_format($montlyTransactionsArray['ingredientsTransactionsSum'])/($montlyTransactionsArray['ingredientsTransactionsSum']+$montlyTransactionsArray['eatoutTransactionsSum'])*100}}
                                     </p>&#037;
                                     @endif
                                 </div>
@@ -356,7 +356,7 @@
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format(($montlyPlanningsArray['eachAPlanningSum']-$montlyTransactionsArray['eachATransactionsSum'])-$montlyPlanningsArray['foodForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
+                                    {{number_format(($montlyPlanningsArray['eachAPlanningSum']-$montlyTransactionsArray['eachATransactionsSum'])-$montlyPlanningsArray['eachAForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
                                 </p>
                             </div>
                         </td>
@@ -427,7 +427,7 @@
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format(($montlyPlanningsArray['eachBPlanningSum']-$montlyTransactionsArray['eachBTransactionsSum'])-$montlyPlanningsArray['foodForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
+                                    {{number_format(($montlyPlanningsArray['eachBPlanningSum']-$montlyTransactionsArray['eachBTransactionsSum'])-$montlyPlanningsArray['eachBForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
                                 </p>
                             </div>
                         </td>

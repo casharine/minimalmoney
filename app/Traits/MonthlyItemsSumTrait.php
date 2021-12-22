@@ -68,6 +68,9 @@ trait MonthlyItemsSumTrait
         $foodPlanningSum = $ingredientsPlanningSum+$eatoutPlanningSum+$eachAPlanningSum+$eachBPlanningSum;
         $foodPlanningFamilySum = $foodPlanningSum-$eachAPlanningSum+$eachBPlanningSum; 
         $foodForEachDay = $foodPlanningFamilySum/$date->daysInMonth; //$dateはモデルでCarbon型にCastしている
+        $eachAForEachDay = $eachAPlanningSum/$date->daysInMonth;
+        $eachBForEachDay = $eachAPlanningSum/$date->daysInMonth;
+
         // 他
         $variablePlanningSum = $dailyPlanningSum+$entertainmentPlanningSum+$childrenPlanningSum+$luxuryPlanningSum;
         $fixedTotalPlanningSum =  $rentPlanningSum+$fixedPlanningSum+$pocketAPlanningSum+$pocketBPlanningSum;
@@ -75,10 +78,12 @@ trait MonthlyItemsSumTrait
         $depositTotalPlanningSum = $normalDepositPlanningSum+$middleDepositPlanningSum+$longDepositPlanningSum+$childrenDepositPlanningSum+$govermentBondsPlanningSum+$stockPlanningSum+$monthlyBudgetPlanningSum;
 
         return array(
-            // 総計
+            // 合計
             'totalPlanningSum' => $totalPlanningSum, // 総計
             'foodPlanningSum' => $foodPlanningSum, // 食費総計
             'foodForEachDayPlanning' => $foodForEachDay, // 一日あたりの食費
+            'eachAForEachDayPlanning' => $eachAForEachDay,
+            'eachBForEachDayPlanning' => $eachBForEachDay,
             'variablePlanningSum' => $variablePlanningSum, //変動費
             'fixedTotalPlanningSum' => $fixedTotalPlanningSum, // 固定費全体(他固定費と区別)
             'pocketPlanningSum' => $pocketPlanningSum, // 小遣い合計

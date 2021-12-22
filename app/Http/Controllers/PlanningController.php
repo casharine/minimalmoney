@@ -78,6 +78,13 @@ class PlanningController extends Controller
     // 予算を家計簿に登録
     public function store(Request $request, int $id)
     {
+        // バリデーション
+        $request->validate([
+            'price' => 'required|max:7',
+            'item' => 'required',
+            'note' => 'nullable|max50',
+            // 'date' => 'required|date', 
+        ]);
         // ロールバックの整合性を保ため一連の処理とする
         DB::transaction(function () use($request, $id) {
             // レコード追加に必要な変数を定義する
