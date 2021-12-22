@@ -50,9 +50,9 @@
     => 'post']) !!}
     {{ Form::text('price', '', ['placeholder' => '金額を入力','style' => 'width:33%;'])}}
     {{ Form::select('item'
-    , array('1'=>'食材費', '2'=>'外食費', '3'=>'個別A', '4'=>'個別B','5'=>'日用費',
-    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'家賃', '11'=>'他固定費',
-    '12'=>'小遣いA', '13'=>'小遣いB', '14'=>'普通預金', '15'=>'中期預金', '16'=>'長期預金', '17'=>'養育預金', '18'=>'国債', '19'=>'株')
+    , array(1=>'食材費', 2=>'外食費', 3=>'個別A', 4=>'個別B',5=>'日用費',
+    6=>'交際費', 7=>'養育費', 8=>'贅沢費', 9=>'特別費', 10=>'家賃', 11=>'他固定費',
+    12=>'小遣いA', 13=>'小遣いB', 14=>'普通預金', 15=>'中期預金', 16=>'長期預金', 17=>'養育預金', 18=>'国債', 19=>'株')
     , ''
     , ['placeholder' => '費目の選択','style' => 'width:33%;']
     ) }}
@@ -100,7 +100,8 @@
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>01</div>
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>
+                </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">

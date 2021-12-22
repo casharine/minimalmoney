@@ -79,15 +79,15 @@ class PlanningController extends Controller
     public function store(Request $request, int $id)
     {
         // ロールバックの整合性を保ため一連の処理とする
-        DB::planning(function () use($request, $id) {
+        DB::transaction(function () use($request, $id) {
             // レコード追加に必要な変数を定義する
-            $user = \Auth::user();            
+            $user = \Auth::user();        
             Planning::create([
                 'editor_id' => $user->id,
                 'book_id' => $id,
                 'price' => $request->price,
-                'planning_item_id' => $request->item_id +1,  
-                'date' => $request->date, 
+                'planning_item_id' => $request->item,  
+                'date' => $user->date_selecter, 
                 'note' => $request->note,
             ]);
         });
