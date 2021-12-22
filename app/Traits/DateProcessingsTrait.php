@@ -19,7 +19,13 @@ trait DateProcessingsTrait
         }
 
         // 当月残日数の計算
-        $restOfDays = $dateSelector->daysInMonth-$today->day;
+        // $dateSelectoが今年の当月の場合は計算
+        if($dateSelector->year==$today->year && $dateSelector->month==$today->month){
+            $restOfDays = $dateSelector->daysInMonth-$today->day;
+        }else{
+        // それ以外の年月は残日数は0とする
+        $restOfDays = 0;
+        }        
 
         // プルダウン用変数 直近10年
         $yearsIndex = [];

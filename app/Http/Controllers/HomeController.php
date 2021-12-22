@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User; 
-use App\Models\Book;
-use App\Models\Sharing;
 use App\Models\Transaction;
-use App\Enums\TransactionItemType;
 use App\Models\Planning;
 use App\Traits\DateProcessingsTrait;
 use App\Traits\MonthlyItemsSumTrait;
@@ -16,7 +13,9 @@ use Illuminate\Support\Carbon;
 
 class HomeController extends Controller
 {
+    // 日付関連の処理
     use DateProcessingsTrait;
+    // 月次費目毎の取得・計算
     use MonthlyItemsSumTrait;
 
     // クラスのプライベートメソッドでメソッド内部のフィールドを配列化し各メソッドに共有
@@ -104,13 +103,14 @@ class HomeController extends Controller
         // ロールバックの整合性を保ため一連の処理とする
         DB::transaction(function () use($request, $id) {
             // レコード追加に必要な変数を定義する
-            $user = \Auth::user();            
-            Transaction::create([
+            $user = \Auth::user();
+            Transaction::create(
+                [
                 'editor_id' => $user->id,
                 'book_id' => $id,
                 'price' => $request->price,
-                'transaction_item_id' => $request->item_id +1,  
-                'dateSelector ' => $request->dateSelector ,
+                'transaction_item_id' => $request->item,  
+                'date' => $request->date, //カレンダー入力
                 'note' => $request->note,
             ]);
         });

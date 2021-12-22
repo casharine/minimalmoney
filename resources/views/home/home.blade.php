@@ -39,9 +39,9 @@
     {{-- 当初enumで実装した場合は第二引数をarray型にしarray('食材費'=>'食材費', '個別A'=>...)とvalueで直接文字列をpostした。 --}}
     {{-- 配列の場合0によりidがずれるため結局arrayを使用した --}}
     {{ Form::select('item'
-    , array('1'=>'食材費', '2'=>'外食費', '3'=>'個別A', '4'=>'個別B','5'=>'日用費',
-    '6'=>'交際費', '7'=>'養育費', '8'=>'贅沢費', '9'=>'特別費', '10'=>'雑益', '11'=>'雑損',
-    '12'=>'立替A', '13'=>'立替B')
+    , array(1=>'食材費', 2 =>'外食費', 3=>'個別A', 4=>'個別B',5=>'日用費',
+    6=>'交際費', 7=>'養育費', 8=>'贅沢費', 9=>'特別費', 10=>'雑益', 11=>'雑損',
+    12=>'立替A', 13=>'立替B')
     , ''
     , ['placeholder' => '費目の選択','style' => 'width:25%;']
     ) }}
@@ -112,7 +112,8 @@
     <tbody>
         <tr class="table-primary">
             <td>
-                <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
+                <div class="text-right">&yen;<p style="display:inline">
+                        {{number_format($montlyPlanningsArray['totalPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
@@ -122,22 +123,23 @@
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['totalPlanningSum']-$montlyTransactionsArray['totalTransactionsSum'])}}
+                    </p>
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['variablePlanningSum'])}}</p>
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['fixedTotalPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['depositTotalPlanningSum'])}}</p>
                 </div>
             </td>
         </tr>
@@ -175,32 +177,42 @@
         <tr class="table-primary">
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['foodPlanningSum'])}}</p>
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyTransactionsArray['foodTransactionsSum'])}}</p>
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format($montlyPlanningsArray['foodPlanningSum']-$montlyTransactionsArray['foodTransactionsSum'])}}
+                    </p>
+                </div>
+            </td>
+            <td>
+                <div class="text-right">
+                    <p style="display:inline">
+                        {{$dateProcessingsArray['restOfDays']}}日</p>
+                </div>
+            </td>
+            <td>
+                {{-- 残日数によるゼロ除算 --}}
+                <div class="text-right">
+                    @if($dateProcessingsArray['restOfDays']==0)
+                    <p style="display:inline">{{number_format(0)}}日</p>
+                    @else
+                    <p style="display:inline">&yen;
+                        {{number_format(($montlyPlanningsArray['foodPlanningSum']-$montlyTransactionsArray['foodTransactionsSum'])/($dateProcessingsArray['restOfDays']))}}
+                    </p>
+                    @endif
                 </div>
             </td>
             <td>
                 <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
-                </div>
-            </td>
-            <td>
-                <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
-                </div>
-            </td>
-            <td>
-                <div class="text-right">&yen;<p style="display:inline">
-                        {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                        {{number_format(($montlyPlanningsArray['foodPlanningSum']-$montlyTransactionsArray['foodTransactionsSum'])-$montlyPlanningsArray['foodForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
+                    </p>
                 </div>
             </td>
         </tr>
@@ -235,7 +247,15 @@
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
                                 <div class="text-right">
-                                    <p style="display:inline">{{number_format(0)}}</p>&#037;
+                                    {{-- 食材費率のゼロ除算の回避 --}}
+                                    @if($montlyTransactionsArray['ingredientsTransactionsSum']==0 and
+                                    $montlyTransactionsArray['eatoutTransactionsSum']==0)
+                                    <p style="display:inline">{{number_format(0)}}%</p>
+                                    @else
+                                    <p style="display:inline">
+                                        {{number_format($montlyTransactionsArray['eatoutTransactionsSum'])/($montlyTransactionsArray['ingredientsTransactionsSum']+$montlyTransactionsArray['eatoutTransactionsSum'])*100}}
+                                    </p>&#037;
+                                    @endif
                                 </div>
                             </div>
                         </th>
@@ -254,7 +274,15 @@
                         <th style="width: 16.66%" class="table-primary">
                             <div class="font-weight-normal">
                                 <div class="text-right">
-                                    <p style="display:inline">{{number_format(0)}}</p>&#037;
+                                    {{-- 食材費率のゼロ除算の回避 --}}
+                                    @if($montlyTransactionsArray['ingredientsTransactionsSum']==0 and
+                                    $montlyTransactionsArray['eatoutTransactionsSum']==0)
+                                    <p style="display:inline">{{number_format(0)}}%</p>
+                                    @else
+                                    <p style="display:inline">
+                                        {{number_format($montlyTransactionsArray['eatoutTransactionsSum'])/($montlyTransactionsArray['ingredientsTransactionsSum']+$montlyTransactionsArray['eatoutTransactionsSum'])*100}}
+                                    </p>&#037;
+                                    @endif
                                 </div>
                             </div>
                         </th>
@@ -292,7 +320,7 @@
                     <tr class="table-primary">
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['eachAPlanningSum'])}}</p>
                             </div>
                         </td>
                         <td>
@@ -302,21 +330,32 @@
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['eachAPlanningSum']-$montlyTransactionsArray['eachATransactionsSum'])}}
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                <p style="display:inline">
+                                    {{$dateProcessingsArray['restOfDays']}}日</p>
+                            </div>
+                        </td>
+                        <td>
+                            {{-- 残日数によるゼロ除算 --}}
+                            <div class="text-right">
+                                @if($dateProcessingsArray['restOfDays']==0)
+                                <p style="display:inline">{{number_format(0)}}日</p>
+                                @else
+                                <p style="display:inline">&yen;
+                                    {{number_format(($montlyPlanningsArray['eachAPlanningSum']-$montlyTransactionsArray['eachATransactionsSum'])/($dateProcessingsArray['restOfDays']))}}
+                                </p>
+                                @endif
                             </div>
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">{{number_format(0)}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format(($montlyPlanningsArray['eachAPlanningSum']-$montlyTransactionsArray['eachATransactionsSum'])-$montlyPlanningsArray['foodForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
+                                </p>
                             </div>
                         </td>
                     </tr>
@@ -352,7 +391,7 @@
                     <tr class="table-primary">
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['eachBPlanningSum'])}}</p>
                             </div>
                         </td>
                         <td>
@@ -362,22 +401,32 @@
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format($montlyPlanningsArray['eachBPlanningSum']-$montlyTransactionsArray['eachBTransactionsSum'])}}
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-right">
+                                <p style="display:inline">
+                                    {{$dateProcessingsArray['restOfDays']}}日</p>
+                            </div>
+                        </td>
+                        <td>
+                            {{-- 残日数によるゼロ除算 --}}
+                            <div class="text-right">
+                                @if($dateProcessingsArray['restOfDays']==0)
+                                <p style="display:inline">{{number_format(0)}}日</p>
+                                @else
+                                <p style="display:inline">&yen;
+                                    {{number_format(($montlyPlanningsArray['eachBPlanningSum']-$montlyTransactionsArray['eachBTransactionsSum'])/($dateProcessingsArray['restOfDays']))}}
+                                </p>
+                                @endif
                             </div>
                         </td>
                         <td>
                             <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="text-right">&yen;<p style="display:inline">
-                                    {{number_format($montlyTransactionsArray['totalTransactionsSum'])}}</p>
+                                    {{number_format(($montlyPlanningsArray['eachBPlanningSum']-$montlyTransactionsArray['eachBTransactionsSum'])-$montlyPlanningsArray['foodForEachDayPlanning']*$dateProcessingsArray['restOfDays'])}}
+                                </p>
                             </div>
                         </td>
                     </tr>

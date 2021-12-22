@@ -87,7 +87,7 @@ class PlanningController extends Controller
                 'book_id' => $id,
                 'price' => $request->price,
                 'planning_item_id' => $request->item_id +1,  
-                'dateSelector' => $request->dateSelector,
+                'date' => $request->date, 
                 'note' => $request->note,
             ]);
         });
