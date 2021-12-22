@@ -41,6 +41,10 @@ class BooksController extends Controller
     //ユーザーの帳簿を登録
     public function store(Request $request)
     {
+         // バリデーション
+        $request->validate([
+            'name' => 'required|max:10',
+        ]);
         // インスタンスを取得
         $user = $request->user();
         // ユーザーのbooksのリレーション数をロードした結果1以上の場合はtrueを返す

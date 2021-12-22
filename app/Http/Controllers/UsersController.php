@@ -127,6 +127,10 @@ class UsersController extends Controller
     // 家計簿の新規作成
     public function store(Request $request)
     {
+                // バリデーション
+        $request->validate([
+            'name' => 'required|max:25', 
+        ]);
         // インスタンスを取得
         $user = $request->user();
         // ユーザーのbooksのリレーション数をロードした結果1以上の場合はtrueを返す
@@ -151,6 +155,9 @@ class UsersController extends Controller
     // 家計簿の共有依頼時の検索・結果表示用
     public function index(Request $request)
     {
+        $request->validate([
+            'name' => 'required|max:25', 
+        ]);
         // // 共通で使用するフィールドを取得 ※変数を再定義するなど一度配列変数に戻す必要がある場合
         $array = $this->setCommonArray();
 

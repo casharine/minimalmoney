@@ -4,26 +4,30 @@
     <div class="row">
       <nav class="navbar fixed-bottom navbar-dark bg-dark py-0 px-2">
         {{-- userページへのリンク --}}
-        <a class="navbar-brand" 　data-toggle="tooltip" title="User管理" href="{{route('users.show')}}"><i
-            class="fas fa-user-circle"></i>&nbsp;User</a>
+        <a class="navbar-brand" 　data-toggle="tooltip" title="User管理" href="{{route('users.show')}}">
+          <font color="FFFF00"><i class="fas fa-user-circle"></i>&nbsp;ユーザー管理</font>
+        </a>
         {{-- homeページへのリンク --}}
-        <a class="navbar-brand" 　data-toggle="tooltip" title="Home" href="/"><i class="fas fa-home"></i>&nbsp;Home</a>
+        <a class="navbar-brand" 　data-toggle="tooltip" title="Home" href="/">
+          <font color="00FF00"><i class="fas fa-home"></i>&nbsp;家計簿を入力</font>
+        </a>
         {{-- sheetページへのリンク --}}
         {{-- <a class="navbar-brand" data-toggle="tooltip" title="Sheets" href="#"><i class="fas fa-table"></i></a> --}}
         {{-- planningページへのリンク --}}
-        <a class="navbar-brand" data-toggle="tooltip" title="Plannings" href="{{route('planning.planning')}}"><i
-            class="fas fa-file-invoice-dollar"></i>&nbsp;Planning</a>
+        <a class="navbar-brand" data-toggle="tooltip" title="Plannings" href="{{route('planning.planning')}}">
+          <font color="fuchsia"><i class="fas fa-file-invoice-dollar"></i>&nbsp;予算を入力</font>
+        </a>
         {{-- graphぺージへのリンク--}}
         {{-- <a class="navbar-brand" 　data-toggle="tooltip" title="Graph" href="#"><i class="fas fa-chart-pie"></i></a>
         --}}
         {{-- carry forwardボタン
         <a class="navbar-brand" href="#"><i class="fas fa-sync"></i></a> --}}
         {{-- undoボタン --}}
-        <a class="navbar-brand" data-toggle="tooltip" title="Undo" href="#"><i
-            class="fas fa-arrow-alt-circle-left"></i>&nbsp;Undo</a>
+        {{-- <a class="navbar-brand" data-toggle="tooltip" title="Undo" href="#"><i
+            class="fas fa-arrow-alt-circle-left"></i>&nbsp;Undo</a> --}}
         {{-- redoボタン --}}
-        <a class="navbar-brand" data-toggle="tooltip" title="Redo" href="#"><i
-            class="fas fa-arrow-alt-circle-right"></i>&nbsp;Redo</a>
+        {{-- <a class="navbar-brand" data-toggle="tooltip" title="Redo" href="#"><i
+            class="fas fa-arrow-alt-circle-right"></i>&nbsp;Redo</a> --}}
         {{-- inputボタン--}}
         {{-- <div> <button type="button" class="navbar-toggler" data-toggle="collapse" data-toggle="tooltip"
             title="費用を入力" data-target="#nav-bar">

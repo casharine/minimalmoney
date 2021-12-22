@@ -83,7 +83,6 @@ class PlanningController extends Controller
             'price' => 'required|max:7',
             'item' => 'required',
             'note' => 'nullable|max50',
-            // 'date' => 'required|date', 
         ]);
         // ロールバックの整合性を保ため一連の処理とする
         DB::transaction(function () use($request, $id) {
