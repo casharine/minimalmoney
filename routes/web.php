@@ -31,8 +31,6 @@ Route::get('/', function () {
     return redirect()->route('Home');
  });
 
-Route::get('home', [HomeController::class, 'home'])->name('Home');
-
 // ユーザー登録等処理のグループ
 // ※ver.6時 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
     //  ユーザ登録
@@ -45,6 +43,7 @@ Route::get('home', [HomeController::class, 'home'])->name('Home');
 
 //  ユーザー設定関連ページ
 Route::group(['middleware' => ['auth']], function () {
+// Route::middleware('auth')->group(function () {
     // ユーザー設定ページ
     Route::get('users', [UsersController::class, 'show'])->name('users.show');
         // ユーザー検索・申請ページ関連
@@ -66,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 //  Home関連ページ
 Route::group(['middleware' => ['auth']], function () {
+    Route::get('home', [HomeController::class, 'home'])->name('Home');
     // ユーザー詳細ページ ※メインのgetはHomeページのため最上部に記載
     Route::post('home/home/{id}', [HomeController::class, 'store'])->name('home.store');
     // 表示する年月の変更ボタン
@@ -80,6 +80,4 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('planning/planning/{id}', [PlanningController::class, 'store'])->name('planning.store');
     // 表示する年月の変更ボタン
     Route::get('planning/planning/{id}', [PlanningController::class, 'dateSelector'])->name('planning.dateSelector');
-
-
 });
