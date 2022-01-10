@@ -94,5 +94,8 @@
 
 以下より、仕様書、ER 図、サイトマップ、ワイヤフレームを確認いただけます。<br>
 https://cacoo.com/diagrams/7C7vMFjy05OcG78j/2A216<br>
+
+ER 図
+<img class="d-block img-fluid mx-auto rounded" src="images/ER.png">
 <br>
 以上
