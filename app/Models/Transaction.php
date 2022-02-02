@@ -36,7 +36,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(TransactionItem::class, 'transaction_item_id', 'id');
     }
-
    
     // 元々クラス内でカプセル化で共通化していたが、他Modelからも使用するためTraitに変更
     // メンバ変数、メソッドをカプセル化し共通化

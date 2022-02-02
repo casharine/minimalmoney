@@ -58,6 +58,14 @@ class HomeController extends Controller
             $dateProcessingsArray = $this->dateProcessingsToArrayTrait($user);
             $dateSelector  = $dateProcessingsArray['dateSelector'];
 
+            // 3のつく日に3年以上前の仕訳を削除
+            if ($dateProcessingsArray['today']->day == 3 || $dateProcessingsArray['today']->day == 13 || $dateProcessingsArray['today']->day == 23){
+                Transaction::with(['user'])
+                    ->where('editor_id', \Auth::id())
+                    ->whereDay('date', '<',  $dateProcessingsArray['today']->copy()->subYear(3))
+                    ->delete();
+            }
+
             // 各費目利用額を受取
             $transaction = new Transaction;
             $foreignKey = 'transaction_item_id';

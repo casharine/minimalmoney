@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User; 
 use App\Models\Book;
+use Illuminate\Support\Facades\DB;
 
 class UsersController extends Controller
 {  
@@ -183,5 +184,16 @@ class UsersController extends Controller
             'unapprovedCounts' => $array['unapprovedCounts'],
         ]);
     }
+
+    // public function eraseRecordBeforeThreeYearsAgo()
+    // {
+    //     $array = $this->setCommonArray();
+
+    //     // nullチェック
+    //     if ($array['booknull'] != true){
+    //         // Transaction,Plannningでメソッドを作成し取得
+
+    // }
+
 
 }
