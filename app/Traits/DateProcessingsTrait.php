@@ -18,6 +18,9 @@ trait DateProcessingsTrait
             $user->save();
         }
 
+        // 3年前(不要レコード削除用)
+        $threeYearsAgo = $today->copy()->subYear(3); 
+
         // 当月残日数の計算
         // $dateSelectoが今年の当月の場合は計算
         if($dateSelector->year==$today->year && $dateSelector->month==$today->month){
@@ -47,6 +50,7 @@ trait DateProcessingsTrait
             'yearsIndex' => $yearsIndex,
             'monthsIndex' => $monthsIndex,
             'today' => $today,
+            'threeYearsAgo' => $threeYearsAgo,
         );
     }
 }
