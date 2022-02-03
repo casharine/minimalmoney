@@ -74,7 +74,7 @@ class BooksController extends Controller
         // $books =  $user->books;
         
         
-        // ユーザーのアクティブフラグを削除
+        // ユーザーのアクティブフラグを切り替え
         Book::with(['users'])
             ->where('active_flag', "t")
             ->whereHas('users', function($builder){

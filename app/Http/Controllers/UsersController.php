@@ -116,13 +116,13 @@ class UsersController extends Controller
     // 共有依頼申請タブ用
     public function sharings()
     {
-        return view('users\sharings.sharings', $this->setCommonArray());
+        return view('users.sharings.sharings', $this->setCommonArray());
     }
 
     // 共有を承認タブ用
     public function unapproved()
     {
-        return view('users\unapproved.unapproved', $this->setCommonArray());
+        return view('users.unapproved.unapproved', $this->setCommonArray());
     }
 
     // 家計簿の新規作成
