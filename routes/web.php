@@ -23,13 +23,18 @@ use App\Http\Controllers\PlanningController;
 |
 */
 
-// Home画面のルーティング ※認証有無でwelcomeページを表示
+// Vue.js テスト用
 Route::get('/', function () {
-    if(!\Auth::check()){
-        return view('home.home');
-    }
-    return redirect()->route('Home');
+    return view('vuesample');
  });
+
+// Home画面のルーティング ※認証有無でwelcomeページを表示
+// Route::get('/', function () {
+//     if(!\Auth::check()){
+//         return view('home.home');
+//     }
+//     return redirect()->route('Home');
+//  });
 
 // ユーザー登録等処理のグループ
 // ※ver.6時 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
